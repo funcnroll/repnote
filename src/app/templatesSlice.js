@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import AddExercise from "../pages/templates/AddExercise";
 import { generateId } from "../helpers/generateId";
 
 const initialState = {
@@ -10,8 +9,8 @@ const initialState = {
   //   exercises: [
   //     { name: 'Squats', sets: 4, reps: 10 },
   //     { name: 'Lunges', sets: 3, reps: 12 },
-  //   id: 1
   //   ]
+  //   id: 1
   // },
   templates: [],
   tmpTemplate: {
@@ -54,11 +53,14 @@ const templatesSlice = createSlice({
       // exerciseName,
       // sets,
       // reps;
+      //  setsDone
       // }
+      state.tmpTemplate.exercises.push(action.payload);
     },
   },
 });
 
-export const { addTemplate } = templatesSlice.actions;
+export const { addTemplate, addExercise, createTmpTemplate } =
+  templatesSlice.actions;
 
 export default templatesSlice.reducer;

@@ -8,6 +8,7 @@
 
 - [ ] Allow user to add sets, reps, and weight per exercise
 - [ ] Allow user to edit sets/reps/weight mid-workout
+- [ ] Add indicator how many sets are done of total set amount per exercise
 - [ ] Allow editing of sets before starting a workout
 
 ## 🛠️ Exercise Management

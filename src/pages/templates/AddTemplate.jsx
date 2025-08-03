@@ -1,6 +1,13 @@
+import { useSelector } from "react-redux";
 import { Link } from "react-router";
 
 function AddTemplate() {
+  const exercises = useSelector(
+    (state) => state.templates.tmpTemplate.exercises
+  );
+
+  const id = useSelector((state) => state.templates.tmpTemplate.id);
+
   return (
     <div className="n-full bg-[#0f172a] text-white px-6 py-8">
       <h1 className="text-2xl font-semibold mb-8">New Template</h1>
@@ -25,6 +32,22 @@ function AddTemplate() {
         <button className="w-full py-3 rounded-lg bg-[#1e293b] text-white font-medium hover:bg-[#2c3a54] transition">
           + Add Template
         </button>
+
+        <div className="flex flex-col items-center justify-center mt-6 w-full">
+          {exercises.map((exercise) => (
+            <div
+              key={id}
+              className="bg-[#1e293b] w-full px-4 py-3 rounded-md mb-2"
+            >
+              <h2 className="text-lg font-semibold text-white">
+                {exercise.exerciseName}
+              </h2>
+              <p className="text-gray-400">
+                Sets: {exercise.sets}, Reps: {exercise.reps}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
