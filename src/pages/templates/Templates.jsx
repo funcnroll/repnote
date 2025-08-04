@@ -7,7 +7,7 @@ function Templates() {
   const dispatch = useDispatch();
 
   return (
-    <div className="h-full bg-[#0f172a] text-white px-4 py-6">
+    <div className="h-full bg-backgroundColor text-white px-4 py-6">
       <h1 className="text-center text-lg font-semibold mb-6">Templates</h1>
 
       <div className="flex justify-center mb-8">
@@ -30,7 +30,7 @@ function Templates() {
           templates.map((template, index) => (
             <div
               key={index}
-              className="bg-[#1e293b] flex justify-between items-center px-4 py-3 rounded-md hover:bg-[#2c3a54] transition"
+              className="bg-primaryColor flex justify-between items-center px-4 py-3 rounded-md hover:bg-[#2c3a54] transition"
             >
               <span>{template}</span>
               <span className="text-gray-400">{">"}</span>

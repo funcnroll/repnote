@@ -10,7 +10,7 @@ const links = [
 
 function NavMenu() {
   return (
-    <nav className="bg-[#0F172A] border-t border-[#1E293B] flex justify-around py-2">
+    <nav className="bg-backgroundColor border-t border-primaryColor flex justify-around py-2">
       {links.map((link) => {
         return (
           <NavLink

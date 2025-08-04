@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addExercise } from "../../app/templatesSlice";
 import { useNavigate } from "react-router";
+import FormInput from "../../components/reusable/FormInput";
 
 function AddExercise() {
   const dispatch = useDispatch();
@@ -16,35 +17,41 @@ function AddExercise() {
     <div className="min-h-screen bg-[#0f172a] text-white px-6 py-8">
       <h1 className="text-2xl font-semibold mb-8">Add Exercise</h1>
 
-      <div className="mb-6">
+      {/* <div className="mb-6">
         <label className="block text-sm text-gray-400 mb-2">
           Exercise name
         </label>
         <input
+          required
           onChange={(e) => setName(e.target.value)}
           type="text"
           placeholder="Squats"
-          className="w-full px-4 py-3 rounded-lg bg-[#1e293b] placeholder-gray-400 focus:outline-none"
+          className="w-full px-4 py-3 rounded-lg bg-primaryColor placeholder-gray-400 focus:outline-none"
         />
-      </div>
+      </div> */}
+      <FormInput
+        label="Exercise name"
+        placeholder="Squats"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        type="text"
+      />
 
       <div className="flex justify-between gap-4 mb-6">
         <div className="flex-1">
-          <label className="block text-sm text-gray-400 mb-2">Sets</label>
-          <input
+          <FormInput
+            label="Sets"
+            placeholder="3"
             onChange={(e) => setSets(e.target.value)}
             type="number"
-            placeholder="3"
-            className="w-full px-4 py-3 rounded-lg bg-[#1e293b] placeholder-gray-400 focus:outline-none"
           />
         </div>
         <div className="flex-1">
-          <label className="block text-sm text-gray-400 mb-2">Reps</label>
-          <input
+          <FormInput
+            label="Reps"
+            placeholder="10"
             onChange={(e) => setReps(e.target.value)}
             type="number"
-            placeholder="10"
-            className="w-full px-4 py-3 rounded-lg bg-[#1e293b] placeholder-gray-400 focus:outline-none"
           />
         </div>
       </div>

@@ -17,24 +17,18 @@ const initialState = {
     exercises: [],
     id: 0,
   },
-  // array to hold template names
-  templateNames: "",
 
   templateXExercises: [],
   // for home screen to know if a template is active
   isTemplateActive: false,
 };
-
 const templatesSlice = createSlice({
   name: "templates",
   initialState,
   reducers: {
     createTmpTemplate: {
       reducer: (state, action) => {
-        state.tmpTemplate = {
-          ...state.tmpTemplate,
-          id: action.payload.id,
-        };
+        state.tmpTemplate = action.payload;
       },
       prepare: () => {
         const id = generateId();
@@ -46,21 +40,38 @@ const templatesSlice = createSlice({
         };
       },
     },
+
     addTemplate(state, action) {},
-    addExercise(state, action) {
-      // action structure:
-      // {
-      // exerciseName,
-      // sets,
-      // reps;
-      //  setsDone
-      // }
-      state.tmpTemplate.exercises.push(action.payload);
+
+    addExercise: {
+      reducer: (state, action) => {
+        state.tmpTemplate.exercises.push(action.payload);
+        console.log(JSON.parse(JSON.stringify(state.tmpTemplate)));
+      },
+      prepare: ({ exerciseName, sets, reps, setsDone = 0 }) => {
+        const id = generateId();
+        return {
+          payload: {
+            id,
+            exerciseName,
+            sets,
+            reps,
+            setsDone,
+          },
+        };
+      },
+    },
+    removeExercise(state, action) {
+      const exerciseId = action.payload;
+
+      state.tmpTemplate.exercises = state.tmpTemplate.exercises.filter(
+        (exercise) => exercise.id !== exerciseId
+      );
     },
   },
 });
 
-export const { addTemplate, addExercise, createTmpTemplate } =
+export const { addTemplate, addExercise, createTmpTemplate, removeExercise } =
   templatesSlice.actions;
 
 export default templatesSlice.reducer;
