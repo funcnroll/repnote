@@ -4,6 +4,7 @@ import { removeExercise } from "../../app/templatesSlice";
 import TemplateButton from "./TemplateButton";
 import FormInput from "../../components/reusable/FormInput";
 import { X } from "lucide-react";
+import ExerciseCard from "./ExerciseCard";
 
 function AddTemplate() {
   const exercises = useSelector(
@@ -26,7 +27,7 @@ function AddTemplate() {
         <TemplateButton to="">+ Add Template</TemplateButton>
 
         <div className="flex flex-col items-center justify-center mt-6 w-full">
-          {exercises.map((exercise) => (
+          {/* {exercises.map((exercise) => (
             <div
               key={exercise.id}
               className="bg-primaryColor w-full px-4 py-3 rounded-md mb-2 flex justify-between items-start"
@@ -46,6 +47,13 @@ function AddTemplate() {
                 />
               </button>
             </div>
+          ))} */}
+          {exercises.map((exercise) => (
+            <ExerciseCard
+              key={exercise.id}
+              exercise={exercise}
+              onRemove={(id) => dispatch(removeExercise(id))}
+            />
           ))}
         </div>
       </div>
