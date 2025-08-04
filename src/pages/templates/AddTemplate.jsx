@@ -27,27 +27,6 @@ function AddTemplate() {
         <TemplateButton to="">+ Add Template</TemplateButton>
 
         <div className="flex flex-col items-center justify-center mt-6 w-full">
-          {/* {exercises.map((exercise) => (
-            <div
-              key={exercise.id}
-              className="bg-primaryColor w-full px-4 py-3 rounded-md mb-2 flex justify-between items-start"
-            >
-              <div>
-                <h2 className="text-lg font-semibold text-white">
-                  {exercise.exerciseName}
-                </h2>
-                <p className="text-gray-400">
-                  Sets: {exercise.sets} Reps: {exercise.reps}
-                </p>
-              </div>
-              <button>
-                <X
-                  className="text-gray-400 hover:text-red-500 w-5 h-5"
-                  onClick={() => dispatch(removeExercise(exercise.id))}
-                />
-              </button>
-            </div>
-          ))} */}
           {exercises.map((exercise) => (
             <ExerciseCard
               key={exercise.id}
