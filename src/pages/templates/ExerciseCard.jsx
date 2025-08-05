@@ -1,6 +1,13 @@
-import { X } from "lucide-react";
+import { X, Edit } from "lucide-react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
+import { selectExerciseToEdit } from "../../app/templatesSlice";
 
 function ExerciseCard({ exercise, onRemove }) {
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
   return (
     <div
       key={exercise.id}
@@ -14,12 +21,20 @@ function ExerciseCard({ exercise, onRemove }) {
           Sets: {exercise.sets} Reps: {exercise.reps}
         </p>
       </div>
-      <button>
-        <X
-          className="text-gray-400 hover:text-red-500 w-5 h-5"
-          onClick={() => onRemove(exercise.id)}
-        />
-      </button>
+
+      <div className="flex gap-2">
+        <button
+          onClick={() => {
+            dispatch(selectExerciseToEdit(exercise));
+            navigate("/add-exercise");
+          }}
+        >
+          <Edit className="text-gray-400 hover:text-blue-400 w-5 h-5 cursor-pointer" />
+        </button>
+        <button onClick={() => onRemove(exercise.id)}>
+          <X className="text-gray-400 hover:text-red-500 w-5 h-5 cursor-pointer" />
+        </button>
+      </div>
     </div>
   );
 }

@@ -1,6 +1,6 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addExercise } from "../../app/templatesSlice";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addExercise, editExercise } from "../../app/templatesSlice";
 import { useNavigate } from "react-router";
 import FormInput from "../../components/reusable/FormInput";
 
@@ -8,69 +8,84 @@ function AddExercise() {
   const dispatch = useDispatch();
 
   const [name, setName] = useState("");
-  const [reps, setReps] = useState(0);
-  const [sets, setSets] = useState(0);
+  const [reps, setReps] = useState("");
+  const [sets, setSets] = useState("");
 
-  const navigate = useNavigate(-1);
+  const navigate = useNavigate();
 
+  const isEditing = useSelector((state) => state.templates.isEditing);
+  const exerciseToEditData = useSelector(
+    (state) => state.templates.exerciseToEdit
+  );
+
+  useEffect(() => {
+    if (isEditing && exerciseToEditData) {
+      setName(exerciseToEditData.exerciseName);
+      setSets(exerciseToEditData.sets);
+      setReps(exerciseToEditData.reps);
+    }
+  }, [isEditing, exerciseToEditData]);
+
+  console.log(exerciseToEditData);
   return (
     <div className="min-h-screen bg-[#0f172a] text-white px-6 py-8">
       <h1 className="text-2xl font-semibold mb-8">Add Exercise</h1>
-
-      {/* <div className="mb-6">
-        <label className="block text-sm text-gray-400 mb-2">
-          Exercise name
-        </label>
-        <input
-          required
-          onChange={(e) => setName(e.target.value)}
-          type="text"
-          placeholder="Squats"
-          className="w-full px-4 py-3 rounded-lg bg-primaryColor placeholder-gray-400 focus:outline-none"
-        />
-      </div> */}
       <FormInput
+        required
         label="Exercise name"
         placeholder="Squats"
-        value={name}
         onChange={(e) => setName(e.target.value)}
         type="text"
+        value={name}
       />
 
       <div className="flex justify-between gap-4 mb-6">
         <div className="flex-1">
           <FormInput
+            required
             label="Sets"
             placeholder="3"
             onChange={(e) => setSets(e.target.value)}
             type="number"
+            value={sets}
           />
         </div>
         <div className="flex-1">
           <FormInput
+            required
             label="Reps"
             placeholder="10"
             onChange={(e) => setReps(e.target.value)}
             type="number"
+            value={reps}
           />
         </div>
       </div>
 
       <button
         onClick={() => {
-          dispatch(
-            addExercise({
-              exerciseName: name,
-              sets: parseInt(sets),
-              reps: parseInt(reps),
-            })
-          );
+          const exerciseData = {
+            exerciseName: name,
+            sets: parseInt(sets),
+            reps: parseInt(reps),
+          };
+
+          if (isEditing && exerciseToEditData?.id) {
+            dispatch(
+              editExercise({
+                ...exerciseData,
+                id: exerciseToEditData.id,
+              })
+            );
+          } else {
+            dispatch(addExercise(exerciseData));
+          }
 
           navigate(-1);
         }}
         className="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 font-medium transition"
       >
-        Add Exercise
+        {isEditing ? "Edit Exercise" : "Add Exercise"}
       </button>
     </div>
   );

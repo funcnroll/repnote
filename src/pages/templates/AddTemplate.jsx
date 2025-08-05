@@ -1,9 +1,9 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import { removeExercise } from "../../app/templatesSlice";
+import { editExercise, removeExercise } from "../../app/templatesSlice";
 import TemplateButton from "./TemplateButton";
 import FormInput from "../../components/reusable/FormInput";
-import { X } from "lucide-react";
+
 import ExerciseCard from "./ExerciseCard";
 
 function AddTemplate() {
@@ -32,6 +32,7 @@ function AddTemplate() {
               key={exercise.id}
               exercise={exercise}
               onRemove={(id) => dispatch(removeExercise(id))}
+              onEdit={(id) => dispatch(editExercise(id))}
             />
           ))}
         </div>

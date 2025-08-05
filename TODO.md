@@ -6,8 +6,9 @@
 
 ## 💪 Workout Flow (Priority!)
 
-- [ ] Allow user to add sets, reps, and weight per exercise
-- [ ] Allow user to edit sets/reps/weight mid-workout
+- [x] Allow user to add/edit sets, reps, and weight per exercise
+  - [ ] Differentiate logic for `tmpTemplate` (editing mode) vs saved templates in `templates` (used for actual workouts)
+- [ ] Allow user to edit sets/reps/weight mid-workout/whilst creating a template
 - [ ] Add indicator how many sets are done of total set amount per exercise
 - [ ] Allow editing of sets before starting a workout
 
@@ -15,12 +16,11 @@
 
 - [ ] Support adding **custom exercises**
 - [ ] Include a searchable list of **common exercises**
+  - [ ] Remove exerciseName and base logic off isCustom (centralised exercise metadata)
 
 ## 🧩 Exercise Editing UI
 
-- [ ] Add a **dropdown menu** next to each exercise for:
-  - [ ] Reordering exercises
-  - [ ] Removing exercises
+- [ ] Add an option next to each exercise to reorder exercises
 - [ ] Display an **X** next to each set to remove it
 - [ ] Show a **persistent bar at the bottom** to add new sets or exercises
 
