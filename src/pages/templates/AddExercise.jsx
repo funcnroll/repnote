@@ -26,7 +26,6 @@ function AddExercise() {
     }
   }, [isEditing, exerciseToEditData]);
 
-  console.log(exerciseToEditData);
   return (
     <div className="min-h-screen bg-[#0f172a] text-white px-6 py-8">
       <h1 className="text-2xl font-semibold mb-8">Add Exercise</h1>
