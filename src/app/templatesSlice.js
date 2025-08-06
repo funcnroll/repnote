@@ -43,7 +43,23 @@ const templatesSlice = createSlice({
       },
     },
 
-    addTemplate(state, action) {},
+    addTemplate(state, action) {
+      console.log(JSON.parse(JSON.stringify(action.payload)));
+
+      const { templateName: name, tmpTemplate } = action.payload;
+      const { exercises, id } = tmpTemplate;
+
+      state.templates.push({
+        name,
+        exercises,
+        id,
+      });
+
+      state.tmpTemplate = {
+        exercises: [],
+        id: 0,
+      };
+    },
 
     addExercise: {
       reducer: (state, action) => {

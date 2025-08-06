@@ -32,7 +32,7 @@ function Templates() {
               key={index}
               className="bg-primaryColor flex justify-between items-center px-4 py-3 rounded-md hover:bg-[#2c3a54] transition"
             >
-              <span>{template}</span>
+              <span>{template.name}</span>
               <span className="text-gray-400">{">"}</span>
             </div>
           ))

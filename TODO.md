@@ -11,6 +11,8 @@
 - [ ] Allow user to edit sets/reps/weight mid-workout/whilst creating a template
 - [ ] Add indicator how many sets are done of total set amount per exercise
 - [ ] Allow editing of sets before starting a workout
+- [ ] Allow user to add a template
+  - [ ] Handle edge cases (User adding template without exercises, etc.)
 
 ## 🛠️ Exercise Management
 
@@ -21,8 +23,12 @@
 ## 🧩 Exercise Editing UI
 
 - [ ] Add an option next to each exercise to reorder exercises
-- [ ] Display an **X** next to each set to remove it
+- [x] Display an **X** next to each set to remove it
 - [ ] Show a **persistent bar at the bottom** to add new sets or exercises
+
+## 🗂️ Misc
+
+- [ ] Convert Javascript to Typescript after finishing template builder logic (adding/removing/editing template, editing/adding/removing/reodering exercises)
 
 ---
 
