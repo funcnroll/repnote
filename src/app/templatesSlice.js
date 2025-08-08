@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { generateId } from "../helpers/generateId";
-import { act } from "react";
 
 const initialState = {
   // object to hold exercises for each template
@@ -57,6 +56,13 @@ const templatesSlice = createSlice({
         exercises: [],
         id: 0,
       };
+    },
+    deleteTemplate(state, action) {
+      const templateId = action.payload;
+
+      state.templates = state.templates.filter(
+        (template) => template.id !== templateId
+      );
     },
 
     addExercise: {
@@ -135,6 +141,7 @@ export const {
   createTmpTemplate,
   removeExercise,
   selectExerciseToEdit,
+  deleteTemplate,
 } = templatesSlice.actions;
 
 export default templatesSlice.reducer;

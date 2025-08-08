@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router";
-import { createTmpTemplate } from "../../app/templatesSlice";
+import { createTmpTemplate, deleteTemplate } from "../../app/templatesSlice";
+import { ChevronRight, X } from "lucide-react"; // ✅ import X icon
 
 function Templates() {
   const templates = useSelector((state) => state.templates.templates);
@@ -30,10 +31,22 @@ function Templates() {
           templates.map((template, index) => (
             <div
               key={index}
-              className="bg-primaryColor flex justify-between items-center px-4 py-3 rounded-md hover:bg-[#2c3a54] transition"
+              className="bg-primaryColor flex justify-between items-center px-4 py-3 rounded-md hover:bg-[#2c3a54] transition cursor-pointer"
             >
-              <span>{template.name}</span>
-              <span className="text-gray-400">{">"}</span>
+              <div className="flex items-center justify-between w-full">
+                <span>{template.name}</span>
+                <div className="flex items-center space-x-4">
+                  <X
+                    size={18}
+                    className="text-gray-400 hover:text-red-500 cursor-pointer transition"
+                    onClick={() => dispatch(deleteTemplate(template.id))}
+                  />
+                  <ChevronRight
+                    size={22}
+                    className="text-gray-400"
+                  />
+                </div>
+              </div>
             </div>
           ))
         )}
