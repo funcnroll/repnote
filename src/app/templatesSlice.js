@@ -17,7 +17,6 @@ const initialState = {
     exercises: [],
     id: 0,
   },
-  templateXExercises: [],
   isTemplateActive: false,
   templateToView: null,
 };
