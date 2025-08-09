@@ -65,7 +65,9 @@ function AddExercise() {
       </div>
 
       <button
-        onClick={() => {
+        onClick={(e) => {
+          e.preventDefault();
+
           const exerciseData = {
             exerciseName: name,
             sets: parseInt(sets),

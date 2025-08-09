@@ -5,7 +5,7 @@ const initialState = {
   // object to hold exercises for each template
   // example template object:
   // {
-  //   templateName: 'Leg Day',
+  //   name: 'Leg Day',
   //   exercises: [
   //     { name: 'Squats', sets: 4, reps: 10 },
   //     { name: 'Lunges', sets: 3, reps: 12 },
@@ -13,9 +13,11 @@ const initialState = {
   //   id: 1
   // },
   templates: [],
+
   tmpTemplate: {
     exercises: [],
     id: 0,
+    name: "",
   },
   isTemplateActive: false,
   templateToView: null,
@@ -39,6 +41,9 @@ const templatesSlice = createSlice({
       },
     },
 
+    editTemplateName(state, action) {
+      state.tmpTemplate.name = action.payload;
+    },
     addTemplate(state, action) {
       const { templateName: name, tmpTemplate } = action.payload;
       const { exercises, id } = tmpTemplate;
@@ -137,6 +142,7 @@ export const {
   removeExercise,
   deleteTemplate,
   selectTemplateToView,
+  editTemplateName,
 } = templatesSlice.actions;
 
 export default templatesSlice.reducer;

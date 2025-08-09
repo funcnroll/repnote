@@ -20,7 +20,9 @@ function ExerciseCard({ exercise, onRemove, onEdit }) {
 
       <div className="flex gap-2">
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
+
             onEdit
               ? onEdit(exercise.id)
               : navigate(`/add-exercise/${exercise.id}`);

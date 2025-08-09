@@ -49,12 +49,17 @@ function Templates() {
                   <X
                     size={18}
                     className="text-gray-400 hover:text-red-500 cursor-pointer transition"
-                    onClick={() => dispatch(deleteTemplate(template.id))}
+                    onClick={(e) => {
+                      e.preventDefault();
+
+                      dispatch(deleteTemplate(template.id));
+                    }}
                   />
                   <ChevronRight
                     size={22}
                     className="text-gray-400"
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.preventDefault();
                       dispatch(selectTemplateToView(template.id));
                       navigate(`/add-template/${template.id}`);
                     }}
