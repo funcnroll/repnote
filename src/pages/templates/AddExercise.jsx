@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addExercise, editExercise } from "../../app/templatesSlice";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import FormInput from "../../components/reusable/FormInput";
 
 function AddExercise() {
@@ -13,18 +13,21 @@ function AddExercise() {
 
   const navigate = useNavigate();
 
-  const isEditing = useSelector((state) => state.templates.isEditing);
-  const exerciseToEditData = useSelector(
-    (state) => state.templates.exerciseToEdit
+  const { exerciseId } = useParams();
+
+  const exerciseToEditData = useSelector((state) =>
+    state.templates.tmpTemplate.exercises.find(
+      (e) => String(e.id) === String(exerciseId)
+    )
   );
 
   useEffect(() => {
-    if (isEditing && exerciseToEditData) {
+    if (exerciseToEditData) {
       setName(exerciseToEditData.exerciseName);
       setSets(exerciseToEditData.sets);
       setReps(exerciseToEditData.reps);
     }
-  }, [isEditing, exerciseToEditData]);
+  }, [exerciseToEditData]);
 
   return (
     <div className="min-h-screen bg-[#0f172a] text-white px-6 py-8">
@@ -69,7 +72,7 @@ function AddExercise() {
             reps: parseInt(reps),
           };
 
-          if (isEditing && exerciseToEditData?.id) {
+          if (exerciseId && exerciseToEditData?.id) {
             dispatch(
               editExercise({
                 ...exerciseData,
@@ -84,7 +87,7 @@ function AddExercise() {
         }}
         className="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 font-medium transition"
       >
-        {isEditing ? "Edit Exercise" : "Add Exercise"}
+        {exerciseId ? "Edit Exercise" : "Add Exercise"}
       </button>
     </div>
   );

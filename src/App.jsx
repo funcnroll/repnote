@@ -38,12 +38,28 @@ export default function App() {
                 path="/tracking"
                 element={<Tracking />}
               />
+
+              {/* adding a template */}
               <Route
-                path="/add-template"
+                path="/add-template/"
                 element={<AddTemplate />}
               />
+
+              {/* editing/viewing */}
+              <Route
+                path="/add-template/:templateId"
+                element={<AddTemplate />}
+              />
+
+              {/* adding an exercise */}
               <Route
                 path="/add-exercise"
+                element={<AddExercise />}
+              />
+
+              {/* editing */}
+              <Route
+                path="/add-exercise/:exerciseId"
                 element={<AddExercise />}
               />
             </Routes>

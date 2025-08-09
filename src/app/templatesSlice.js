@@ -17,11 +17,9 @@ const initialState = {
     exercises: [],
     id: 0,
   },
-
   templateXExercises: [],
   isTemplateActive: false,
-  isEditing: false,
-  exerciseToEdit: null,
+  templateToView: null,
 };
 const templatesSlice = createSlice({
   name: "templates",
@@ -64,6 +62,7 @@ const templatesSlice = createSlice({
         (template) => template.id !== templateId
       );
     },
+    editTemplate(state, action) {},
 
     addExercise: {
       reducer: (state, action) => {
@@ -123,13 +122,10 @@ const templatesSlice = createSlice({
           isCustom,
         };
       }
-
-      state.isEditing = false;
-      state.exerciseToEdit = null;
     },
-    selectExerciseToEdit(state, action) {
-      state.exerciseToEdit = action.payload;
-      state.isEditing = true;
+
+    selectTemplateToView(state, action) {
+      state.templateToView = action.payload;
     },
   },
 });
@@ -140,8 +136,8 @@ export const {
   addExercise,
   createTmpTemplate,
   removeExercise,
-  selectExerciseToEdit,
   deleteTemplate,
+  selectTemplateToView,
 } = templatesSlice.actions;
 
 export default templatesSlice.reducer;

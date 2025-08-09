@@ -1,10 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  addTemplate,
-  editExercise,
-  removeExercise,
-} from "../../app/templatesSlice";
+import { addTemplate, removeExercise } from "../../app/templatesSlice";
 import TemplateButton from "./TemplateButton";
 import FormInput from "../../components/reusable/FormInput";
 
@@ -52,7 +48,7 @@ function AddTemplate() {
                 key={exercise.id}
                 exercise={exercise}
                 onRemove={(id) => dispatch(removeExercise(id))}
-                onEdit={(id) => dispatch(editExercise(id))}
+                onEdit={(id) => navigate(`/add-exercise/${id}`)}
               />
             ))}
           </div>

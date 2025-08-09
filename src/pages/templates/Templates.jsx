@@ -1,11 +1,21 @@
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router";
-import { createTmpTemplate, deleteTemplate } from "../../app/templatesSlice";
+import { Link, useNavigate } from "react-router";
+import {
+  createTmpTemplate,
+  deleteTemplate,
+  selectTemplateToView,
+} from "../../app/templatesSlice";
 import { ChevronRight, X } from "lucide-react"; // ✅ import X icon
 
 function Templates() {
   const templates = useSelector((state) => state.templates.templates);
   const dispatch = useDispatch();
+
+  const isEditingTemplate = useSelector(
+    (state) => state.templates.isEditingTemplate
+  );
+
+  const navigate = useNavigate();
 
   return (
     <div className="h-full bg-backgroundColor text-white px-4 py-6">
@@ -17,7 +27,7 @@ function Templates() {
           className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-3 rounded-md shadow-md transition"
           onClick={() => dispatch(createTmpTemplate())}
         >
-          New Template
+          {isEditingTemplate ? "Edit Template" : "New Template"}
         </Link>
       </div>
 
@@ -44,6 +54,10 @@ function Templates() {
                   <ChevronRight
                     size={22}
                     className="text-gray-400"
+                    onClick={() => {
+                      dispatch(selectTemplateToView(template.id));
+                      navigate(`/add-template/${template.id}`);
+                    }}
                   />
                 </div>
               </div>
