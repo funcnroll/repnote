@@ -1,6 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { generateId } from "../helpers/generateId";
 
+const defaultTmpTemplate = {
+  exercises: [],
+  id: 0,
+  name: "",
+};
+
 const initialState = {
   // object to hold exercises for each template
   // example template object:
@@ -14,11 +20,7 @@ const initialState = {
   // },
   templates: [],
 
-  tmpTemplate: {
-    exercises: [],
-    id: 0,
-    name: "",
-  },
+  tmpTemplate: defaultTmpTemplate,
   isTemplateActive: false,
   templateToView: null,
 };
@@ -41,6 +43,10 @@ const templatesSlice = createSlice({
       },
     },
 
+    loadTmpTemplate(state, action) {
+      state.tmpTemplate = action.payload;
+    },
+
     editTemplateName(state, action) {
       state.tmpTemplate.name = action.payload;
     },
@@ -54,10 +60,7 @@ const templatesSlice = createSlice({
         id,
       });
 
-      state.tmpTemplate = {
-        exercises: [],
-        id: 0,
-      };
+      state.tmpTemplate = defaultTmpTemplate;
     },
     deleteTemplate(state, action) {
       const templateId = action.payload;

@@ -24,13 +24,9 @@ function AddTemplate() {
 
   const { templateId } = useParams();
 
-  console.log(templateId);
-
   const template = useSelector((state) =>
     state.templates.templates.find((t) => String(t.id) === String(templateId))
   );
-
-  console.log(template);
 
   return (
     <div className="dvh-full overflow-y-auto bg-backgroundColor text-white px-6 py-8">
@@ -40,7 +36,7 @@ function AddTemplate() {
         <FormInput
           label="Template Name"
           placeholder="Leg Day"
-          defaultValue={templateName}
+          value={templateName ?? ""}
           required
           onChange={(e) => dispatch(editTemplateName(e.target.value))}
         />
