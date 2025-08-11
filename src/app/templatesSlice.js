@@ -158,6 +158,11 @@ const templatesSlice = createSlice({
         };
       }
     },
+
+    reorderExercises(state, action) {
+      const { from, to } = action.payload;
+      const newExercises = [...state.tmpTemplate.exercises];
+    },
   },
 });
 

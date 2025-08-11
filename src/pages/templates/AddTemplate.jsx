@@ -60,10 +60,14 @@ function AddTemplate() {
           </TemplateButton>
 
           <div className="flex flex-col items-center justify-center mt-6 w-full">
-            {exercises.map((exercise) => (
+            {exercises.map((exercise, index) => (
               <ExerciseCard
                 key={exercise.id}
                 exercise={exercise}
+                index={index}
+                total={exercises.length}
+                onMoveUp={() => {}}
+                onMoveDown={() => {}}
                 onRemove={(id) => dispatch(removeExercise(id))}
                 onEdit={(id) => navigate(`/add-exercise/${id}`)}
               />
