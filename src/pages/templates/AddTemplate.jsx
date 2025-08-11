@@ -11,6 +11,7 @@ import FormInput from "../../components/reusable/FormInput";
 import ExerciseCard from "./ExerciseCard";
 
 import { useNavigate, useParams } from "react-router";
+import ChevronBack from "../../components/reusable/ChevronBack";
 
 function AddTemplate() {
   const exercises = useSelector(
@@ -30,6 +31,7 @@ function AddTemplate() {
 
   return (
     <div className="dvh-full overflow-y-auto bg-backgroundColor text-white px-6 py-8">
+      <ChevronBack />
       <h1 className="text-2xl font-semibold mb-8">New Template</h1>
 
       <form>

@@ -5,7 +5,7 @@ import {
   deleteTemplate,
   loadTmpTemplate,
 } from "../../app/templatesSlice";
-import { ChevronRight, X } from "lucide-react"; // ✅ import X icon
+import { ChevronRight, X } from "lucide-react";
 
 function Templates() {
   const templates = useSelector((state) => state.templates.templates);

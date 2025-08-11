@@ -7,7 +7,7 @@ function ChevronBack({ label = "Back" }) {
   return (
     <button
       onClick={() => navigate(-1)}
-      className="absolute top-4 left-4 flex items-center space-x-1 text-white hover:text-gray-300 transition-colors z-50"
+      className="absolute top-4 left-4 flex items-center space-x-1 text-white hover:text-gray-300 transition-colors z-50 cursor-pointer"
     >
       <ChevronLeft
         size={24}

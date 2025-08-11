@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addExercise, editExercise } from "../../app/templatesSlice";
 import { useNavigate, useParams } from "react-router";
 import FormInput from "../../components/reusable/FormInput";
+import ChevronBack from "../../components/reusable/ChevronBack";
 
 function AddExercise() {
   const dispatch = useDispatch();
@@ -31,6 +32,8 @@ function AddExercise() {
 
   return (
     <div className="min-h-screen bg-[#0f172a] text-white px-6 py-8">
+      <ChevronBack />
+
       <h1 className="text-2xl font-semibold mb-8">Add Exercise</h1>
       <FormInput
         required
