@@ -24,7 +24,7 @@ const initialState = {
   isTemplateActive: false,
   templateToView: null,
 };
-const templatesSlice = createSlice({
+const templateSlice = createSlice({
   name: "templates",
   initialState,
   reducers: {
@@ -193,6 +193,6 @@ export const {
   loadTmpTemplate,
   updateTemplate,
   reorderExercise,
-} = templatesSlice.actions;
+} = templateSlice.actions;
 
-export default templatesSlice.reducer;
+export default templateSlice.reducer;

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addExercise, editExercise } from "../../app/templatesSlice";
+import { addExercise, editExercise } from "../../app/templateSlice";
 import { useNavigate, useParams } from "react-router";
 import FormInput from "../../components/reusable/FormInput";
 import ChevronBack from "../../components/reusable/ChevronBack";

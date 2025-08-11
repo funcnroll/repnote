@@ -4,7 +4,7 @@ import {
   createTmpTemplate,
   deleteTemplate,
   loadTmpTemplate,
-} from "../../app/templatesSlice";
+} from "../../app/templateSlice";
 import { ChevronRight, X } from "lucide-react";
 
 function Templates() {

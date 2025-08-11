@@ -6,7 +6,7 @@ import {
   removeExercise,
   reorderExercise,
   updateTemplate,
-} from "../../app/templatesSlice";
+} from "../../app/templateSlice";
 import TemplateButton from "./TemplateButton";
 import FormInput from "../../components/reusable/FormInput";
 import ExerciseCard from "./ExerciseCard";
