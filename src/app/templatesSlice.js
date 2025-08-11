@@ -159,7 +159,7 @@ const templatesSlice = createSlice({
       }
     },
 
-    reorderExercises(state, action) {
+    reorderExercise(state, action) {
       const { from, to } = action.payload;
       const list = state.tmpTemplate.exercises;
 
@@ -192,6 +192,7 @@ export const {
   editTemplateName,
   loadTmpTemplate,
   updateTemplate,
+  reorderExercise,
 } = templatesSlice.actions;
 
 export default templatesSlice.reducer;

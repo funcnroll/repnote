@@ -4,6 +4,7 @@ import {
   addTemplate,
   editTemplateName,
   removeExercise,
+  reorderExercise,
   updateTemplate,
 } from "../../app/templatesSlice";
 import TemplateButton from "./TemplateButton";
@@ -66,8 +67,12 @@ function AddTemplate() {
                 exercise={exercise}
                 index={index}
                 total={exercises.length}
-                onMoveUp={() => {}}
-                onMoveDown={() => {}}
+                onMoveUp={() =>
+                  dispatch(reorderExercise({ from: index, to: index - 1 }))
+                }
+                onMoveDown={() =>
+                  dispatch(reorderExercise({ from: index, to: index + 1 }))
+                }
                 onRemove={(id) => dispatch(removeExercise(id))}
                 onEdit={(id) => navigate(`/add-exercise/${id}`)}
               />
