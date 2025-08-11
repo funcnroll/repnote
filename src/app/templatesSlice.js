@@ -161,7 +161,23 @@ const templatesSlice = createSlice({
 
     reorderExercises(state, action) {
       const { from, to } = action.payload;
-      const newExercises = [...state.tmpTemplate.exercises];
+      const list = state.tmpTemplate.exercises;
+
+      // just in case
+      if (
+        from === to ||
+        from < 0 ||
+        to < 0 ||
+        from >= list.length ||
+        to >= list.length
+      )
+        return;
+
+      const copy = [...list];
+
+      const [moved] = copy.splice(from, 1);
+      copy.splice(to, 0, moved);
+      state.tmpTemplate.exercises = copy;
     },
   },
 });

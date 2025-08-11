@@ -33,7 +33,7 @@ function ExerciseCard({
           disabled={index === 0}
           onClick={(e) => {
             e.preventDefault();
-            onMoveUp && onMoveUp(index);
+            onMoveUp(index);
           }}
         >
           <ArrowUp
@@ -51,7 +51,7 @@ function ExerciseCard({
           disabled={index === total - 1}
           onClick={(e) => {
             e.preventDefault();
-            onMoveDown && onMoveDown(index);
+            onMoveDown(index);
           }}
         >
           <ArrowDown
