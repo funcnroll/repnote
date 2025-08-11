@@ -44,7 +44,23 @@ const templatesSlice = createSlice({
     },
 
     loadTmpTemplate(state, action) {
-      state.tmpTemplate = action.payload;
+      const templateId = action.payload;
+
+      const found = state.templates.find(
+        (t) => String(t.id) === String(templateId)
+      );
+
+      if (found) {
+        state.tmpTemplate = {
+          id: found.id,
+          name: found.name ?? "",
+          exercises: found.exercises
+            ? found.exercises.map((e) => ({ ...e }))
+            : [],
+        };
+      } else {
+        state.tmpTemplate = defaultTmpTemplate;
+      }
     },
 
     editTemplateName(state, action) {
@@ -69,7 +85,19 @@ const templatesSlice = createSlice({
         (template) => template.id !== templateId
       );
     },
-    editTemplate(state, action) {},
+    updateTemplate(state, action) {
+      const templateIdToUpdate = state.tmpTemplate.id;
+
+      const index = state.templates.findIndex(
+        (template) => template.id === templateIdToUpdate
+      );
+
+      if (index !== -1) {
+        state.templates[index] = action.payload;
+      }
+
+      state.tmpTemplate = defaultTmpTemplate;
+    },
 
     addExercise: {
       reducer: (state, action) => {
@@ -130,10 +158,6 @@ const templatesSlice = createSlice({
         };
       }
     },
-
-    selectTemplateToView(state, action) {
-      state.templateToView = action.payload;
-    },
   },
 });
 
@@ -144,8 +168,9 @@ export const {
   createTmpTemplate,
   removeExercise,
   deleteTemplate,
-  selectTemplateToView,
   editTemplateName,
+  loadTmpTemplate,
+  updateTemplate,
 } = templatesSlice.actions;
 
 export default templatesSlice.reducer;

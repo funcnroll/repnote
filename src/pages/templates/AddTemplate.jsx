@@ -4,6 +4,7 @@ import {
   addTemplate,
   editTemplateName,
   removeExercise,
+  updateTemplate,
 } from "../../app/templatesSlice";
 import TemplateButton from "./TemplateButton";
 import FormInput from "../../components/reusable/FormInput";
@@ -16,6 +17,7 @@ function AddTemplate() {
     (state) => state.templates.tmpTemplate.exercises
   );
   const tmpTemplate = useSelector((state) => state.templates.tmpTemplate);
+  const templates = useSelector((state) => state.templates.templates);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -24,9 +26,7 @@ function AddTemplate() {
 
   const { templateId } = useParams();
 
-  const template = useSelector((state) =>
-    state.templates.templates.find((t) => String(t.id) === String(templateId))
-  );
+  const isEditMode = templates.some((t) => String(t.id) === String(templateId));
 
   return (
     <div className="dvh-full overflow-y-auto bg-backgroundColor text-white px-6 py-8">
@@ -45,38 +45,28 @@ function AddTemplate() {
           <TemplateButton
             onClick={(e) => {
               e.preventDefault();
-              dispatch(addTemplate({ templateName, tmpTemplate }));
+
+              if (isEditMode) {
+                dispatch(updateTemplate(tmpTemplate));
+              } else {
+                dispatch(addTemplate({ templateName, tmpTemplate }));
+              }
               navigate("/templates");
             }}
           >
-            {templateId ? "Edit Template" : "+ Add Template"}
+            {isEditMode ? "Edit Template" : "+ Add Template"}
           </TemplateButton>
 
-          {templateId && (
-            <div className="flex flex-col items-center justify-center mt-6 w-full">
-              {template.exercises.map((exercise) => (
-                <ExerciseCard
-                  key={exercise.id}
-                  exercise={exercise}
-                  onRemove={(id) => dispatch(removeExercise(id))}
-                  onEdit={(id) => navigate(`/add-exercise/${id}`)}
-                />
-              ))}
-            </div>
-          )}
-
-          {!templateId && (
-            <div className="flex flex-col items-center justify-center mt-6 w-full">
-              {exercises.map((exercise) => (
-                <ExerciseCard
-                  key={exercise.id}
-                  exercise={exercise}
-                  onRemove={(id) => dispatch(removeExercise(id))}
-                  onEdit={(id) => navigate(`/add-exercise/${id}`)}
-                />
-              ))}
-            </div>
-          )}
+          <div className="flex flex-col items-center justify-center mt-6 w-full">
+            {exercises.map((exercise) => (
+              <ExerciseCard
+                key={exercise.id}
+                exercise={exercise}
+                onRemove={(id) => dispatch(removeExercise(id))}
+                onEdit={(id) => navigate(`/add-exercise/${id}`)}
+              />
+            ))}
+          </div>
         </div>
       </form>
     </div>

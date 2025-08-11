@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router";
 import {
   createTmpTemplate,
   deleteTemplate,
-  selectTemplateToView,
+  loadTmpTemplate,
 } from "../../app/templatesSlice";
 import { ChevronRight, X } from "lucide-react"; // ✅ import X icon
 
@@ -16,6 +16,8 @@ function Templates() {
   );
 
   const navigate = useNavigate();
+
+  console.log(templates);
 
   return (
     <div className="h-full bg-backgroundColor text-white px-4 py-6">
@@ -60,7 +62,7 @@ function Templates() {
                     className="text-gray-400"
                     onClick={(e) => {
                       e.preventDefault();
-                      dispatch(selectTemplateToView(template.id));
+                      dispatch(loadTmpTemplate(template.id));
                       navigate(`/add-template/${template.id}`);
                     }}
                   />
