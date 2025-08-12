@@ -20,6 +20,10 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedIndexedAccess": true,
 
+    // allow migration
+    "allowJs": true,
+    "checkJs": false,
+
     // Import/export settings
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
