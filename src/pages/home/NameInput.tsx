@@ -1,4 +1,4 @@
-import { JSX, useState } from "react";
+import { useState } from "react";
 import { changeName } from "../../app/homeSlice";
 import { useDispatch } from "react-redux";
 import Error from "../../components/reusable/Error";
