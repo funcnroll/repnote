@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   addTemplate,
   editTemplateName,
-  removeExercise,
-  reorderExercise,
+  removeExerciseFromTemplate,
+  reorderExerciseInTemplate,
   updateTemplate,
 } from "../../app/templateSlice";
 import TemplateButton from "./TemplateButton";
@@ -68,12 +68,16 @@ function AddTemplate() {
                 index={index}
                 total={exercises.length}
                 onMoveUp={() =>
-                  dispatch(reorderExercise({ from: index, to: index - 1 }))
+                  dispatch(
+                    reorderExerciseInTemplate({ from: index, to: index - 1 })
+                  )
                 }
                 onMoveDown={() =>
-                  dispatch(reorderExercise({ from: index, to: index + 1 }))
+                  dispatch(
+                    reorderExerciseInTemplate({ from: index, to: index + 1 })
+                  )
                 }
-                onRemove={(id) => dispatch(removeExercise(id))}
+                onRemove={(id) => dispatch(removeExerciseFromTemplate(id))}
                 onEdit={(id) => navigate(`/add-exercise/${id}`)}
               />
             ))}

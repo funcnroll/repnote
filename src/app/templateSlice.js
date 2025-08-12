@@ -99,7 +99,8 @@ const templateSlice = createSlice({
       state.tmpTemplate = defaultTmpTemplate;
     },
 
-    addExercise: {
+    // Exercise-related actions that work with tmpTemplate
+    addExerciseToTemplate: {
       reducer: (state, action) => {
         state.tmpTemplate.exercises.push(action.payload);
       },
@@ -119,21 +120,20 @@ const templateSlice = createSlice({
             sets,
             reps,
             setsDone,
-            // used later for tracking and quick access
             exerciseId,
             isCustom,
           },
         };
       },
     },
-    removeExercise(state, action) {
+    removeExerciseFromTemplate(state, action) {
       const exerciseId = action.payload;
 
       state.tmpTemplate.exercises = state.tmpTemplate.exercises.filter(
         (exercise) => exercise.id !== exerciseId
       );
     },
-    editExercise(state, action) {
+    editExerciseInTemplate(state, action) {
       const {
         id,
         exerciseName,
@@ -159,7 +159,7 @@ const templateSlice = createSlice({
       }
     },
 
-    reorderExercise(state, action) {
+    reorderExerciseInTemplate(state, action) {
       const { from, to } = action.payload;
       const list = state.tmpTemplate.exercises;
 
@@ -184,15 +184,15 @@ const templateSlice = createSlice({
 
 export const {
   addTemplate,
-  editExercise,
-  addExercise,
+  editExerciseInTemplate,
+  addExerciseToTemplate,
   createTmpTemplate,
-  removeExercise,
+  removeExerciseFromTemplate,
   deleteTemplate,
   editTemplateName,
   loadTmpTemplate,
   updateTemplate,
-  reorderExercise,
+  reorderExerciseInTemplate,
 } = templateSlice.actions;
 
 export default templateSlice.reducer;

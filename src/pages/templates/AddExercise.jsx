@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addExercise, editExercise } from "../../app/templateSlice";
+import {
+  addExerciseToTemplate,
+  editExerciseInTemplate,
+} from "../../app/templateSlice";
 import { useNavigate, useParams } from "react-router";
 import FormInput from "../../components/reusable/FormInput";
 import ChevronBack from "../../components/reusable/ChevronBack";
@@ -79,13 +82,13 @@ function AddExercise() {
 
           if (exerciseId && exerciseToEditData?.id) {
             dispatch(
-              editExercise({
+              editExerciseInTemplate({
                 ...exerciseData,
                 id: exerciseToEditData.id,
               })
             );
           } else {
-            dispatch(addExercise(exerciseData));
+            dispatch(addExerciseToTemplate(exerciseData));
           }
 
           navigate(-1);
