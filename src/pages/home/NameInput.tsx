@@ -4,12 +4,12 @@ import { useDispatch } from "react-redux";
 import Error from "../../components/reusable/Error";
 
 function NameInput() {
-  const [input, setInput] = useState("");
-  const [error, setError] = useState("");
+  const [input, setInput] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   const dispatch = useDispatch();
 
-  function handleSubmit(e) {
+  function handleSubmit(e: React.FormEvent<HTMLElement>) {
     e.preventDefault();
 
     if (input.trim().length < 2) {
@@ -30,7 +30,9 @@ function NameInput() {
         type="text"
         placeholder="Your name"
         className="w-full px-4 py-3 rounded-xl bg-slate-700 text-white placeholder-gray-400"
-        onChange={(e) => setInput(e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setInput(e.target.value)
+        }
         value={input}
       />
 

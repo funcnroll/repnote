@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import NameInput from "./NameInput";
+import NameInput from "./NameInput.tsx";
 import H1 from "../../components/reusable/H1";
 import NoWorkout from "./NoWorkout";
 
