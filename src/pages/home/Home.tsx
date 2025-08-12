@@ -1,11 +1,11 @@
-import { useSelector } from "react-redux";
 import NameInput from "./NameInput";
 import H1 from "../../components/reusable/H1";
 import NoWorkout from "./NoWorkout";
+import { useAppSelector } from "../../app/hooks";
 
 function Home() {
-  const name = useSelector((state) => state.home.name);
-  const isWorkingOut = useSelector((state) => state.home.isWorkingOut);
+  const name = useAppSelector((state) => state.home.name);
+  const isWorkingOut = useAppSelector((state) => state.home.isWorkingOut);
 
   if (!name) {
     return (
