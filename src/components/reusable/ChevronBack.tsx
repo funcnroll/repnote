@@ -1,7 +1,7 @@
 import { ChevronLeft } from "lucide-react";
 import { useNavigate } from "react-router";
 
-function ChevronBack({ label = "Back" }) {
+function ChevronBack({ label = "Back" }: { label?: string }) {
   const navigate = useNavigate();
 
   return (

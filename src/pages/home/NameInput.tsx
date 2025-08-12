@@ -3,7 +3,7 @@ import { changeName } from "../../app/homeSlice";
 import { useDispatch } from "react-redux";
 import Error from "../../components/reusable/Error";
 
-function NameInput(): JSX.Element {
+function NameInput() {
   const [input, setInput] = useState<string>("");
   const [error, setError] = useState<string>("");
 
