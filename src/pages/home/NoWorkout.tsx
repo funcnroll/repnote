@@ -1,4 +1,6 @@
-function NoWorkout() {
+import { JSX } from "react";
+
+function NoWorkout(): JSX.Element {
   return (
     <div className="bg-slate-800 text-center px-8 py-10 rounded-3xl shadow-lg space-y-6 w-full max-w-sm mx-auto">
       <h2 className="text-2xl text-gray-200 font-semibold">

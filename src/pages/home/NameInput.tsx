@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { JSX, useState } from "react";
 import { changeName } from "../../app/homeSlice";
 import { useDispatch } from "react-redux";
 import Error from "../../components/reusable/Error";
 
-function NameInput() {
+function NameInput(): JSX.Element {
   const [input, setInput] = useState<string>("");
   const [error, setError] = useState<string>("");
 
