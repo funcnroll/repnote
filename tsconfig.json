@@ -6,8 +6,8 @@
 
     // Module system for Vite
     "module": "ESNext",
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
+    "moduleResolution": "node10",
+    "allowImportingTsExtensions": false,
     "moduleDetection": "force",
 
     // JSX settings for React

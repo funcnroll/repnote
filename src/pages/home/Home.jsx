@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import NameInput from "./NameInput.tsx";
+import NameInput from "./NameInput";
 import H1 from "../../components/reusable/H1";
-import NoWorkout from "./NoWorkout.tsx";
+import NoWorkout from "./NoWorkout";
 
 function Home() {
   const name = useSelector((state) => state.home.name);
