@@ -69,7 +69,7 @@ const templateSlice = createSlice({
       };
     },
 
-    loadTmpTemplate(state, action: PayloadAction<number>) {
+    loadTmpTemplate(state, action: PayloadAction<string>) {
       const templateId = action.payload;
 
       const found = state.templates.find(
@@ -111,7 +111,7 @@ const templateSlice = createSlice({
 
       state.tmpTemplate = defaultTmpTemplate;
     },
-    deleteTemplate(state, action: PayloadAction<number>) {
+    deleteTemplate(state, action: PayloadAction<string>) {
       const templateId = action.payload;
 
       state.templates = state.templates.filter(
