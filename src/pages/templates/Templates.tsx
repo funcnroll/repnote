@@ -39,7 +39,7 @@ function Templates() {
           templates.map((template, index) => (
             <div
               key={index}
-              className="bg-primaryColor flex justify-between items-center px-4 py-3 rounded-md hover:bg-[#2c3a54] transition cursor-pointer"
+              className="bg-primaryColor flex justify-between items-center px-4 py-3 rounded-md hover:bg-secondaryColor transition cursor-pointer"
             >
               <div className="flex items-center justify-between w-full">
                 <span>{template.name}</span>
