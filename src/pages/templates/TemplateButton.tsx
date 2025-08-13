@@ -1,6 +1,15 @@
+import React, { MouseEventHandler } from "react";
 import { Link } from "react-router";
 
-function TemplateButton({ children, to, onClick = () => {} }) {
+function TemplateButton({
+  children,
+  to,
+  onClick = () => {},
+}: {
+  children: React.ReactNode;
+  to: string;
+  onClick: MouseEventHandler<HTMLAnchorElement>;
+}) {
   return (
     <Link
       to={to}
