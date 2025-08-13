@@ -5,9 +5,14 @@ import {
   reorderExerciseInTemplate,
   updateTemplate,
 } from "@/app/templateSlice";
+import {
+  setAddTemplateError,
+  clearAddTemplateError,
+} from "@/app/errorSlice";
 import TemplateButton from "./TemplateButton";
 import FormInput from "../../components/reusable/FormInput";
 import ExerciseCard from "./ExerciseCard";
+import Error from "../../components/reusable/Error";
 
 import { useNavigate, useParams } from "react-router";
 import ChevronBack from "../../components/reusable/ChevronBack";
@@ -26,6 +31,7 @@ function AddTemplate() {
   const templateName = useAppSelector(
     (state) => state.templates.tmpTemplate.name
   );
+  const error = useAppSelector((state) => state.error.addTemplate);
 
   const { templateId } = useParams();
 
@@ -42,14 +48,24 @@ function AddTemplate() {
           placeholder="Leg Day"
           value={templateName ?? ""}
           required
-          onChange={(e) => dispatch(editTemplateName(e.target.value))}
+          onChange={(e) => {
+            dispatch(editTemplateName(e.target.value));
+            if (error) dispatch(clearAddTemplateError());
+          }}
         />
+        {error && <Error msg={error} />}
         <div className="flex flex-col gap-4">
           <TemplateButton to="/add-exercise">+ Add Exercise</TemplateButton>
           <TemplateButton
             onClick={(e) => {
               e.preventDefault();
 
+              if (!templateName?.trim()) {
+                dispatch(setAddTemplateError("Template name is required"));
+                return;
+              }
+
+              dispatch(clearAddTemplateError());
               if (isEditMode) {
                 dispatch(updateTemplate(tmpTemplate));
               } else {
