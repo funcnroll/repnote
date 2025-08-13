@@ -1,7 +1,14 @@
 import { BarChart2, FileText, History, Home } from "lucide-react";
+import React from "react";
 import { NavLink } from "react-router";
 
-const links = [
+interface LinkItem {
+  to: string;
+  title: string;
+  icon: React.ReactNode;
+}
+
+const links: LinkItem[] = [
   { to: "/", title: "Home", icon: <Home size={24} /> },
   { to: "/templates", title: "Templates", icon: <FileText size={24} /> },
   { to: "/history", title: "History", icon: <History size={24} /> },
