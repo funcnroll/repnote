@@ -1,4 +1,9 @@
-function FormInput({ label, ...props }) {
+import React from "react";
+
+function FormInput({
+  label,
+  ...props
+}: { label: string } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <div className="mb-6">
       <label className="block text-sm text-gray-400 mb-2">{label}</label>
