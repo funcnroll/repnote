@@ -6,7 +6,7 @@ import History from "./pages/history/History";
 import Tracking from "./pages/tracking/Tracking";
 import AddTemplate from "./pages/templates/AddTemplate";
 import AddExercise from "./pages/templates/AddExercise";
-import { useAppSelector } from "app/hooks";
+import { useAppSelector } from "@/app/hooks";
 
 export default function App() {
   const name = useAppSelector((state) => state.home.name);
@@ -39,27 +39,13 @@ export default function App() {
                 element={<Tracking />}
               />
 
-              {/* adding a template */}
               <Route
-                path="/add-template/"
+                path="/add-template/:templateId?"
                 element={<AddTemplate />}
               />
 
-              {/* editing/viewing */}
               <Route
-                path="/add-template/:templateId"
-                element={<AddTemplate />}
-              />
-
-              {/* adding an exercise */}
-              <Route
-                path="/add-exercise"
-                element={<AddExercise />}
-              />
-
-              {/* editing */}
-              <Route
-                path="/add-exercise/:exerciseId"
+                path="/add-exercise/:exerciseId?"
                 element={<AddExercise />}
               />
             </Routes>

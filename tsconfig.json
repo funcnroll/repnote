@@ -33,7 +33,10 @@
 
     // Resolution settings
     "resolveJsonModule": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
 
     // Output settings
     "declaration": false,

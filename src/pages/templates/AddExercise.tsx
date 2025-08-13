@@ -3,11 +3,11 @@ import { useDispatch } from "react-redux";
 import {
   addExerciseToTemplate,
   editExerciseInTemplate,
-} from "../../app/templateSlice";
+} from "@/app/templateSlice";
 import { useNavigate, useParams } from "react-router";
 import FormInput from "../../components/reusable/FormInput";
 import ChevronBack from "../../components/reusable/ChevronBack";
-import { useAppSelector } from "app/hooks";
+import { useAppSelector } from "@/app/hooks";
 
 function AddExercise() {
   const dispatch = useDispatch();

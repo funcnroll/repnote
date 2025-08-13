@@ -4,14 +4,14 @@ import {
   removeExerciseFromTemplate,
   reorderExerciseInTemplate,
   updateTemplate,
-} from "../../app/templateSlice";
+} from "@/app/templateSlice";
 import TemplateButton from "./TemplateButton";
 import FormInput from "../../components/reusable/FormInput";
 import ExerciseCard from "./ExerciseCard";
 
 import { useNavigate, useParams } from "react-router";
 import ChevronBack from "../../components/reusable/ChevronBack";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
 function AddTemplate() {
   const exercises = useAppSelector(
