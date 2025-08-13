@@ -1,4 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router";
 import {
   createTmpTemplate,
@@ -6,14 +5,11 @@ import {
   loadTmpTemplate,
 } from "../../app/templateSlice";
 import { ChevronRight, X } from "lucide-react";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 function Templates() {
-  const templates = useSelector((state) => state.templates.templates);
-  const dispatch = useDispatch();
-
-  const isEditingTemplate = useSelector(
-    (state) => state.templates.isEditingTemplate
-  );
+  const templates = useAppSelector((state) => state.templates.templates);
+  const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
 
@@ -29,7 +25,7 @@ function Templates() {
           className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-3 rounded-md shadow-md transition"
           onClick={() => dispatch(createTmpTemplate())}
         >
-          {isEditingTemplate ? "Edit Template" : "New Template"}
+          New Template
         </Link>
       </div>
 
