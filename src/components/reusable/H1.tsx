@@ -1,4 +1,6 @@
-function H1({ children }) {
+import { ReactNode } from "react";
+
+function H1({ children }: { children: ReactNode }) {
   return (
     <h1 className="text-6xl  break-words whitespace-normal w-full">
       {children}
