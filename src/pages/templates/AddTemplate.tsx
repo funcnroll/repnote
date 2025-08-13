@@ -5,10 +5,7 @@ import {
   reorderExerciseInTemplate,
   updateTemplate,
 } from "@/app/templateSlice";
-import {
-  setAddTemplateError,
-  clearAddTemplateError,
-} from "@/app/errorSlice";
+import { setAddTemplateError, clearAddTemplateError } from "@/app/errorSlice";
 import TemplateButton from "./TemplateButton";
 import FormInput from "../../components/reusable/FormInput";
 import ExerciseCard from "./ExerciseCard";
