@@ -28,7 +28,7 @@
 
 ## 🗂️ Misc
 
-- [ ] Convert Javascript to Typescript after finishing template builder logic (adding/removing/editing template, editing/adding/removing/reodering exercises)
+- [x] Convert Javascript to Typescript after finishing template builder logic (adding/removing/editing template, editing/adding/removing/reodering exercises)
 
 ---
 
