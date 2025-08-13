@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   addExerciseToTemplate,
   editExerciseInTemplate,
@@ -7,6 +7,7 @@ import {
 import { useNavigate, useParams } from "react-router";
 import FormInput from "../../components/reusable/FormInput";
 import ChevronBack from "../../components/reusable/ChevronBack";
+import { useAppSelector } from "app/hooks";
 
 function AddExercise() {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ function AddExercise() {
 
   const { exerciseId } = useParams();
 
-  const exerciseToEditData = useSelector((state) =>
+  const exerciseToEditData = useAppSelector((state) =>
     state.templates.tmpTemplate.exercises.find(
       (e) => String(e.id) === String(exerciseId)
     )
@@ -28,8 +29,8 @@ function AddExercise() {
   useEffect(() => {
     if (exerciseToEditData) {
       setName(exerciseToEditData.exerciseName);
-      setSets(exerciseToEditData.sets);
-      setReps(exerciseToEditData.reps);
+      setSets(String(exerciseToEditData.sets));
+      setReps(String(exerciseToEditData.reps));
     }
   }, [exerciseToEditData]);
 
