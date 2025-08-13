@@ -1,5 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
-
 import {
   addTemplate,
   editTemplateName,
@@ -13,18 +11,21 @@ import ExerciseCard from "./ExerciseCard";
 
 import { useNavigate, useParams } from "react-router";
 import ChevronBack from "../../components/reusable/ChevronBack";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 function AddTemplate() {
-  const exercises = useSelector(
+  const exercises = useAppSelector(
     (state) => state.templates.tmpTemplate.exercises
   );
-  const tmpTemplate = useSelector((state) => state.templates.tmpTemplate);
-  const templates = useSelector((state) => state.templates.templates);
+  const tmpTemplate = useAppSelector((state) => state.templates.tmpTemplate);
+  const templates = useAppSelector((state) => state.templates.templates);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const templateName = useSelector((state) => state.templates.tmpTemplate.name);
+  const templateName = useAppSelector(
+    (state) => state.templates.tmpTemplate.name
+  );
 
   const { templateId } = useParams();
 
