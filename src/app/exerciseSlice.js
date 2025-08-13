@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { generateId } from "../helpers/generateId";
 
 const exerciseSlice = createSlice({
   name: "exercises",
@@ -10,87 +9,39 @@ const exerciseSlice = createSlice({
     currentExercise: null,
   },
   reducers: {
-    addExercise: {
-      reducer: (state, action) => {
-        // Add to exercise library
-        state.exerciseLibrary.push(action.payload);
-      },
-      prepare: ({
-        exerciseName,
-        sets,
-        reps,
-        setsDone = 0,
-        exerciseId = null,
-        isCustom = null,
-      }) => {
-        const id = generateId();
-        return {
-          payload: {
-            id,
-            exerciseName,
-            sets,
-            reps,
-            setsDone,
-            exerciseId,
-            isCustom,
-          },
-        };
-      },
+    addExercise(state, action) {
+      state.exerciseLibrary.push(action.payload);
     },
-    removeExercise: {
-      reducer: (state, action) => {
-        const exerciseId = action.payload;
-        state.exerciseLibrary = state.exerciseLibrary.filter(
-          (exercise) => exercise.id !== exerciseId
-        );
-      },
-      prepare: (exerciseId) => ({
-        payload: exerciseId,
-      }),
+    removeExercise(state, action) {
+      const exerciseId = action.payload;
+      state.exerciseLibrary = state.exerciseLibrary.filter(
+        (exercise) => exercise.id !== exerciseId
+      );
     },
-    editExercise: {
-      reducer: (state, action) => {
-        const {
-          id,
-          exerciseName,
-          sets,
-          reps,
-          exerciseId = null,
-          isCustom = null,
-        } = action.payload;
-
-        const index = state.exerciseLibrary.findIndex(
-          (exercise) => exercise.id === id
-        );
-
-        if (index !== -1) {
-          state.exerciseLibrary[index] = {
-            ...state.exerciseLibrary[index],
-            exerciseName,
-            sets,
-            reps,
-            exerciseId,
-            isCustom,
-          };
-        }
-      },
-      prepare: ({
+    editExercise(state, action) {
+      const {
         id,
         exerciseName,
         sets,
         reps,
         exerciseId = null,
         isCustom = null,
-      }) => ({
-        payload: {
-          id,
+      } = action.payload;
+
+      const index = state.exerciseLibrary.findIndex(
+        (exercise) => exercise.id === id
+      );
+
+      if (index !== -1) {
+        state.exerciseLibrary[index] = {
+          ...state.exerciseLibrary[index],
           exerciseName,
           sets,
           reps,
           exerciseId,
           isCustom,
-        },
-      }),
+        };
+      }
     },
     setCurrentExercise(state, action) {
       state.currentExercise = action.payload;
