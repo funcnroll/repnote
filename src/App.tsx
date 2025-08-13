@@ -4,12 +4,12 @@ import Home from "./pages/home/Home";
 import Templates from "./pages/templates/Templates";
 import History from "./pages/history/History";
 import Tracking from "./pages/tracking/Tracking";
-import { useSelector } from "react-redux";
 import AddTemplate from "./pages/templates/AddTemplate";
 import AddExercise from "./pages/templates/AddExercise";
+import { useAppSelector } from "app/hooks";
 
 export default function App() {
-  const name = useSelector((state) => state.home.name);
+  const name = useAppSelector((state) => state.home.name);
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-slate-200">
