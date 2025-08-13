@@ -1,6 +1,26 @@
 import { X, Edit, ArrowUp, ArrowDown } from "lucide-react";
 import { useNavigate } from "react-router";
 
+interface Exercise {
+  id: string;
+  exerciseName: string;
+  sets: number;
+  reps: number;
+  setsDone?: number;
+  exerciseId?: string | null;
+  isCustom?: boolean | null;
+}
+
+interface ExerciseCardProps {
+  exercise: Exercise;
+  onRemove: (exerciseId: string) => void;
+  onEdit?: (exerciseId: string) => void;
+  index: number;
+  total: number;
+  onMoveUp: () => void;
+  onMoveDown: () => void;
+}
+
 function ExerciseCard({
   exercise,
   onRemove,
@@ -9,7 +29,7 @@ function ExerciseCard({
   total,
   onMoveUp,
   onMoveDown,
-}) {
+}: ExerciseCardProps) {
   const navigate = useNavigate();
 
   return (
