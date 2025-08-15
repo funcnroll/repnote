@@ -13,7 +13,7 @@ interface Exercise {
   isCustom?: boolean | null;
 }
 
-interface Template {
+export interface Template {
   id: string;
   name: string;
   exercises: Exercise[];
@@ -237,6 +237,7 @@ const templateSlice = createSlice({
         state.tmpTemplate.exercises = copy;
       }
     },
+    startTemplate(state, action) {},
   },
 });
 

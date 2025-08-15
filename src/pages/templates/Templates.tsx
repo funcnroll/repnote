@@ -4,7 +4,7 @@ import {
   deleteTemplate,
   loadTmpTemplate,
 } from "../../app/templateSlice";
-import { ChevronRight, X } from "lucide-react";
+import { ChevronRight, Play, X } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 
 function Templates() {
@@ -12,8 +12,6 @@ function Templates() {
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
-
-  console.log(templates);
 
   return (
     <div className="h-full bg-backgroundColor text-white px-4 py-6">
@@ -44,6 +42,13 @@ function Templates() {
               <div className="flex items-center justify-between w-full">
                 <span>{template.name}</span>
                 <div className="flex items-center space-x-4">
+                  <Play
+                    size={18}
+                    className="text-gray-400 hover:text-green-500 cursor-pointer transition"
+                    onClick={(e) => {
+                      e.preventDefault();
+                    }}
+                  />
                   <X
                     size={18}
                     className="text-gray-400 hover:text-red-500 cursor-pointer transition"
@@ -55,7 +60,7 @@ function Templates() {
                   />
                   <ChevronRight
                     size={22}
-                    className="text-gray-400"
+                    className="text-gray-400 hover:text-blue-400 transition cursor-pointer"
                     onClick={(e) => {
                       e.preventDefault();
                       dispatch(loadTmpTemplate(template.id));

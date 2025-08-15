@@ -1,13 +1,31 @@
 import homeReducer from "./homeSlice";
-import templatesReducer from "./templateSlice";
+import templatesReducer, {
+  addTemplate,
+  updateTemplate,
+  deleteTemplate,
+} from "./templateSlice";
 import errorReducer from "./errorSlice";
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, createListenerMiddleware } from "@reduxjs/toolkit";
+import { saveTemplatesToLocalStorage } from "./localStorage";
+
+const listenerMiddleware = createListenerMiddleware();
 
 export const store = configureStore({
   reducer: {
     home: homeReducer,
     templates: templatesReducer,
     error: errorReducer,
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().prepend(listenerMiddleware.middleware),
+});
+
+// Listen for all template changes and sync to localStorage
+listenerMiddleware.startListening({
+  actionCreator: addTemplate,
+  effect: (action, listenerApi) => {
+    const state = listenerApi.getState() as RootState;
+    saveTemplatesToLocalStorage(state.templates.templates);
   },
 });
 
