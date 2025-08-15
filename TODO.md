@@ -12,7 +12,7 @@
 - [ ] Add indicator how many sets are done of total set amount per exercise
 - [ ] Allow editing of sets before starting a workout
 - [x] Allow user to add a template
-  - [ ] Handle edge cases (User adding template without exercises, etc.)
+  - [x] Handle edge cases (User adding template without exercises, etc.)
 
 ## 🛠️ Exercise Management
 
