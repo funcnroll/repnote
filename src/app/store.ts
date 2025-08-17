@@ -31,7 +31,7 @@ export const store = configureStore({
 
 listenerMiddleware.startListening({
   actionCreator: addTemplate,
-  effect: (action, listenerApi) => {
+  effect: (_action, listenerApi) => {
     const state = listenerApi.getState() as RootState;
     saveTemplatesToLocalStorage(state.templates.templates);
   },
@@ -39,7 +39,7 @@ listenerMiddleware.startListening({
 
 listenerMiddleware.startListening({
   actionCreator: updateTemplate,
-  effect: (action, listenerApi) => {
+  effect: (_action, listenerApi) => {
     const state = listenerApi.getState() as RootState;
     saveTemplatesToLocalStorage(state.templates.templates);
   },
@@ -47,7 +47,7 @@ listenerMiddleware.startListening({
 
 listenerMiddleware.startListening({
   actionCreator: deleteTemplate,
-  effect: (action, listenerApi) => {
+  effect: (_action, listenerApi) => {
     const state = listenerApi.getState() as RootState;
     saveTemplatesToLocalStorage(state.templates.templates);
   },
@@ -57,7 +57,7 @@ listenerMiddleware.startListening({
 // This ensures user's name persists between browser sessions
 listenerMiddleware.startListening({
   actionCreator: changeName,
-  effect: (action, listenerApi) => {
+  effect: (_action, listenerApi) => {
     const state = listenerApi.getState() as RootState;
     saveNameToLocalStorage(state.home.name);
   },
