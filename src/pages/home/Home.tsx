@@ -5,7 +5,7 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { isNotWorkingOut, isWorkingOut } from "../../app/homeSlice";
 import { getRecentWorkouts } from "@/helpers/workouts";
 import { CompletedWorkout } from "@/types/workout";
-import ToActiveButton from "./ToActiveTemplate";
+import Button from "../../components/reusable/Button";
 
 function Home() {
   const name = useAppSelector((state) => state.home.name);
@@ -45,9 +45,12 @@ function Home() {
           {/* Workout Progress */}
           <div className="bg-[#1c2331] p-8 rounded-xl mb-8 flex items-center justify-between">
             <div className="flex flex-col gap-3">
-              <ToActiveButton to={`/activeTemplate/${activeTemplate?.id}`}>
+              <Button 
+                variant="text" 
+                to={`/activeTemplate/${activeTemplate?.id}`}
+              >
                 {activeTemplate?.name}
-              </ToActiveButton>
+              </Button>
               <p className="text-gray-400">Workout Progress</p>
             </div>
             <div className="w-24 h-24 rounded-full border-8 border-blue-500 border-t-blue-900 flex items-center justify-center text-lg font-semibold">

@@ -6,7 +6,7 @@ import {
   updateTemplate,
 } from "@/app/templateSlice";
 import { setAddTemplateError, clearAddTemplateError } from "@/app/errorSlice";
-import TemplateButton from "./TemplateButton";
+import Button from "../../components/reusable/Button";
 import FormInput from "../../components/reusable/FormInput";
 import ExerciseCard from "./ExerciseCard";
 import Error from "../../components/reusable/Error";
@@ -59,15 +59,17 @@ function AddTemplate() {
         />
 
         <div className="flex flex-col gap-4">
-          <TemplateButton
+          <Button
             to="/add-exercise"
+            fullWidth
             onClick={() => {
               if (error) dispatch(clearAddTemplateError());
             }}
           >
             + Add Exercise
-          </TemplateButton>
-          <TemplateButton
+          </Button>
+          <Button
+            fullWidth
             onClick={(e) => {
               e.preventDefault();
 
@@ -106,7 +108,7 @@ function AddTemplate() {
             }}
           >
             {isEditMode ? "Edit Template" : "+ Add Template"}
-          </TemplateButton>
+          </Button>
 
           {/* Exercise list with reordering and editing capabilities */}
           <div className="flex flex-col items-center justify-center mt-6 w-full">
