@@ -18,16 +18,18 @@ import { useAppDispatch, useAppSelector } from "@/app/hooks";
 function AddTemplate() {
   // Extract relevant state from Redux store
   const exercises = useAppSelector(
-    (state) => state.templates.tmpTemplate.exercises
+    (state) => state.templates.draftTemplate.exercises
   );
-  const tmpTemplate = useAppSelector((state) => state.templates.tmpTemplate);
+  const draftTemplate = useAppSelector(
+    (state) => state.templates.draftTemplate
+  );
   const templates = useAppSelector((state) => state.templates.templates);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const templateName = useAppSelector(
-    (state) => state.templates.tmpTemplate.name
+    (state) => state.templates.draftTemplate.name
   );
   const error = useAppSelector((state) => state.error.addTemplate);
 
@@ -57,7 +59,7 @@ function AddTemplate() {
         />
 
         <div className="flex flex-col gap-4">
-          <TemplateButton 
+          <TemplateButton
             to="/add-exercise"
             onClick={() => {
               if (error) dispatch(clearAddTemplateError());
@@ -96,9 +98,9 @@ function AddTemplate() {
 
               // Save or update the template based on current mode
               if (isEditMode) {
-                dispatch(updateTemplate(tmpTemplate));
+                dispatch(updateTemplate(draftTemplate));
               } else {
-                dispatch(addTemplate({ templateName, tmpTemplate }));
+                dispatch(addTemplate({ templateName, draftTemplate }));
               }
               navigate("/templates");
             }}

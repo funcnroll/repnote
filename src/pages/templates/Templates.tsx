@@ -1,8 +1,9 @@
 import { Link, useNavigate } from "react-router";
 import {
-  createTmpTemplate,
+  createdraftTemplate,
   deleteTemplate,
-  loadTmpTemplate,
+  loaddraftTemplate,
+  startTemplate,
 } from "../../app/templateSlice";
 import { ChevronRight, Play, X } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -21,7 +22,7 @@ function Templates() {
         <Link
           to="/add-template"
           className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-3 rounded-md shadow-md transition"
-          onClick={() => dispatch(createTmpTemplate())}
+          onClick={() => dispatch(createdraftTemplate())}
         >
           New Template
         </Link>
@@ -47,6 +48,7 @@ function Templates() {
                     className="text-gray-400 hover:text-green-500 cursor-pointer transition"
                     onClick={(e) => {
                       e.preventDefault();
+                      dispatch(startTemplate());
                     }}
                   />
                   <X
@@ -63,7 +65,7 @@ function Templates() {
                     className="text-gray-400 hover:text-blue-400 transition cursor-pointer"
                     onClick={(e) => {
                       e.preventDefault();
-                      dispatch(loadTmpTemplate(template.id));
+                      dispatch(loaddraftTemplate(template.id));
                       navigate(`/add-template/${template.id}`);
                     }}
                   />

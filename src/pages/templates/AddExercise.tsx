@@ -4,10 +4,7 @@ import {
   addExerciseToTemplate,
   editExerciseInTemplate,
 } from "@/app/templateSlice";
-import {
-  setAddExerciseError,
-  clearAddExerciseError,
-} from "@/app/errorSlice";
+import { setAddExerciseError, clearAddExerciseError } from "@/app/errorSlice";
 import { useNavigate, useParams } from "react-router";
 import FormInput from "../../components/reusable/FormInput";
 import ChevronBack from "../../components/reusable/ChevronBack";
@@ -28,7 +25,7 @@ function AddExercise() {
 
   // Find exercise data if we're in edit mode
   const exerciseToEditData = useAppSelector((state) =>
-    state.templates.tmpTemplate.exercises.find(
+    state.templates.draftTemplate.exercises.find(
       (e) => String(e.id) === String(exerciseId)
     )
   );
@@ -111,12 +108,16 @@ function AddExercise() {
           const parsedReps = parseInt(reps);
 
           if (isNaN(parsedSets) || isNaN(parsedReps)) {
-            dispatch(setAddExerciseError("Sets and reps must be valid numbers"));
+            dispatch(
+              setAddExerciseError("Sets and reps must be valid numbers")
+            );
             return;
           }
 
           if (parsedSets <= 0 || parsedReps <= 0) {
-            dispatch(setAddExerciseError("Sets and reps must be greater than 0"));
+            dispatch(
+              setAddExerciseError("Sets and reps must be greater than 0")
+            );
             return;
           }
 

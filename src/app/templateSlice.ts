@@ -8,11 +8,11 @@ interface Exercise {
   exerciseName: string;
   sets: number;
   reps: number;
-  setsDone?: number;    // Tracks progress during workout execution
+  setsDone?: number; // Tracks progress during workout execution
 
   //TODO: optional until commonExercises is finished
-  exerciseId?: string | null;  // Reference to common exercise database
-  isCustom?: boolean | null;   // Flag for user-created vs predefined exercises
+  exerciseId?: string | null; // Reference to common exercise database
+  isCustom?: boolean | null; // Flag for user-created vs predefined exercises
 }
 
 // Complete workout template containing multiple exercises
@@ -24,7 +24,7 @@ export interface Template {
 
 // Temporary template object used during template creation/editing
 // Separated from main templates to allow draft states without affecting saved data
-interface TmpTemplateObj {
+interface draftTemplateObj {
   exercises: Exercise[];
   id: string;
   name: string;
@@ -32,15 +32,15 @@ interface TmpTemplateObj {
 
 // Main state structure for template management
 interface State {
-  templates: Template[];           // All saved workout templates
-  tmpTemplate: TmpTemplateObj;     // Draft template being created/edited
+  templates: Template[]; // All saved workout templates
+  draftTemplate: draftTemplateObj; // Draft template being created/edited
   // TODO: Optional until starting a workout is finished
-  isTemplateActive?: boolean;      // Tracks if user is currently in a workout
+  activeTemplate?: draftTemplateObj | null; // Tracks current active template
   templateToView: Template | null; // Template selected for viewing/starting
 }
 
 // Default empty template used for resetting the temporary template
-const defaultTmpTemplate: TmpTemplateObj = {
+const defaultdraftTemplate: draftTemplateObj = {
   exercises: [],
   id: "",
   name: "",
@@ -50,8 +50,8 @@ const initialState: State = {
   // Load existing templates from localStorage, or start with empty array
   templates: loadTemplatesFromLocalStorage() || [],
 
-  tmpTemplate: defaultTmpTemplate,
-  isTemplateActive: false,
+  draftTemplate: defaultdraftTemplate,
+  activeTemplate: null,
   templateToView: null,
 };
 const templateSlice = createSlice({
@@ -59,9 +59,9 @@ const templateSlice = createSlice({
   initialState,
   reducers: {
     // Initialize a new temporary template for creation
-    createTmpTemplate(state) {
+    createdraftTemplate(state) {
       const id = generateId();
-      state.tmpTemplate = {
+      state.draftTemplate = {
         exercises: [],
         id,
         name: "",
@@ -69,16 +69,16 @@ const templateSlice = createSlice({
     },
 
     // Load an existing template into the temporary template for editing
-    loadTmpTemplate(state, action: PayloadAction<string>) {
+    loaddraftTemplate(state, action: PayloadAction<string>) {
       const templateId = action.payload;
 
       const found = state.templates.find(
         (t) => String(t.id) === String(templateId)
       );
 
-      // Load template into tmpTemplate for editing
+      // Load template into draftTemplate for editing
       if (found) {
-        state.tmpTemplate = {
+        state.draftTemplate = {
           id: found.id,
           name: found.name ?? "",
           // Deep clone exercises to prevent mutations affecting the original
@@ -88,13 +88,13 @@ const templateSlice = createSlice({
         };
       } else {
         // Reset to default if template not found
-        state.tmpTemplate = defaultTmpTemplate;
+        state.draftTemplate = defaultdraftTemplate;
       }
     },
 
     // Update the name of the template being created/edited
     editTemplateName(state, action: PayloadAction<string>) {
-      state.tmpTemplate.name = action.payload;
+      state.draftTemplate.name = action.payload;
     },
 
     // Save the temporary template as a new template in the main templates array
@@ -102,11 +102,11 @@ const templateSlice = createSlice({
       state,
       action: PayloadAction<{
         templateName: string;
-        tmpTemplate: TmpTemplateObj;
+        draftTemplate: draftTemplateObj;
       }>
     ) {
-      const { templateName: name, tmpTemplate } = action.payload;
-      const { exercises, id } = tmpTemplate;
+      const { templateName: name, draftTemplate } = action.payload;
+      const { exercises, id } = draftTemplate;
 
       state.templates.push({
         name,
@@ -115,7 +115,7 @@ const templateSlice = createSlice({
       });
 
       // Clear the temporary template after saving
-      state.tmpTemplate = defaultTmpTemplate;
+      state.draftTemplate = defaultdraftTemplate;
     },
     // Remove a template from the templates array
     deleteTemplate(state, action: PayloadAction<string>) {
@@ -127,8 +127,8 @@ const templateSlice = createSlice({
     },
 
     // Update an existing template with changes from the temporary template
-    updateTemplate(state, action: PayloadAction<TmpTemplateObj>) {
-      const templateIdToUpdate = state.tmpTemplate.id;
+    updateTemplate(state, action: PayloadAction<draftTemplateObj>) {
+      const templateIdToUpdate = state.draftTemplate.id;
 
       const index = state.templates.findIndex(
         (template) => template.id === templateIdToUpdate
@@ -139,7 +139,7 @@ const templateSlice = createSlice({
       }
 
       // Clear the temporary template after updating
-      state.tmpTemplate = defaultTmpTemplate;
+      state.draftTemplate = defaultdraftTemplate;
     },
 
     // Add a new exercise to the temporary template
@@ -164,7 +164,7 @@ const templateSlice = createSlice({
       } = action.payload;
 
       const id = generateId();
-      state.tmpTemplate.exercises.push({
+      state.draftTemplate.exercises.push({
         id,
         exerciseName,
         sets,
@@ -178,7 +178,7 @@ const templateSlice = createSlice({
     removeExerciseFromTemplate(state, action: PayloadAction<string>) {
       const exerciseId = action.payload;
 
-      state.tmpTemplate.exercises = state.tmpTemplate.exercises.filter(
+      state.draftTemplate.exercises = state.draftTemplate.exercises.filter(
         (exercise) => exercise.id !== exerciseId
       );
     },
@@ -203,16 +203,16 @@ const templateSlice = createSlice({
         isCustom = null,
       } = action.payload;
 
-      const index = state.tmpTemplate.exercises.findIndex(
+      const index = state.draftTemplate.exercises.findIndex(
         (exercise) => exercise.id === id
       );
 
       if (index !== -1) {
-        const currentExercise = state.tmpTemplate.exercises[index];
+        const currentExercise = state.draftTemplate.exercises[index];
 
         if (currentExercise) {
           // Preserve the setsDone value while updating other fields
-          state.tmpTemplate.exercises[index] = {
+          state.draftTemplate.exercises[index] = {
             id: currentExercise.id,
             exerciseName,
             sets,
@@ -225,13 +225,13 @@ const templateSlice = createSlice({
       }
     },
 
-    // Reorder exercises within the temporary template (drag and drop functionality)
+    // Reorder exercises within the temporary template
     reorderExerciseInTemplate(
       state,
       action: PayloadAction<{ from: number; to: number }>
     ) {
       const { from, to } = action.payload;
-      const list = state.tmpTemplate.exercises;
+      const list = state.draftTemplate.exercises;
 
       // Validate indices to prevent array manipulation errors
       if (
@@ -250,11 +250,11 @@ const templateSlice = createSlice({
       const moved = movedArray[0];
       if (moved) {
         copy.splice(to, 0, moved);
-        state.tmpTemplate.exercises = copy;
+        state.draftTemplate.exercises = copy;
       }
     },
-    // Placeholder for starting a workout with a template (not yet implemented)
-    startTemplate(_state, _action) {},
+    // Starting a workout with a template
+    startTemplate(state) {},
   },
 });
 
@@ -262,13 +262,14 @@ export const {
   addTemplate,
   editExerciseInTemplate,
   addExerciseToTemplate,
-  createTmpTemplate,
+  createdraftTemplate,
   removeExerciseFromTemplate,
   deleteTemplate,
   editTemplateName,
-  loadTmpTemplate,
+  loaddraftTemplate,
   updateTemplate,
   reorderExerciseInTemplate,
+  startTemplate,
 } = templateSlice.actions;
 
 export default templateSlice.reducer;
