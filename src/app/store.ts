@@ -14,9 +14,9 @@ const listenerMiddleware = createListenerMiddleware();
 // Configure the Redux store with all reducers and middleware
 export const store = configureStore({
   reducer: {
-    home: homeReducer,        // User profile and workout status
-    templates: templatesReducer,  // Workout templates and exercises
-    error: errorReducer,      // Error messages for form validation
+    home: homeReducer, // User profile and workout status
+    templates: templatesReducer, // Workout templates and exercises
+    error: errorReducer, // Error messages for form validation
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(listenerMiddleware.middleware),
