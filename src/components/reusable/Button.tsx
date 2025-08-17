@@ -1,10 +1,10 @@
 import { MouseEventHandler, ReactNode } from "react";
 import { Link } from "react-router";
 
-export type ButtonVariant = "primary" | "secondary" | "text" | "outline";
-export type ButtonSize = "sm" | "md" | "lg";
+type ButtonVariant = "primary" | "secondary" | "text" | "outline";
+type ButtonSize = "sm" | "md" | "lg";
 
-export interface ButtonProps {
+interface ButtonProps {
   children: ReactNode;
   to?: string;
   onClick?: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
@@ -19,7 +19,8 @@ const variantStyles: Record<ButtonVariant, string> = {
   primary: "bg-primaryColor text-white hover:bg-secondaryColor",
   secondary: "bg-gray-600 text-white hover:bg-gray-700",
   text: "text-blue-400 hover:text-blue-500 bg-transparent",
-  outline: "border border-primaryColor text-primaryColor hover:bg-primaryColor hover:text-white",
+  outline:
+    "border border-primaryColor text-primaryColor hover:bg-primaryColor hover:text-white",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
@@ -38,13 +39,15 @@ function Button({
   disabled = false,
   fullWidth = false,
 }: ButtonProps) {
-  const baseStyles = "rounded-lg font-medium transition duration-300 flex items-center justify-center";
+  const baseStyles =
+    "rounded-lg font-medium transition duration-300 flex items-center justify-center";
   const variantStyle = variantStyles[variant];
   const sizeStyle = sizeStyles[size];
   const widthStyle = fullWidth ? "w-full" : "";
   const disabledStyle = disabled ? "opacity-50 cursor-not-allowed" : "";
-  
-  const combinedClassName = `${baseStyles} ${variantStyle} ${sizeStyle} ${widthStyle} ${disabledStyle} ${className}`.trim();
+
+  const combinedClassName =
+    `${baseStyles} ${variantStyle} ${sizeStyle} ${widthStyle} ${disabledStyle} ${className}`.trim();
 
   if (to && !disabled) {
     return (
