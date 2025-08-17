@@ -48,7 +48,7 @@ function Templates() {
                     className="text-gray-400 hover:text-green-500 cursor-pointer transition"
                     onClick={(e) => {
                       e.preventDefault();
-                      dispatch(startTemplate());
+                      dispatch(startTemplate(template.id));
                     }}
                   />
                   <X

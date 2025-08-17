@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { loadNameFromLocalStorage } from "./localStorage";
 
 // State for user profile and workout session status
 interface HomeState {
-  name: string;          // User's name for personalization
+  name: string; // User's name for personalization
   isWorkingOut: boolean; // Whether user is currently in an active workout
 }
 
 const initialState: HomeState = {
-  name: "",
+  name: loadNameFromLocalStorage() || "",
   isWorkingOut: false,
 };
 

@@ -16,3 +16,20 @@ export const loadTemplatesFromLocalStorage = () => {
   const saved = localStorage.getItem("templates");
   return saved ? JSON.parse(saved) : [];
 };
+
+/**
+ * Saves the user's name to browser localStorage
+ * Used for data persistence between browser sessions
+ */
+export const saveNameToLocalStorage = (name: string) => {
+  localStorage.setItem("name", JSON.stringify(name));
+};
+
+/**
+ * Loads user's name from browser localStorage on app initialization
+ * Returns empty string if no saved data exists
+ */
+export const loadNameFromLocalStorage = (): string => {
+  const saved = localStorage.getItem("name");
+  return saved ? JSON.parse(saved) : "";
+};

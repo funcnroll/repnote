@@ -254,7 +254,13 @@ const templateSlice = createSlice({
       }
     },
     // Starting a workout with a template
-    startTemplate(state) {},
+    startTemplate(state, action: PayloadAction<string>) {
+      const templateToStart = state.templates.find(
+        (t) => t.id === action.payload
+      );
+
+      state.activeTemplate = templateToStart;
+    },
   },
 });
 

@@ -6,7 +6,11 @@ import templatesReducer, {
 } from "./templateSlice";
 import errorReducer from "./errorSlice";
 import { configureStore, createListenerMiddleware } from "@reduxjs/toolkit";
-import { saveTemplatesToLocalStorage } from "./localStorage";
+import {
+  saveTemplatesToLocalStorage,
+  saveNameToLocalStorage,
+} from "./localStorage";
+import { changeName } from "./homeSlice";
 
 // Create middleware to listen for specific Redux actions and trigger side effects
 const listenerMiddleware = createListenerMiddleware();
@@ -46,6 +50,16 @@ listenerMiddleware.startListening({
   effect: (action, listenerApi) => {
     const state = listenerApi.getState() as RootState;
     saveTemplatesToLocalStorage(state.templates.templates);
+  },
+});
+
+// Auto-save name to localStorage whenever it is changed
+// This ensures user's name persists between browser sessions
+listenerMiddleware.startListening({
+  actionCreator: changeName,
+  effect: (action, listenerApi) => {
+    const state = listenerApi.getState() as RootState;
+    saveNameToLocalStorage(state.home.name);
   },
 });
 
