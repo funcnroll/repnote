@@ -45,7 +45,7 @@ function Home() {
           {/* Workout Progress */}
           <div className="bg-[#1c2331] p-8 rounded-xl mb-8 flex items-center justify-between">
             <div className="flex flex-col gap-3">
-              <ToActiveButton to="/add-template">
+              <ToActiveButton to={`/activeTemplate/${activeTemplate?.id}`}>
                 {activeTemplate?.name}
               </ToActiveButton>
               <p className="text-gray-400">Workout Progress</p>

@@ -7,6 +7,7 @@ import Tracking from "./pages/tracking/Tracking";
 import AddTemplate from "./pages/templates/AddTemplate";
 import AddExercise from "./pages/templates/AddExercise";
 import { useAppSelector } from "@/app/hooks";
+import ActiveTemplate from "./pages/templates/ActiveTemplate";
 
 export default function App() {
   const name = useAppSelector((state) => state.home.name);
@@ -47,6 +48,10 @@ export default function App() {
               <Route
                 path="/add-exercise/:exerciseId?"
                 element={<AddExercise />}
+              />
+              <Route
+                path="/activeTemplate/:activeTemplateId"
+                element={<ActiveTemplate />}
               />
             </Routes>
           </div>
