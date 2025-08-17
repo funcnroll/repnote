@@ -16,6 +16,7 @@ import ChevronBack from "../../components/reusable/ChevronBack";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
 function AddTemplate() {
+  // Extract relevant state from Redux store
   const exercises = useAppSelector(
     (state) => state.templates.tmpTemplate.exercises
   );
@@ -32,6 +33,7 @@ function AddTemplate() {
 
   const { templateId } = useParams();
 
+  // Determine if we're editing an existing template or creating a new one
   const isEditMode = templates.some((t) => String(t.id) === String(templateId));
 
   return (
@@ -69,11 +71,13 @@ function AddTemplate() {
 
               dispatch(clearAddTemplateError());
 
+              // Validate template name
               if (!templateName?.trim()) {
                 dispatch(setAddTemplateError("Template name is required"));
                 return;
               }
 
+              // Validate at least one exercise exists
               if (exercises.length === 0) {
                 dispatch(
                   setAddTemplateError("At least one exercise is required")
@@ -81,6 +85,7 @@ function AddTemplate() {
                 return;
               }
 
+              // Validate all exercises have names
               const hasInvalidExercises = exercises.some(
                 (exercise) => !exercise.exerciseName?.trim()
               );
@@ -89,6 +94,7 @@ function AddTemplate() {
                 return;
               }
 
+              // Save or update the template based on current mode
               if (isEditMode) {
                 dispatch(updateTemplate(tmpTemplate));
               } else {
@@ -100,6 +106,7 @@ function AddTemplate() {
             {isEditMode ? "Edit Template" : "+ Add Template"}
           </TemplateButton>
 
+          {/* Exercise list with reordering and editing capabilities */}
           <div className="flex flex-col items-center justify-center mt-6 w-full">
             {exercises.map((exercise, index) => (
               <ExerciseCard

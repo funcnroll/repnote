@@ -17,6 +17,7 @@ import { useAppSelector } from "@/app/hooks";
 function AddExercise() {
   const dispatch = useDispatch();
 
+  // Local form state for exercise details
   const [name, setName] = useState("");
   const [reps, setReps] = useState("");
   const [sets, setSets] = useState("");
@@ -25,6 +26,7 @@ function AddExercise() {
 
   const { exerciseId } = useParams();
 
+  // Find exercise data if we're in edit mode
   const exerciseToEditData = useAppSelector((state) =>
     state.templates.tmpTemplate.exercises.find(
       (e) => String(e.id) === String(exerciseId)
@@ -32,6 +34,7 @@ function AddExercise() {
   );
   const error = useAppSelector((state) => state.error.addExercise);
 
+  // Populate form with existing data when editing an exercise
   useEffect(() => {
     if (exerciseToEditData) {
       setName(exerciseToEditData.exerciseName);
@@ -91,16 +94,19 @@ function AddExercise() {
         onClick={(e) => {
           e.preventDefault();
 
+          // Validate exercise name
           if (!name.trim()) {
             dispatch(setAddExerciseError("Exercise name is required"));
             return;
           }
 
+          // Validate sets and reps are provided
           if (!sets.trim() || !reps.trim()) {
             dispatch(setAddExerciseError("Sets and reps are required"));
             return;
           }
 
+          // Parse and validate numeric values
           const parsedSets = parseInt(sets);
           const parsedReps = parseInt(reps);
 
@@ -114,6 +120,7 @@ function AddExercise() {
             return;
           }
 
+          // Clear any previous errors and prepare exercise data
           dispatch(clearAddExerciseError());
           const exerciseData = {
             exerciseName: name.trim(),
@@ -121,6 +128,7 @@ function AddExercise() {
             reps: parsedReps,
           };
 
+          // Update existing exercise or add new one based on mode
           if (exerciseId && exerciseToEditData?.id) {
             dispatch(
               editExerciseInTemplate({

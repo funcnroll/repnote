@@ -8,17 +8,22 @@ import errorReducer from "./errorSlice";
 import { configureStore, createListenerMiddleware } from "@reduxjs/toolkit";
 import { saveTemplatesToLocalStorage } from "./localStorage";
 
+// Create middleware to listen for specific Redux actions and trigger side effects
 const listenerMiddleware = createListenerMiddleware();
 
+// Configure the Redux store with all reducers and middleware
 export const store = configureStore({
   reducer: {
-    home: homeReducer,
-    templates: templatesReducer,
-    error: errorReducer,
+    home: homeReducer,        // User profile and workout status
+    templates: templatesReducer,  // Workout templates and exercises
+    error: errorReducer,      // Error messages for form validation
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().prepend(listenerMiddleware.middleware),
 });
+
+// Auto-save templates to localStorage whenever they are modified
+// This ensures data persistence without manual save actions
 
 listenerMiddleware.startListening({
   actionCreator: addTemplate,
@@ -44,5 +49,6 @@ listenerMiddleware.startListening({
   },
 });
 
+// Type definitions for TypeScript integration with Redux
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

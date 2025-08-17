@@ -11,14 +11,15 @@ interface Exercise {
   isCustom?: boolean | null;
 }
 
+// Props for the ExerciseCard component used in template creation/editing
 interface ExerciseCardProps {
   exercise: Exercise;
-  onRemove: (exerciseId: string) => void;
-  onEdit?: (exerciseId: string) => void;
-  index: number;
-  total: number;
-  onMoveUp: () => void;
-  onMoveDown: () => void;
+  onRemove: (exerciseId: string) => void;  // Callback to remove this exercise
+  onEdit?: (exerciseId: string) => void;   // Optional callback to edit this exercise
+  index: number;                           // Position in the exercises array
+  total: number;                           // Total number of exercises
+  onMoveUp: () => void;                    // Callback to move exercise up in order
+  onMoveDown: () => void;                  // Callback to move exercise down in order
 }
 
 function ExerciseCard({
@@ -46,9 +47,9 @@ function ExerciseCard({
         </p>
       </div>
 
+      {/* Action buttons for exercise management */}
       <div className="flex gap-2 items-center">
-        {/* move up */}
-
+        {/* Move exercise up in order (disabled if first) */}
         <button
           disabled={index === 0}
           onClick={(e) => {
@@ -65,8 +66,7 @@ function ExerciseCard({
           />
         </button>
 
-        {/* move down */}
-
+        {/* Move exercise down in order (disabled if last) */}
         <button
           disabled={index === total - 1}
           onClick={(e) => {
@@ -83,7 +83,7 @@ function ExerciseCard({
           />
         </button>
 
-        {/* edit */}
+        {/* Edit exercise details */}
         <button
           onClick={(e) => {
             e.preventDefault();
@@ -95,6 +95,8 @@ function ExerciseCard({
         >
           <Edit className="text-gray-400 hover:text-blue-400 w-5 h-5 cursor-pointer" />
         </button>
+        
+        {/* Remove exercise from template */}
         <button onClick={() => onRemove(exercise.id)}>
           <X className="text-gray-400 hover:text-red-500 w-5 h-5 cursor-pointer" />
         </button>
