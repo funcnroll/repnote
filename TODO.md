@@ -7,7 +7,7 @@
 ## 💪 Workout Flow (Priority!)
 
 - [x] Allow user to add/edit sets, reps, and weight per exercise
-  - [ ] Differentiate logic for `tmpTemplate` (editing mode) vs saved templates in `templates` (used for actual workouts)
+  - [x] Differentiate logic for `tmpTemplate` (editing mode) vs saved templates in `templates` (used for actual workouts)
 - [ ] Allow user to edit sets/reps/weight mid-workout/whilst creating a template
 - [ ] Add indicator how many sets are done of total set amount per exercise
 - [ ] Allow editing of sets before starting a workout
