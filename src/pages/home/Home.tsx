@@ -3,6 +3,9 @@ import H1 from "../../components/reusable/H1";
 import NoWorkout from "./NoWorkout";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { isNotWorkingOut, isWorkingOut } from "../../app/homeSlice";
+import { getRecentWorkouts } from "@/helpers/workouts";
+import { CompletedWorkout } from "@/types/workout";
+import ToActiveButton from "./ToActiveTemplate";
 
 function Home() {
   const name = useAppSelector((state) => state.home.name);
@@ -15,6 +18,8 @@ function Home() {
 
   if (activeTemplate) dispatch(isWorkingOut());
   if (!activeTemplate) dispatch(isNotWorkingOut());
+
+  const recentWorkouts = getRecentWorkouts();
 
   if (!name) {
     return (
@@ -39,7 +44,12 @@ function Home() {
 
           {/* Workout Progress */}
           <div className="bg-[#1c2331] p-8 rounded-xl mb-8 flex items-center justify-between">
-            <p className="text-gray-400">Workout Progress</p>
+            <div className="flex flex-col gap-3">
+              <ToActiveButton to="/add-template">
+                {activeTemplate?.name}
+              </ToActiveButton>
+              <p className="text-gray-400">Workout Progress</p>
+            </div>
             <div className="w-24 h-24 rounded-full border-8 border-blue-500 border-t-blue-900 flex items-center justify-center text-lg font-semibold">
               75%
             </div>
@@ -49,11 +59,7 @@ function Home() {
           <h2 className="text-xl font-semibold mb-4">Recent Workouts</h2>
 
           <div className="space-y-3 pb-8">
-            {[
-              { name: "Full Body Workout", sets: 5 },
-              { name: "Upper Body Workout", sets: 4 },
-              { name: "Core Workout", sets: 6 },
-            ].map((workout, index) => (
+            {recentWorkouts.map((workout: CompletedWorkout, index: number) => (
               <div
                 key={index}
                 className="bg-[#1c2331] p-6 rounded-xl flex justify-between items-center"
@@ -62,7 +68,6 @@ function Home() {
                   <p className="font-medium">{workout.name}</p>
                   <p className="text-gray-400 text-sm">{workout.sets} sets</p>
                 </div>
-                <p className="text-gray-400 text-sm">{workout.sets} sets</p>
               </div>
             ))}
           </div>

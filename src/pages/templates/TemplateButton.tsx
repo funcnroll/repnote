@@ -1,11 +1,6 @@
-import React, { MouseEventHandler } from "react";
+import { TemplateButtonProps } from "@/types/templateButton";
+import { MouseEventHandler } from "react";
 import { Link } from "react-router";
-
-interface TemplateButtonProps {
-  children: React.ReactNode;
-  to?: string;
-  onClick?: MouseEventHandler<HTMLAnchorElement | HTMLButtonElement>;
-}
 
 function TemplateButton({ children, to, onClick }: TemplateButtonProps) {
   const className =

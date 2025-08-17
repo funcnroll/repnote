@@ -261,6 +261,22 @@ const templateSlice = createSlice({
 
       state.activeTemplate = templateToStart;
     },
+    finishTemplate(_state, _action) {
+      // TODO: Add finished workouts to localStorage and then display sets done
+      //       if (templateToStart) {
+      //   const totalSets = templateToStart.exercises.reduce(
+      //     (sum, exercise) => sum + (exercise.setsDone || 0),
+      //     0
+      //   );
+      //   const workoutData: CompletedWorkout = {
+      //     name: templateToStart.name,
+      //     sets: totalSets,
+      //     timestamp: new Date().toISOString(),
+      //   };
+      //   saveWorkoutToLocalStorage(workoutData);
+      //   state.activeTemplate = templateToStart;
+      // }
+    },
   },
 });
 
