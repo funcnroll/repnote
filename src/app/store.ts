@@ -20,9 +20,24 @@ export const store = configureStore({
     getDefaultMiddleware().prepend(listenerMiddleware.middleware),
 });
 
-// Listen for all template changes and sync to localStorage
 listenerMiddleware.startListening({
   actionCreator: addTemplate,
+  effect: (action, listenerApi) => {
+    const state = listenerApi.getState() as RootState;
+    saveTemplatesToLocalStorage(state.templates.templates);
+  },
+});
+
+listenerMiddleware.startListening({
+  actionCreator: updateTemplate,
+  effect: (action, listenerApi) => {
+    const state = listenerApi.getState() as RootState;
+    saveTemplatesToLocalStorage(state.templates.templates);
+  },
+});
+
+listenerMiddleware.startListening({
+  actionCreator: deleteTemplate,
   effect: (action, listenerApi) => {
     const state = listenerApi.getState() as RootState;
     saveTemplatesToLocalStorage(state.templates.templates);

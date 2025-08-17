@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { generateId } from "../helpers/generateId";
+import { loadTemplatesFromLocalStorage } from "./localStorage";
 
 interface Exercise {
   id: string;
@@ -50,7 +51,7 @@ const initialState: State = {
   //   ]
   //   id: 1
   // },
-  templates: [],
+  templates: loadTemplatesFromLocalStorage() || [],
 
   tmpTemplate: defaultTmpTemplate,
   isTemplateActive: false,
