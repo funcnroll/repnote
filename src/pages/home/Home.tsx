@@ -40,13 +40,11 @@ function Home() {
         </div>
       ) : (
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl font-semibold mb-6">Welcome back, {name}</h1>
-
           {/* Workout Progress */}
           <div className="bg-[#1c2331] p-8 rounded-xl mb-8 flex items-center justify-between">
             <div className="flex flex-col gap-3">
-              <Button 
-                variant="text" 
+              <Button
+                variant="text"
                 to={`/activeTemplate/${activeTemplate?.id}`}
               >
                 {activeTemplate?.name}
