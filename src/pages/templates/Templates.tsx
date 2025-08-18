@@ -3,8 +3,8 @@ import {
   createdraftTemplate,
   deleteTemplate,
   loaddraftTemplate,
-  startTemplate,
 } from "../../app/templateSlice";
+import { startTemplate } from "../../app/activeTemplateSlice";
 import { ChevronRight, Play, X } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import H1 from "../../components/reusable/H1";
@@ -17,7 +17,12 @@ function Templates() {
 
   return (
     <div className="h-full bg-backgroundColor text-white px-4 py-6">
-      <H1 variant="small" centered>Templates</H1>
+      <H1
+        variant="small"
+        centered
+      >
+        Templates
+      </H1>
 
       <div className="flex justify-center mb-8">
         <Link
@@ -49,7 +54,8 @@ function Templates() {
                     className="text-gray-400 hover:text-green-500 cursor-pointer transition"
                     onClick={(e) => {
                       e.preventDefault();
-                      dispatch(startTemplate(template.id));
+                      dispatch(startTemplate(template));
+                      navigate(`/activeTemplate/${template.id}`);
                     }}
                   />
                   <X

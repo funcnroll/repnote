@@ -4,6 +4,7 @@ import templatesReducer, {
   updateTemplate,
   deleteTemplate,
 } from "./templateSlice";
+import activeTemplateReducer from "./activeTemplateSlice";
 import errorReducer from "./errorSlice";
 import { configureStore, createListenerMiddleware } from "@reduxjs/toolkit";
 import {
@@ -20,6 +21,7 @@ export const store = configureStore({
   reducer: {
     home: homeReducer, // User profile and workout status
     templates: templatesReducer, // Workout templates and exercises
+    activeTemplate: activeTemplateReducer, // Active workout session
     error: errorReducer, // Error messages for form validation
   },
   middleware: (getDefaultMiddleware) =>

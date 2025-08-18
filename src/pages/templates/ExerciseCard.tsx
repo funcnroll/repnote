@@ -14,12 +14,13 @@ interface Exercise {
 // Props for the ExerciseCard component used in template creation/editing
 interface ExerciseCardProps {
   exercise: Exercise;
-  onRemove: (exerciseId: string) => void;  // Callback to remove this exercise
-  onEdit?: (exerciseId: string) => void;   // Optional callback to edit this exercise
-  index: number;                           // Position in the exercises array
-  total: number;                           // Total number of exercises
-  onMoveUp: () => void;                    // Callback to move exercise up in order
-  onMoveDown: () => void;                  // Callback to move exercise down in order
+  onRemove: (exerciseId: string) => void; // Callback to remove this exercise
+  onEdit?: (exerciseId: string) => void; // Optional callback to edit this exercise
+  index: number; // Position in the exercises array
+  total: number; // Total number of exercises
+  onMoveUp: () => void; // Callback to move exercise up in order
+  onMoveDown: () => void; // Callback to move exercise down in order
+  showProgress?: boolean; // Optional flag to show sets done progress
 }
 
 function ExerciseCard({
@@ -30,6 +31,7 @@ function ExerciseCard({
   total,
   onMoveUp,
   onMoveDown,
+  showProgress = false,
 }: ExerciseCardProps) {
   const navigate = useNavigate();
 
@@ -44,6 +46,11 @@ function ExerciseCard({
         </h2>
         <p className="text-gray-400">
           Sets: {exercise.sets} Reps: {exercise.reps}
+          {showProgress && exercise.setsDone !== undefined && (
+            <span className="text-yellow-400 ml-2">
+              ({exercise.setsDone}/{exercise.sets} done)
+            </span>
+          )}
         </p>
       </div>
 
@@ -95,7 +102,7 @@ function ExerciseCard({
         >
           <Edit className="text-gray-400 hover:text-blue-400 w-5 h-5 cursor-pointer" />
         </button>
-        
+
         {/* Remove exercise from template */}
         <button onClick={() => onRemove(exercise.id)}>
           <X className="text-gray-400 hover:text-red-500 w-5 h-5 cursor-pointer" />

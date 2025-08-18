@@ -13,7 +13,7 @@ function Home() {
   const dispatch = useAppDispatch();
 
   const activeTemplate = useAppSelector(
-    (state) => state.templates.activeTemplate
+    (state) => state.activeTemplate.activeTemplate
   );
 
   if (activeTemplate) dispatch(isWorkingOut());
