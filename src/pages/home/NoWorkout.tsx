@@ -9,7 +9,12 @@ function NoWorkout() {
       <p className="text-base text-gray-400">
         Start a workout to log your training
       </p>
-      <Button variant="secondary" size="lg" fullWidth>
+      <Button
+        variant="secondary"
+        size="lg"
+        to="templates"
+        fullWidth
+      >
         + Start Workout
       </Button>
     </div>

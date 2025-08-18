@@ -40,7 +40,7 @@ function Button({
   fullWidth = false,
 }: ButtonProps) {
   const baseStyles =
-    "rounded-lg font-medium transition duration-300 flex items-center justify-center";
+    "rounded-lg font-medium transition duration-300 flex items-center justify-center cursor-pointer";
   const variantStyle = variantStyles[variant];
   const sizeStyle = sizeStyles[size];
   const widthStyle = fullWidth ? "w-full" : "";
