@@ -10,6 +10,7 @@ import Button from "../../components/reusable/Button";
 import FormInput from "../../components/reusable/FormInput";
 import ExerciseCard from "./ExerciseCard";
 import Error from "../../components/reusable/Error";
+import H1 from "../../components/reusable/H1";
 
 import { useNavigate, useParams } from "react-router";
 import ChevronBack from "../../components/reusable/ChevronBack";
@@ -44,7 +45,7 @@ function AddTemplate() {
 
       {error && <Error msg={error} />}
 
-      <h1 className="text-2xl font-semibold mb-8">New Template</h1>
+      <H1 variant="medium">New Template</H1>
 
       <form>
         <FormInput

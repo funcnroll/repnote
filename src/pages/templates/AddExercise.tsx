@@ -10,6 +10,7 @@ import FormInput from "../../components/reusable/FormInput";
 import ChevronBack from "../../components/reusable/ChevronBack";
 import Error from "../../components/reusable/Error";
 import { useAppSelector } from "@/app/hooks";
+import H1 from "../../components/reusable/H1";
 
 function AddExercise() {
   const dispatch = useDispatch();
@@ -44,7 +45,7 @@ function AddExercise() {
     <div className="min-h-screen bg-backgroundColor text-white px-6 py-8">
       <ChevronBack />
 
-      <h1 className="text-2xl font-semibold mb-8">Add Exercise</h1>
+      <H1 variant="medium">Add Exercise</H1>
       <FormInput
         required
         label="Exercise name"

@@ -7,6 +7,7 @@ import {
 } from "../../app/templateSlice";
 import { ChevronRight, Play, X } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import H1 from "../../components/reusable/H1";
 
 function Templates() {
   const templates = useAppSelector((state) => state.templates.templates);
@@ -16,7 +17,7 @@ function Templates() {
 
   return (
     <div className="h-full bg-backgroundColor text-white px-4 py-6">
-      <h1 className="text-center text-lg font-semibold mb-6">Templates</h1>
+      <H1 variant="small" centered>Templates</H1>
 
       <div className="flex justify-center mb-8">
         <Link
