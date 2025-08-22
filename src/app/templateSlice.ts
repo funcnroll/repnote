@@ -9,10 +9,6 @@ interface Exercise {
   exerciseName: string;
   sets: number;
   reps: number;
-
-  //TODO: optional until commonExercises is finished
-  exerciseId?: string | null; // Reference to common exercise database
-  isCustom?: boolean | null; // Flag for user-created vs predefined exercises
 }
 
 // Complete workout template containing multiple exercises
@@ -150,18 +146,9 @@ const templateSlice = createSlice({
         sets: number;
         reps: number;
         setsDone?: number;
-        exerciseId?: string | null;
-        isCustom?: boolean | null;
       }>
     ) {
-      const {
-        exerciseName,
-        sets,
-        reps,
-
-        exerciseId = null,
-        isCustom = null,
-      } = action.payload;
+      const { exerciseName, sets, reps } = action.payload;
 
       const id = generateId();
       state.draftTemplate.exercises.push({
@@ -169,9 +156,6 @@ const templateSlice = createSlice({
         exerciseName,
         sets,
         reps,
-
-        exerciseId,
-        isCustom,
       });
     },
     // Remove an exercise from the temporary template
@@ -217,8 +201,6 @@ const templateSlice = createSlice({
             exerciseName,
             sets,
             reps,
-            exerciseId,
-            isCustom,
           };
         }
       }
