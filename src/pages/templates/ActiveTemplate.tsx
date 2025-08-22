@@ -6,7 +6,7 @@ import {
   removeExerciseFromActiveTemplate,
   reorderExerciseInActiveTemplate,
 } from "@/app/activeTemplateSlice";
-import ExerciseCard from "./ExerciseCard";
+import ExerciseCard from "./reusable/ExerciseCard";
 
 function ActiveTemplate() {
   const { activeTemplateId } = useParams();

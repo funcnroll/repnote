@@ -178,14 +178,7 @@ const templateSlice = createSlice({
         isCustom?: boolean | null;
       }>
     ) {
-      const {
-        id,
-        exerciseName,
-        sets,
-        reps,
-        exerciseId = null,
-        isCustom = null,
-      } = action.payload;
+      const { id, exerciseName, sets, reps } = action.payload;
 
       const index = state.draftTemplate.exercises.findIndex(
         (exercise) => exercise.id === id

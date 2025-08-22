@@ -3,21 +3,25 @@ import { useDispatch } from "react-redux";
 import {
   addExerciseToTemplate,
   editExerciseInTemplate,
-} from "@/app/templateSlice";
-import { setAddExerciseError, clearAddExerciseError } from "@/app/errorSlice";
+} from "../../app/templateSlice";
+import {
+  setAddExerciseError,
+  clearAddExerciseError,
+} from "../../app/errorSlice";
 import { useNavigate, useParams } from "react-router";
 import FormInput from "../../components/reusable/FormInput";
 import ChevronBack from "../../components/reusable/ChevronBack";
 import Error from "../../components/reusable/Error";
 import Checkbox from "../../components/reusable/Checkbox";
-import { useAppSelector } from "@/app/hooks";
+import { useAppSelector } from "../../app/hooks";
 import H1 from "../../components/reusable/H1";
 import { Search } from "lucide-react";
 import exercisesRaw from "../../data/exercises.json";
-import { Exercise } from "@/types/Exercise";
-import { searchExercises } from "@/helpers/searchExercises";
+import { Exercise } from "../../types/Exercise";
+import { searchExercises } from "../../helpers/searchExercises";
 import { useDebouncedValue } from "../../helpers/useDebouncedValue";
-import SearchExerciseCard from "@/components/reusable/SearchExerciseCard";
+import SearchExerciseCard from "./reusable/SearchExerciseCard";
+import SetRow from "./reusable/SetRow";
 
 const exercises: Exercise[] = exercisesRaw as Exercise[];
 
@@ -118,33 +122,12 @@ function AddExercise() {
       )}
       {error && <Error msg={error} />}
 
-      <div className="flex justify-between gap-4 mb-6">
-        <div className="flex-1">
-          <FormInput
-            required
-            label="Sets"
-            placeholder="3"
-            onChange={(e) => {
-              setSets(e.target.value);
-              if (error) dispatch(clearAddExerciseError());
-            }}
-            type="number"
-            value={sets}
-          />
-        </div>
-        <div className="flex-1">
-          <FormInput
-            required
-            label="Reps"
-            placeholder="10"
-            onChange={(e) => {
-              setReps(e.target.value);
-              if (error) dispatch(clearAddExerciseError());
-            }}
-            type="number"
-            value={reps}
-          />
-        </div>
+      <div className="mt-4 mb-8">
+        <SetRow
+          setNumber={2}
+          reps={0}
+          completed={false}
+        />
       </div>
 
       <button
