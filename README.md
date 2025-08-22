@@ -53,6 +53,10 @@ npm install
 npm run dev
 ```
 
+## 🙏 Acknowledgments
+
+Exercise data provided by [free-exercise-db](https://github.com/yuhonas/free-exercise-db)
+
 ## 📜 License
 
 This project is licensed under the [MIT License](LICENSE).

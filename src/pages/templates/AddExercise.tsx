@@ -9,8 +9,17 @@ import { useNavigate, useParams } from "react-router";
 import FormInput from "../../components/reusable/FormInput";
 import ChevronBack from "../../components/reusable/ChevronBack";
 import Error from "../../components/reusable/Error";
+import Checkbox from "../../components/reusable/Checkbox";
 import { useAppSelector } from "@/app/hooks";
 import H1 from "../../components/reusable/H1";
+import { Search } from "lucide-react";
+import exercisesRaw from "../../data/exercises.json";
+import { Exercise } from "@/types/Exercise";
+import { searchExercises } from "@/helpers/searchExercises";
+import { useDebouncedValue } from "../../helpers/useDebouncedValue";
+import SearchExerciseCard from "@/components/reusable/SearchExerciseCard";
+
+const exercises: Exercise[] = exercisesRaw as Exercise[];
 
 function AddExercise() {
   const dispatch = useDispatch();
@@ -19,6 +28,11 @@ function AddExercise() {
   const [name, setName] = useState("");
   const [reps, setReps] = useState("");
   const [sets, setSets] = useState("");
+
+  const [isCustom, setIsCustom] = useState(false);
+  const [search, setSearch] = useState("");
+
+  const debouncedSearch = useDebouncedValue(search, 150);
 
   const navigate = useNavigate();
 
@@ -41,22 +55,67 @@ function AddExercise() {
     }
   }, [exerciseToEditData]);
 
+  function exerciseToSelect(e: Exercise) {
+    setName(e.name);
+    setSearch("");
+  }
+
   return (
     <div className="min-h-screen bg-backgroundColor text-white px-6 py-8">
       <ChevronBack />
 
       <H1 variant="medium">Add Exercise</H1>
-      <FormInput
-        required
-        label="Exercise name"
-        placeholder="Squats"
-        onChange={(e) => {
-          setName(e.target.value);
-          if (error) dispatch(clearAddExerciseError());
-        }}
-        type="text"
-        value={name}
+
+      <Checkbox
+        label="Custom exercise?"
+        checked={isCustom}
+        onChange={setIsCustom}
       />
+
+      {!isCustom && (
+        <div>
+          <div className="mb-6">
+            <div className="relative">
+              <FormInput
+                placeholder="Search for an exercise.."
+                type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+              <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" />
+            </div>
+          </div>
+
+          {search.length > 0 &&
+            exercises
+              .filter((e) => searchExercises(e, debouncedSearch))
+              .map((e) => (
+                <SearchExerciseCard
+                  key={e.id}
+                  e={e}
+                  func={exerciseToSelect}
+                />
+              ))}
+        </div>
+      )}
+
+      {(isCustom || name) && (
+        <FormInput
+          required
+          label="Exercise name"
+          placeholder="Squats"
+          onChange={(e) => {
+            // If custom exercise, allow user input
+
+            if (!isCustom) return;
+            setName(e.target.value);
+
+            if (error) dispatch(clearAddExerciseError());
+          }}
+          type="text"
+          value={name}
+        />
+      )}
       {error && <Error msg={error} />}
 
       <div className="flex justify-between gap-4 mb-6">
