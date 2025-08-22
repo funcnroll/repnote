@@ -108,6 +108,7 @@ function AddExercise() {
           required
           label="Exercise name"
           placeholder="Squats"
+          disabled={!isCustom}
           onChange={(e) => {
             // If custom exercise, allow user input
 
