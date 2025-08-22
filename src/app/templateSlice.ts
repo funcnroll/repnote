@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { generateId } from "../helpers/generateId";
 import { loadTemplatesFromLocalStorage } from "./localStorage";
+import { Set } from "@/types/Set";
 
 // Exercise data structure for individual exercises within templates
 interface Exercise {
@@ -8,7 +9,6 @@ interface Exercise {
   exerciseName: string;
   sets: number;
   reps: number;
-  setsDone?: number; // Tracks progress during workout execution
 
   //TODO: optional until commonExercises is finished
   exerciseId?: string | null; // Reference to common exercise database
@@ -158,7 +158,7 @@ const templateSlice = createSlice({
         exerciseName,
         sets,
         reps,
-        setsDone = 0,
+
         exerciseId = null,
         isCustom = null,
       } = action.payload;
@@ -169,7 +169,7 @@ const templateSlice = createSlice({
         exerciseName,
         sets,
         reps,
-        setsDone,
+
         exerciseId,
         isCustom,
       });
@@ -219,7 +219,6 @@ const templateSlice = createSlice({
             reps,
             exerciseId,
             isCustom,
-            setsDone: currentExercise.setsDone,
           };
         }
       }
