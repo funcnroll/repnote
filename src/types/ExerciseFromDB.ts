@@ -1,4 +1,4 @@
-export interface Exercise {
+export interface ExerciseFromDB {
   id: string;
   name: string;
   force: "push" | "pull" | "static" | null;

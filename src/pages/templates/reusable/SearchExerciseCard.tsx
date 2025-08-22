@@ -1,11 +1,11 @@
-import { Exercise } from "@/types/Exercise";
+import { ExerciseFromDB } from "@/types/ExerciseFromDB";
 
 function SearchExerciseCard({
   e,
   func,
 }: {
-  e: Exercise;
-  func: (e: Exercise) => void;
+  e: ExerciseFromDB;
+  func: (e: ExerciseFromDB) => void;
 }) {
   return (
     <div

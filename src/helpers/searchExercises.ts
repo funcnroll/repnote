@@ -1,6 +1,6 @@
-import { Exercise } from "@/types/Exercise";
+import { ExerciseFromDB } from "@/types/ExerciseFromDB";
 
-export function searchExercises(e: Exercise, query: string) {
+export function searchExercises(e: ExerciseFromDB, query: string) {
   const terms = query.toLowerCase().trim().split(" ");
 
   return terms.every(

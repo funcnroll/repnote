@@ -7,8 +7,7 @@ import { Set } from "@/types/Set";
 interface Exercise {
   id: string;
   exerciseName: string;
-  sets: number;
-  reps: number;
+  sets: Set[];
 }
 
 // Complete workout template containing multiple exercises
@@ -143,20 +142,41 @@ const templateSlice = createSlice({
       state,
       action: PayloadAction<{
         exerciseName: string;
-        sets: number;
+        sets: Set;
         reps: number;
-        setsDone?: number;
       }>
     ) {
-      const { exerciseName, sets, reps } = action.payload;
+      const { exerciseName, sets } = action.payload;
 
       const id = generateId();
       state.draftTemplate.exercises.push({
         id,
         exerciseName,
-        sets,
-        reps,
+        sets: [
+          {
+            id: sets.id,
+            reps: sets.reps,
+            weight: sets.weight,
+            actualReps: sets.actualReps,
+            completed: sets.completed,
+            notes: sets.notes,
+            rpe: sets.rpe,
+          },
+        ],
       });
+    },
+
+    addSetToExerciseInTemplate(
+      state,
+      action: PayloadAction<{ exerciseId: string; set: Set }>
+    ) {
+      const { exerciseId, set } = action.payload;
+
+      const exercise = state.draftTemplate.exercises.find(
+        (ex) => ex.id === exerciseId
+      );
+
+      if (exercise) exercise.sets.push(set);
     },
     // Remove an exercise from the temporary template
     removeExerciseFromTemplate(state, action: PayloadAction<string>) {
@@ -172,13 +192,21 @@ const templateSlice = createSlice({
       action: PayloadAction<{
         id: string;
         exerciseName: string;
-        sets: number;
+        sets: {
+          id: number;
+          reps: number;
+          weight: number;
+          actualReps: number;
+          completed: boolean;
+          notes: string;
+          rpe: number;
+        };
         reps: number;
         exerciseId?: string | null;
         isCustom?: boolean | null;
       }>
     ) {
-      const { id, exerciseName, sets, reps } = action.payload;
+      const { id, exerciseName, sets } = action.payload;
 
       const index = state.draftTemplate.exercises.findIndex(
         (exercise) => exercise.id === id
@@ -192,8 +220,17 @@ const templateSlice = createSlice({
           state.draftTemplate.exercises[index] = {
             id: currentExercise.id,
             exerciseName,
-            sets,
-            reps,
+            sets: [
+              {
+                id: sets.id,
+                reps: sets.reps,
+                weight: sets.weight,
+                actualReps: sets.actualReps,
+                completed: sets.completed,
+                notes: sets.notes,
+                rpe: sets.rpe,
+              },
+            ],
           };
         }
       }

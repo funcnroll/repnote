@@ -17,21 +17,22 @@ import { useAppSelector } from "../../app/hooks";
 import H1 from "../../components/reusable/H1";
 import { Search } from "lucide-react";
 import exercisesRaw from "../../data/exercises.json";
-import { Exercise } from "../../types/Exercise";
+import { ExerciseFromDB } from "../../types/ExerciseFromDB";
 import { searchExercises } from "../../helpers/searchExercises";
 import { useDebouncedValue } from "../../helpers/useDebouncedValue";
 import SearchExerciseCard from "./reusable/SearchExerciseCard";
 import SetRow from "./reusable/SetRow";
+import AddSetButton from "./reusable/AddSetButton";
+import { Set } from "@/types/Set";
 
-const exercises: Exercise[] = exercisesRaw as Exercise[];
+const exercises: ExerciseFromDB[] = exercisesRaw as ExerciseFromDB[];
 
 function AddExercise() {
   const dispatch = useDispatch();
 
-  // Local form state for exercise details
   const [name, setName] = useState("");
-  const [reps, setReps] = useState("");
-  const [sets, setSets] = useState("");
+
+  const [localSets, setLocalSets] = useState<Set[]>([]);
 
   const [isCustom, setIsCustom] = useState(false);
   const [search, setSearch] = useState("");
@@ -54,12 +55,12 @@ function AddExercise() {
   useEffect(() => {
     if (exerciseToEditData) {
       setName(exerciseToEditData.exerciseName);
-      setSets(String(exerciseToEditData.sets));
-      setReps(String(exerciseToEditData.reps));
+
+      // TODO: Make set and rep populating work when editing
     }
   }, [exerciseToEditData]);
 
-  function exerciseToSelect(e: Exercise) {
+  function exerciseToSelect(e: ExerciseFromDB) {
     setName(e.name);
     setSearch("");
   }
@@ -123,12 +124,14 @@ function AddExercise() {
       )}
       {error && <Error msg={error} />}
 
-      <div className="mt-4 mb-8">
+      <div className="flex flex-col mb-6">
         <SetRow
           setNumber={2}
           reps={0}
           completed={false}
         />
+
+        <AddSetButton onClick={() => {}} />
       </div>
 
       <button
@@ -141,36 +144,14 @@ function AddExercise() {
             return;
           }
 
-          // Validate sets and reps are provided
-          if (!sets.trim() || !reps.trim()) {
-            dispatch(setAddExerciseError("Sets and reps are required"));
-            return;
-          }
-
           // Parse and validate numeric values
-          const parsedSets = parseInt(sets);
-          const parsedReps = parseInt(reps);
-
-          if (isNaN(parsedSets) || isNaN(parsedReps)) {
-            dispatch(
-              setAddExerciseError("Sets and reps must be valid numbers")
-            );
-            return;
-          }
-
-          if (parsedSets <= 0 || parsedReps <= 0) {
-            dispatch(
-              setAddExerciseError("Sets and reps must be greater than 0")
-            );
-            return;
-          }
+          const sets = [];
 
           // Clear any previous errors and prepare exercise data
           dispatch(clearAddExerciseError());
           const exerciseData = {
             exerciseName: name.trim(),
-            sets: parsedSets,
-            reps: parsedReps,
+            sets: localSets,
           };
 
           // Update existing exercise or add new one based on mode
