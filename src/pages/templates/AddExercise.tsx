@@ -27,6 +27,12 @@ import { Set } from "@/types/Set";
 
 const exercises: ExerciseFromDB[] = exercisesRaw as ExerciseFromDB[];
 
+interface ExerciseData {
+  exerciseName: string;
+  sets: Set;
+  reps: number;
+}
+
 function AddExercise() {
   const dispatch = useDispatch();
 
@@ -145,13 +151,13 @@ function AddExercise() {
           }
 
           // Parse and validate numeric values
-          const sets = [];
+          const sets: Set[] = [];
 
           // Clear any previous errors and prepare exercise data
           dispatch(clearAddExerciseError());
-          const exerciseData = {
+          const exerciseData: ExerciseData = {
             exerciseName: name.trim(),
-            sets: localSets,
+            sets,
           };
 
           // Update existing exercise or add new one based on mode
