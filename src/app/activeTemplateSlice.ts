@@ -1,15 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-
-// Exercise data structure for individual exercises within active templates
-interface Exercise {
-  id: string;
-  exerciseName: string;
-  sets: number;
-  reps: number;
-  setsDone?: number; // Tracks progress during workout execution
-  exerciseId?: string | null; // Reference to common exercise database
-  isCustom?: boolean | null; // Flag for user-created vs predefined exercises
-}
+import { Exercise } from "@/types/Exercise";
 
 // Active template object used during workout sessions
 interface ActiveTemplate {

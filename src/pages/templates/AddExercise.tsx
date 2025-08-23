@@ -24,14 +24,9 @@ import SearchExerciseCard from "./reusable/SearchExerciseCard";
 import SetRow from "./reusable/SetRow";
 import AddSetButton from "./reusable/AddSetButton";
 import { Set } from "@/types/Set";
+import { Exercise } from "@/types/Exercise";
 
 const exercises: ExerciseFromDB[] = exercisesRaw as ExerciseFromDB[];
-
-interface ExerciseData {
-  exerciseName: string;
-  sets: Set;
-  reps: number;
-}
 
 function AddExercise() {
   const dispatch = useDispatch();
@@ -69,6 +64,32 @@ function AddExercise() {
   function exerciseToSelect(e: ExerciseFromDB) {
     setName(e.name);
     setSearch("");
+  }
+
+  // Add a new set to local state
+  function addLocalSet() {
+    const newSet: Set = {
+      id: localSets.length, // Use index as temporary ID
+      reps: null,
+      weight: null,
+      actualReps: null,
+      completed: false,
+      notes: "",
+      rpe: null,
+    };
+    setLocalSets([...localSets, newSet]);
+  }
+
+  // Update a specific set
+  function updateLocalSet(index: number, updatedSet: Partial<Set>) {
+    setLocalSets(
+      localSets.map((set, i) => (i === index ? { ...set, ...updatedSet } : set))
+    );
+  }
+
+  // Remove a set
+  function removeLocalSet(index: number) {
+    setLocalSets(localSets.filter((_, i) => i !== index));
   }
 
   return (
@@ -131,13 +152,23 @@ function AddExercise() {
       {error && <Error msg={error} />}
 
       <div className="flex flex-col mb-6">
-        <SetRow
-          setNumber={2}
-          reps={0}
-          completed={false}
-        />
+        {localSets.map((set, index) => (
+          <SetRow
+            key={index}
+            setNumber={index + 1}
+            reps={set.reps}
+            weight={set.weight}
+            completed={set.completed}
+            onRepsChange={(reps) => updateLocalSet(index, { reps })}
+            onWeightChange={(weight) => updateLocalSet(index, { weight })}
+            onToggleComplete={() =>
+              updateLocalSet(index, { completed: !set.completed })
+            }
+            onRemove={() => removeLocalSet(index)}
+          />
+        ))}
 
-        <AddSetButton onClick={() => {}} />
+        <AddSetButton onClick={addLocalSet} />
       </div>
 
       <button
@@ -150,31 +181,32 @@ function AddExercise() {
             return;
           }
 
-          // Parse and validate numeric values
-          const sets: Set[] = [];
+          const sets: Set[] = localSets.map((set, index) => ({
+            ...set,
+            id: Date.now() + index, // Generate proper IDs for Redux
+          }));
 
-          // Clear any previous errors and prepare exercise data
           dispatch(clearAddExerciseError());
-          const exerciseData: ExerciseData = {
-            exerciseName: name.trim(),
-            sets,
-          };
 
           // Update existing exercise or add new one based on mode
           if (exerciseId && exerciseToEditData?.id) {
-            dispatch(
-              editExerciseInTemplate({
-                ...exerciseData,
-                id: exerciseToEditData.id,
-              })
-            );
+            const exerciseData: Exercise = {
+              id: exerciseToEditData.id,
+              exerciseName: name,
+              sets,
+            };
+            dispatch(editExerciseInTemplate(exerciseData));
           } else {
+            const exerciseData = {
+              exerciseName: name,
+              sets,
+            };
             dispatch(addExerciseToTemplate(exerciseData));
           }
 
           navigate(-1);
         }}
-        className="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 font-medium transition"
+        className="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 font-medium transition cursor-pointer"
       >
         {exerciseId ? "Edit Exercise" : "Add Exercise"}
       </button>

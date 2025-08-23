@@ -1,14 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { generateId } from "../helpers/generateId";
 import { loadTemplatesFromLocalStorage } from "./localStorage";
+import { Exercise } from "@/types/Exercise";
 import { Set } from "@/types/Set";
-
-// Exercise data structure for individual exercises within templates
-interface Exercise {
-  id: string;
-  exerciseName: string;
-  sets: Set[];
-}
 
 // Complete workout template containing multiple exercises
 export interface Template {
@@ -140,30 +134,11 @@ const templateSlice = createSlice({
     // Add a new exercise to the temporary template
     addExerciseToTemplate(
       state,
-      action: PayloadAction<{
-        exerciseName: string;
-        sets: Set;
-        reps: number;
-      }>
+      action: PayloadAction<Omit<Exercise, "id"> | Exercise>
     ) {
-      const { exerciseName, sets } = action.payload;
-
-      const id = generateId();
-      state.draftTemplate.exercises.push({
-        id,
-        exerciseName,
-        sets: [
-          {
-            id: sets.id,
-            reps: sets.reps,
-            weight: sets.weight,
-            actualReps: sets.actualReps,
-            completed: sets.completed,
-            notes: sets.notes,
-            rpe: sets.rpe,
-          },
-        ],
-      });
+      const exercise = action.payload;
+      const exerciseWithId = 'id' in exercise ? exercise : { ...exercise, id: generateId() };
+      state.draftTemplate.exercises.push(exerciseWithId);
     },
 
     addSetToExerciseInTemplate(
@@ -187,25 +162,7 @@ const templateSlice = createSlice({
       );
     },
     // Update an existing exercise in the temporary template
-    editExerciseInTemplate(
-      state,
-      action: PayloadAction<{
-        id: string;
-        exerciseName: string;
-        sets: {
-          id: number;
-          reps: number;
-          weight: number;
-          actualReps: number;
-          completed: boolean;
-          notes: string;
-          rpe: number;
-        };
-        reps: number;
-        exerciseId?: string | null;
-        isCustom?: boolean | null;
-      }>
-    ) {
+    editExerciseInTemplate(state, action: PayloadAction<Exercise>) {
       const { id, exerciseName, sets } = action.payload;
 
       const index = state.draftTemplate.exercises.findIndex(
@@ -216,21 +173,10 @@ const templateSlice = createSlice({
         const currentExercise = state.draftTemplate.exercises[index];
 
         if (currentExercise) {
-          // Preserve the setsDone value while updating other fields
           state.draftTemplate.exercises[index] = {
             id: currentExercise.id,
             exerciseName,
-            sets: [
-              {
-                id: sets.id,
-                reps: sets.reps,
-                weight: sets.weight,
-                actualReps: sets.actualReps,
-                completed: sets.completed,
-                notes: sets.notes,
-                rpe: sets.rpe,
-              },
-            ],
+            sets,
           };
         }
       }

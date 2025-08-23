@@ -1,15 +1,6 @@
 import { X, Edit, ArrowUp, ArrowDown } from "lucide-react";
 import { useNavigate } from "react-router";
-
-interface Exercise {
-  id: string;
-  exerciseName: string;
-  sets: number;
-  reps: number;
-  setsDone?: number;
-  exerciseId?: string | null;
-  isCustom?: boolean | null;
-}
+import { Exercise } from "@/types/Exercise";
 
 // Props for the ExerciseCard component used in template creation/editing
 interface ExerciseCardProps {
@@ -31,7 +22,6 @@ function ExerciseCard({
   total,
   onMoveUp,
   onMoveDown,
-  showProgress = false,
 }: ExerciseCardProps) {
   const navigate = useNavigate();
 
@@ -44,14 +34,7 @@ function ExerciseCard({
         <h2 className="text-lg font-semibold text-white">
           {exercise.exerciseName}
         </h2>
-        <p className="text-gray-400">
-          Sets: {exercise.sets} Reps: {exercise.reps}
-          {showProgress && exercise.setsDone !== undefined && (
-            <span className="text-yellow-400 ml-2">
-              ({exercise.setsDone}/{exercise.sets} done)
-            </span>
-          )}
-        </p>
+        <p className="text-gray-400">Sets: {exercise.sets.length}</p>
       </div>
 
       {/* Action buttons for exercise management */}
