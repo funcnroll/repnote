@@ -56,8 +56,7 @@ function AddExercise() {
   useEffect(() => {
     if (exerciseToEditData) {
       setName(exerciseToEditData.exerciseName);
-
-      // TODO: Make set and rep populating work when editing
+      setLocalSets(exerciseToEditData.sets);
     }
   }, [exerciseToEditData]);
 
@@ -158,12 +157,8 @@ function AddExercise() {
             setNumber={index + 1}
             reps={set.reps}
             weight={set.weight}
-            completed={set.completed}
             onRepsChange={(reps) => updateLocalSet(index, { reps })}
             onWeightChange={(weight) => updateLocalSet(index, { weight })}
-            onToggleComplete={() =>
-              updateLocalSet(index, { completed: !set.completed })
-            }
             onRemove={() => removeLocalSet(index)}
           />
         ))}

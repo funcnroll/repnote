@@ -72,6 +72,39 @@ const activeTemplateSlice = createSlice({
         state.activeTemplate.exercises = copy;
       }
     },
+
+    toggleSetComplete(
+      state,
+      action: PayloadAction<{ exerciseId: string; setId: number }>
+    ) {
+      const { exerciseId, setId } = action.payload;
+      const exercise = state.activeTemplate?.exercises.find(
+        (ex) => ex.id === exerciseId
+      );
+      const set = exercise?.sets.find((s) => s.id === setId);
+      if (set) {
+        set.completed = !set.completed;
+      }
+    },
+
+    updateSetReps(
+      state,
+      action: PayloadAction<{
+        exerciseId: string;
+        setId: number;
+        actualReps: number;
+      }>
+    ) {
+      const { exerciseId, setId, actualReps } = action.payload;
+
+      const exercise = state.activeTemplate?.exercises.find(
+        (ex) => ex.id === exerciseId
+      );
+      const set = exercise?.sets.find((set) => set.id === setId);
+      if (set) {
+        set.actualReps = actualReps;
+      }
+    },
   },
 });
 

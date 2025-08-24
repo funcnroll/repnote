@@ -9,7 +9,6 @@ import {
 import ExerciseCard from "./reusable/ExerciseCard";
 
 function ActiveTemplate() {
-  const { activeTemplateId } = useParams();
   const dispatch = useAppDispatch();
 
   const activeTemplate = useAppSelector(
@@ -21,6 +20,7 @@ function ActiveTemplate() {
       <ChevronBack />
 
       <H1 variant="medium">Active Template</H1>
+      <H1 variant="medium">{activeTemplate?.name}</H1>
 
       <div>
         {activeTemplate?.exercises.map((exercise, index) => (
@@ -42,7 +42,6 @@ function ActiveTemplate() {
                 reorderExerciseInActiveTemplate({ from: index, to: index + 1 })
               )
             }
-            showProgress={true}
           />
         ))}
       </div>
