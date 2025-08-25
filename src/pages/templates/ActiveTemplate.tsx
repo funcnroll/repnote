@@ -1,15 +1,19 @@
 import ChevronBack from "@/components/reusable/ChevronBack";
-import { useParams } from "react-router";
 import H1 from "@/components/reusable/H1";
 import { useAppSelector, useAppDispatch } from "@/app/hooks";
 import {
   removeExerciseFromActiveTemplate,
   reorderExerciseInActiveTemplate,
+  finishTemplate,
 } from "@/app/activeTemplateSlice";
+import { updateTemplateFromActive } from "@/app/templateSlice";
 import ExerciseCard from "./reusable/ExerciseCard";
+import { useNavigate } from "react-router";
+import { isNotWorkingOut } from "@/app/homeSlice";
 
 function ActiveTemplate() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const activeTemplate = useAppSelector(
     (state) => state.activeTemplate.activeTemplate
@@ -44,6 +48,40 @@ function ActiveTemplate() {
             }
           />
         ))}
+      </div>
+
+      {/* Finish Workout Buttons */}
+      <div className="flex flex-col gap-4 mt-8">
+        <button
+          onClick={() => {
+            dispatch(finishTemplate());
+            dispatch(isNotWorkingOut());
+            navigate("/");
+          }}
+          className="w-full py-3 rounded-lg bg-green-600 hover:bg-green-700 font-medium transition cursor-pointer"
+        >
+          Finish Workout
+        </button>
+
+        <button
+          onClick={() => {
+            if (activeTemplate) {
+              dispatch(
+                updateTemplateFromActive({
+                  templateId: activeTemplate.id,
+                  exercises: activeTemplate.exercises,
+                })
+              );
+              dispatch(finishTemplate());
+              dispatch(isNotWorkingOut());
+
+              navigate("/");
+            }
+          }}
+          className="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 font-medium transition cursor-pointer"
+        >
+          Finish Workout (Modify Template)
+        </button>
       </div>
     </div>
   );

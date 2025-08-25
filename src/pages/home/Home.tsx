@@ -6,6 +6,7 @@ import { isNotWorkingOut, isWorkingOut } from "../../app/homeSlice";
 import { getRecentWorkouts } from "@/helpers/workouts";
 import { CompletedWorkout } from "@/types/workout";
 import Button from "../../components/reusable/Button";
+import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
 
 function Home() {
   const name = useAppSelector((state) => state.home.name);
@@ -18,6 +19,24 @@ function Home() {
 
   if (activeTemplate) dispatch(isWorkingOut());
   if (!activeTemplate) dispatch(isNotWorkingOut());
+
+  const totalSets =
+    activeTemplate?.exercises.reduce((sum, ex) => sum + ex.sets.length, 0) || 0;
+  const completedSets =
+    activeTemplate?.exercises.reduce(
+      (sum, ex) => sum + ex.sets.filter((set) => set.completed).length,
+      0
+    ) || 0;
+
+  console.log(totalSets, completedSets);
+
+  const progress =
+    totalSets > 0 ? Math.round((completedSets / totalSets) * 100) : 0;
+
+  const progressData = [
+    { name: "Completed", value: completedSets, fill: "#3B82F6" },
+    { name: "Remaining", value: totalSets - completedSets, fill: "#1E293B" }
+  ];
 
   const recentWorkouts = getRecentWorkouts();
 
@@ -51,8 +70,28 @@ function Home() {
               </Button>
               <p className="text-gray-400">Workout Progress</p>
             </div>
-            <div className="w-24 h-24 rounded-full border-8 border-blue-500 border-t-blue-900 flex items-center justify-center text-lg font-semibold">
-              75%
+            <div className="w-24 h-24 relative">
+              <ResponsiveContainer width="100%" height="100%">
+                <PieChart>
+                  <Pie
+                    data={progressData}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={30}
+                    outerRadius={45}
+                    startAngle={90}
+                    endAngle={-270}
+                    dataKey="value"
+                  >
+                    {progressData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.fill} />
+                    ))}
+                  </Pie>
+                </PieChart>
+              </ResponsiveContainer>
+              <div className="absolute inset-0 flex items-center justify-center text-lg font-semibold">
+                {progress}%
+              </div>
             </div>
           </div>
 

@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Exercise } from "@/types/Exercise";
+import ActiveTemplate from "../pages/templates/ActiveTemplate";
 
 // Active template object used during workout sessions
 interface ActiveTemplate {
@@ -105,6 +106,51 @@ const activeTemplateSlice = createSlice({
         set.actualReps = actualReps;
       }
     },
+
+    updateSetWeight(
+      state,
+      action: PayloadAction<{
+        exerciseId: string;
+        setId: number;
+        weight: number | null;
+      }>
+    ) {
+      const { exerciseId, setId, weight } = action.payload;
+
+      const exercise = state.activeTemplate?.exercises.find(
+        (ex) => ex.id === exerciseId
+      );
+      const set = exercise?.sets.find((set) => set.id === setId);
+      if (set) {
+        set.weight = weight;
+      }
+    },
+
+    removeSetFromActiveTemplate(
+      state,
+      action: PayloadAction<{ exerciseId: string; setId: number }>
+    ) {
+      const { exerciseId, setId } = action.payload;
+
+      const exercise = state.activeTemplate?.exercises.find(
+        (ex) => ex.id === exerciseId
+      );
+      if (exercise) {
+        exercise.sets = exercise.sets.filter((set) => set.id !== setId);
+      }
+    },
+
+    editExerciseInActiveTemplate(state, action: PayloadAction<Exercise>) {
+      const updatedExercise = action.payload;
+      if (state.activeTemplate?.exercises) {
+        const exerciseIndex = state.activeTemplate.exercises.findIndex(
+          (exercise) => exercise.id === updatedExercise.id
+        );
+        if (exerciseIndex !== -1) {
+          state.activeTemplate.exercises[exerciseIndex] = updatedExercise;
+        }
+      }
+    },
   },
 });
 
@@ -113,6 +159,11 @@ export const {
   finishTemplate,
   removeExerciseFromActiveTemplate,
   reorderExerciseInActiveTemplate,
+  toggleSetComplete,
+  updateSetReps,
+  updateSetWeight,
+  removeSetFromActiveTemplate,
+  editExerciseInActiveTemplate,
 } = activeTemplateSlice.actions;
 
 export default activeTemplateSlice.reducer;

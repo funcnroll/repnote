@@ -44,9 +44,12 @@ export default function App() {
                 path="/add-template/:templateId?"
                 element={<AddTemplate />}
               />
-
               <Route
-                path="/add-exercise/:exerciseId?"
+                path="/add-template/:templateId/add-exercise/:exerciseId?"
+                element={<AddExercise />}
+              />
+              <Route
+                path="/active-template/:activeTemplateId/add-exercise/:exerciseId?"
                 element={<AddExercise />}
               />
               <Route

@@ -33,3 +33,31 @@ export const loadNameFromLocalStorage = (): string => {
   const saved = localStorage.getItem("name");
   return saved ? JSON.parse(saved) : "";
 };
+
+/**
+ * Saves the isCustom state for a specific exercise to localStorage
+ * Used to remember custom exercise preference when editing
+ */
+export const saveIsCustomToLocalStorage = (exerciseId: string, isCustom: boolean) => {
+  const key = `isCustom_${exerciseId}`;
+  localStorage.setItem(key, JSON.stringify(isCustom));
+};
+
+/**
+ * Loads the isCustom state for a specific exercise from localStorage
+ * Returns false if no saved data exists for this exercise
+ */
+export const loadIsCustomFromLocalStorage = (exerciseId: string): boolean => {
+  const key = `isCustom_${exerciseId}`;
+  const saved = localStorage.getItem(key);
+  return saved ? JSON.parse(saved) : false;
+};
+
+/**
+ * Removes the isCustom state for a specific exercise from localStorage
+ * Used when exercise is deleted or no longer needed
+ */
+export const removeIsCustomFromLocalStorage = (exerciseId: string) => {
+  const key = `isCustom_${exerciseId}`;
+  localStorage.removeItem(key);
+};

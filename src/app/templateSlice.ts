@@ -137,7 +137,8 @@ const templateSlice = createSlice({
       action: PayloadAction<Omit<Exercise, "id"> | Exercise>
     ) {
       const exercise = action.payload;
-      const exerciseWithId = 'id' in exercise ? exercise : { ...exercise, id: generateId() };
+      const exerciseWithId =
+        "id" in exercise ? exercise : { ...exercise, id: generateId() };
       state.draftTemplate.exercises.push(exerciseWithId);
     },
 
@@ -210,6 +211,20 @@ const templateSlice = createSlice({
         state.draftTemplate.exercises = copy;
       }
     },
+    // Optionally update specifictemplate data with activeTemplate
+    updateTemplateFromActive(
+      state,
+      action: PayloadAction<{ templateId: string; exercises: Exercise[] }>
+    ) {
+      const { templateId, exercises } = action.payload;
+
+      const templateToModify = state.templates.findIndex(
+        (template) => template.id === templateId
+      );
+
+      // Tell TS that this element will ALWAYS exist
+      state.templates[templateToModify]!.exercises = exercises;
+    },
   },
 });
 
@@ -224,6 +239,7 @@ export const {
   loaddraftTemplate,
   updateTemplate,
   reorderExerciseInTemplate,
+  updateTemplateFromActive,
 } = templateSlice.actions;
 
 export default templateSlice.reducer;

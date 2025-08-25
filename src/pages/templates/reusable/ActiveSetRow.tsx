@@ -4,6 +4,7 @@ interface ActiveSetRowProps {
   setNumber: number;
   reps: number | null;
   weight: number | null;
+  actualReps?: number | null;
   completed: boolean;
   onToggleComplete?: () => void;
   onRemove?: () => void;
@@ -15,6 +16,7 @@ function ActiveSetRow({
   setNumber,
   reps,
   weight,
+  actualReps,
   completed = false,
   onToggleComplete,
   onRemove,
@@ -37,14 +39,14 @@ function ActiveSetRow({
           <span className="text-white font-medium text-sm">reps</span>
           <input
             type="number"
-            value={reps ?? ""}
+            value={actualReps ?? ""}
             onChange={(e) =>
               onRepsChange?.(
                 e.target.value === "" ? null : parseInt(e.target.value) || null
               )
             }
             className="bg-transparent text-white font-medium focus:outline-none focus:bg-backgroundColor focus:px-2 focus:py-1 focus:rounded transition-all duration-200 w-full max-w-12 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
-            placeholder="0"
+            placeholder={reps?.toString() || "0"}
           />
         </div>
 

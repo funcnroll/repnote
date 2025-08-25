@@ -3,6 +3,13 @@ import { useNavigate, useParams } from "react-router";
 import { Exercise } from "@/types/Exercise";
 import ActiveTemplate from "../ActiveTemplate";
 import ActiveSetRow from "./ActiveSetRow";
+import { useAppDispatch } from "@/app/hooks";
+import {
+  toggleSetComplete,
+  updateSetReps,
+  updateSetWeight,
+  removeSetFromActiveTemplate,
+} from "@/app/activeTemplateSlice";
 
 // Props for the ExerciseCard component used in template creation/editing
 interface ExerciseCardProps {
@@ -26,8 +33,9 @@ function ExerciseCard({
   onMoveDown,
 }: ExerciseCardProps) {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const { activeTemplateId } = useParams();
+  const { activeTemplateId, templateId } = useParams();
 
   return (
     <div
@@ -86,9 +94,16 @@ function ExerciseCard({
             onClick={(e) => {
               e.preventDefault();
 
-              onEdit
-                ? onEdit(exercise.id)
-                : navigate(`/add-exercise/${exercise.id}`);
+              if (onEdit) {
+                onEdit(exercise.id);
+              } else if (activeTemplateId) {
+                navigate(`/active-template/${activeTemplateId}/add-exercise/${exercise.id}`);
+              } else if (templateId) {
+                navigate(`/add-template/${templateId}/add-exercise/${exercise.id}`);
+              } else {
+                // This shouldn't happen with the new nested structure, but fallback
+                navigate(`/add-template/new/add-exercise/${exercise.id}`);
+              }
             }}
           >
             <Edit className="text-gray-400 hover:text-blue-400 w-5 h-5 cursor-pointer" />
@@ -110,22 +125,43 @@ function ExerciseCard({
               setNumber={setIndex + 1}
               reps={set.reps}
               weight={set.weight}
+              actualReps={set.actualReps}
               completed={set.completed}
               onToggleComplete={() => {
-                // TODO: Dispatch toggleSetComplete action
-                console.log("Toggle set complete:", exercise.id, set.id);
+                dispatch(
+                  toggleSetComplete({
+                    exerciseId: exercise.id,
+                    setId: set.id,
+                  })
+                );
               }}
               onRemove={() => {
-                // TODO: Dispatch remove set action
-                console.log("Remove set:", exercise.id, set.id);
+                dispatch(
+                  removeSetFromActiveTemplate({
+                    exerciseId: exercise.id,
+                    setId: set.id,
+                  })
+                );
               }}
               onRepsChange={(reps) => {
-                // TODO: Dispatch update reps action
-                console.log("Update reps:", exercise.id, set.id, reps);
+                if (reps !== null) {
+                  dispatch(
+                    updateSetReps({
+                      exerciseId: exercise.id,
+                      setId: set.id,
+                      actualReps: reps,
+                    })
+                  );
+                }
               }}
               onWeightChange={(weight) => {
-                // TODO: Dispatch update weight action
-                console.log("Update weight:", exercise.id, set.id, weight);
+                dispatch(
+                  updateSetWeight({
+                    exerciseId: exercise.id,
+                    setId: set.id,
+                    weight,
+                  })
+                );
               }}
             />
           ))}

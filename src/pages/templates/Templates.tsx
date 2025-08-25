@@ -8,6 +8,7 @@ import { startTemplate } from "../../app/activeTemplateSlice";
 import { ChevronRight, Play, X } from "lucide-react";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import H1 from "../../components/reusable/H1";
+import { isWorkingOut } from "@/app/homeSlice";
 
 function Templates() {
   const templates = useAppSelector((state) => state.templates.templates);
@@ -55,6 +56,7 @@ function Templates() {
                     onClick={(e) => {
                       e.preventDefault();
                       dispatch(startTemplate(template));
+                      dispatch(isWorkingOut());
                       navigate(`/activeTemplate/${template.id}`);
                     }}
                   />

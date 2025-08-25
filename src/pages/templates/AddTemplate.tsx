@@ -17,7 +17,6 @@ import ChevronBack from "../../components/reusable/ChevronBack";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 
 function AddTemplate() {
-  // Extract relevant state from Redux store
   const exercises = useAppSelector(
     (state) => state.templates.draftTemplate.exercises
   );
@@ -61,7 +60,7 @@ function AddTemplate() {
 
         <div className="flex flex-col gap-4">
           <Button
-            to="/add-exercise"
+            to={`/add-template/${templateId || "new"}/add-exercise`}
             fullWidth
             onClick={() => {
               if (error) dispatch(clearAddTemplateError());
@@ -130,7 +129,11 @@ function AddTemplate() {
                   )
                 }
                 onRemove={(id) => dispatch(removeExerciseFromTemplate(id))}
-                onEdit={(id) => navigate(`/add-exercise/${id}`)}
+                onEdit={(id) =>
+                  navigate(
+                    `/add-template/${templateId || "new"}/add-exercise/${id}`
+                  )
+                }
               />
             ))}
           </div>
