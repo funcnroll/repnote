@@ -4,6 +4,7 @@ import NoWorkout from "./NoWorkout";
 import RecentWorkouts from "./RecentWorkouts";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { isNotWorkingOut, isWorkingOut } from "../../app/homeSlice";
+import { useEffect } from "react";
 
 import Button from "../../components/reusable/Button";
 import { PieChart, Pie, Cell, ResponsiveContainer } from "recharts";
@@ -22,8 +23,13 @@ function Home() {
     (state) => state.activeTemplate.activeTemplate
   );
 
-  if (activeTemplate) dispatch(isWorkingOut());
-  if (!activeTemplate) dispatch(isNotWorkingOut());
+  useEffect(() => {
+    if (activeTemplate) {
+      dispatch(isWorkingOut());
+    } else {
+      dispatch(isNotWorkingOut());
+    }
+  }, [activeTemplate, dispatch]);
 
   const totalSets = calculateTotalSets(activeTemplate);
   const completedSets = calculateCompletedSets(activeTemplate);
