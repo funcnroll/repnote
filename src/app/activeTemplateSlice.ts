@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Exercise } from "@/types/Exercise";
 import ActiveTemplate from "../pages/templates/ActiveTemplate";
-import { saveActiveTemplateToLocalStorage } from "./localStorage";
+import { saveFinishedWorkoutToLocalStorage } from "./localStorage";
 import { CompletedWorkout } from "../types/CompletedWorkout";
 import { getCurrentTimestamp } from "@/helpers/getCurrentTimeStamp";
 import {
@@ -46,7 +46,7 @@ const activeTemplateSlice = createSlice({
           exercises: state.activeTemplate.exercises,
         };
 
-        saveActiveTemplateToLocalStorage(completedWorkout);
+        saveFinishedWorkoutToLocalStorage(completedWorkout);
       }
 
       state.activeTemplate = null;

@@ -71,7 +71,7 @@ export function removeIsCustomFromLocalStorage(exerciseId: string) {
  * Saves a completed workout to the recent workouts array in localStorage
  * Used for data persistence between browser sessions
  */
-export function saveActiveTemplateToLocalStorage(workout: CompletedWorkout) {
+export function saveFinishedWorkoutToLocalStorage(workout: CompletedWorkout) {
   const existingWorkouts = loadRecentWorkoutsFromLocalStorage();
   const updatedWorkouts = [workout, ...existingWorkouts].slice(0, 4); // Keep only last 4 workouts
   localStorage.setItem("recentWorkouts", JSON.stringify(updatedWorkouts));
@@ -82,6 +82,25 @@ export function saveActiveTemplateToLocalStorage(workout: CompletedWorkout) {
  * Returns empty array if no saved data exists
  */
 export function loadRecentWorkoutsFromLocalStorage(): CompletedWorkout[] {
+  const saved = localStorage.getItem("recentWorkouts");
+  return saved ? JSON.parse(saved) : [];
+}
+
+/**
+ * Saves a completed workout to the recent workouts array in localStorage
+ * Used for data persistence between browser sessions
+ */
+export function saveActiveTemplateToLocalStorage(workout: CompletedWorkout) {
+  const existingWorkouts = loadRecentWorkoutsFromLocalStorage();
+  const updatedWorkouts = [workout, ...existingWorkouts].slice(0, 4); // Keep only last 4 workouts
+  localStorage.setItem("recentWorkouts", JSON.stringify(updatedWorkouts));
+}
+
+/**
+ * Loads recent workouts array from browser localStorage
+ * Returns empty array if no saved data exists
+ */
+export function loadActiveTemplateFromLocalStorage(): CompletedWorkout[] {
   const saved = localStorage.getItem("recentWorkouts");
   return saved ? JSON.parse(saved) : [];
 }
