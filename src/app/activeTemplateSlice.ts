@@ -1,9 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Exercise } from "@/types/Exercise";
 import ActiveTemplate from "../pages/templates/ActiveTemplate";
-import { saveFinishedWorkoutToLocalStorage } from "./localStorage";
+import {
+  deleteActiveTemplateFromLocalStorage,
+  saveActiveTemplateToLocalStorage,
+  saveFinishedWorkoutToLocalStorage,
+} from "./localStorage";
 import { CompletedWorkout } from "../types/CompletedWorkout";
 import { getCurrentTimestamp } from "@/helpers/getCurrentTimeStamp";
+import { loadActiveTemplateFromLocalStorage } from "./localStorage";
 import {
   calculateTotalSets,
   calculateCompletedSets,
@@ -22,7 +27,7 @@ interface State {
 }
 
 const initialState: State = {
-  activeTemplate: null,
+  activeTemplate: loadActiveTemplateFromLocalStorage() || null,
 };
 
 const activeTemplateSlice = createSlice({
@@ -31,6 +36,7 @@ const activeTemplateSlice = createSlice({
   reducers: {
     // Start a workout with a template
     startTemplate(state, action: PayloadAction<ActiveTemplate>) {
+      saveActiveTemplateToLocalStorage(action.payload);
       state.activeTemplate = action.payload;
     },
 
@@ -47,6 +53,7 @@ const activeTemplateSlice = createSlice({
         };
 
         saveFinishedWorkoutToLocalStorage(completedWorkout);
+        deleteActiveTemplateFromLocalStorage();
       }
 
       state.activeTemplate = null;
@@ -59,6 +66,7 @@ const activeTemplateSlice = createSlice({
         state.activeTemplate.exercises = state.activeTemplate.exercises.filter(
           (exercise) => exercise.id !== exerciseId
         );
+        saveActiveTemplateToLocalStorage(state.activeTemplate);
       }
     },
 
@@ -90,6 +98,7 @@ const activeTemplateSlice = createSlice({
       if (moved && state.activeTemplate) {
         copy.splice(to, 0, moved);
         state.activeTemplate.exercises = copy;
+        saveActiveTemplateToLocalStorage(state.activeTemplate);
       }
     },
 
@@ -104,6 +113,9 @@ const activeTemplateSlice = createSlice({
       const set = exercise?.sets.find((s) => s.id === setId);
       if (set) {
         set.completed = !set.completed;
+        state.activeTemplate
+          ? saveActiveTemplateToLocalStorage(state.activeTemplate)
+          : null;
       }
     },
 
@@ -123,6 +135,9 @@ const activeTemplateSlice = createSlice({
       const set = exercise?.sets.find((set) => set.id === setId);
       if (set) {
         set.actualReps = actualReps;
+        state.activeTemplate
+          ? saveActiveTemplateToLocalStorage(state.activeTemplate)
+          : null;
       }
     },
 
@@ -142,6 +157,9 @@ const activeTemplateSlice = createSlice({
       const set = exercise?.sets.find((set) => set.id === setId);
       if (set) {
         set.weight = weight;
+        state.activeTemplate
+          ? saveActiveTemplateToLocalStorage(state.activeTemplate)
+          : null;
       }
     },
 
@@ -156,6 +174,9 @@ const activeTemplateSlice = createSlice({
       );
       if (exercise) {
         exercise.sets = exercise.sets.filter((set) => set.id !== setId);
+        state.activeTemplate
+          ? saveActiveTemplateToLocalStorage(state.activeTemplate)
+          : null;
       }
     },
 
@@ -167,6 +188,7 @@ const activeTemplateSlice = createSlice({
         );
         if (exerciseIndex !== -1) {
           state.activeTemplate.exercises[exerciseIndex] = updatedExercise;
+          saveActiveTemplateToLocalStorage(state.activeTemplate);
         }
       }
     },

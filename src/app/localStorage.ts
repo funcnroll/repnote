@@ -1,6 +1,7 @@
 import { Template } from "./templateSlice";
 
 import { CompletedWorkout } from "../types/CompletedWorkout";
+import { ActiveTemplate } from "./activeTemplateSlice";
 
 /**
  * Saves the current templates array to browser localStorage
@@ -87,20 +88,28 @@ export function loadRecentWorkoutsFromLocalStorage(): CompletedWorkout[] {
 }
 
 /**
- * Saves a completed workout to the recent workouts array in localStorage
- * Used for data persistence between browser sessions
+ * Saves the currently active workout template to localStorage
+ * Used to persist in-progress workouts between browser sessions
  */
-export function saveActiveTemplateToLocalStorage(workout: CompletedWorkout) {
-  const existingWorkouts = loadRecentWorkoutsFromLocalStorage();
-  const updatedWorkouts = [workout, ...existingWorkouts].slice(0, 4); // Keep only last 4 workouts
-  localStorage.setItem("recentWorkouts", JSON.stringify(updatedWorkouts));
+export function saveActiveTemplateToLocalStorage(
+  activeTemplate: ActiveTemplate
+) {
+  localStorage.setItem("activeTemplate", JSON.stringify(activeTemplate));
 }
 
 /**
- * Loads recent workouts array from browser localStorage
- * Returns empty array if no saved data exists
+ * Loads the currently active workout template from localStorage
+ * Returns null if no active template exists
  */
-export function loadActiveTemplateFromLocalStorage(): CompletedWorkout[] {
-  const saved = localStorage.getItem("recentWorkouts");
-  return saved ? JSON.parse(saved) : [];
+export function loadActiveTemplateFromLocalStorage(): ActiveTemplate | null {
+  const saved = localStorage.getItem("activeTemplate");
+  return saved ? JSON.parse(saved) : null;
+}
+
+/**
+ * Deletes the active template from browser localStorage
+ * Used when finishing or canceling a workout
+ */
+export function deleteActiveTemplateFromLocalStorage() {
+  localStorage.removeItem("activeTemplate");
 }

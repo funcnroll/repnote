@@ -14,7 +14,7 @@
 - [x] Allow user to add a template
   - [x] Handle edge cases (User adding template without exercises, etc.)
 - [x] Allow user to add exercise within an active template
-- [ ] add active template to local storage and load from local storage
+- [x] add active template to local storage and load from local storage (if applicable)
 
 ## 🛠️ Exercise Management
 
