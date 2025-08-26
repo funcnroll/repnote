@@ -13,7 +13,8 @@
 - [x] Allow editing of sets before starting a workout
 - [x] Allow user to add a template
   - [x] Handle edge cases (User adding template without exercises, etc.)
-- [ ] Allow user to add exercise within an active template
+- [x] Allow user to add exercise within an active template
+- [ ] add active template to local storage and load from local storage
 
 ## 🛠️ Exercise Management
 
