@@ -1,9 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Exercise } from "@/types/Exercise";
 import ActiveTemplate from "../pages/templates/ActiveTemplate";
+import { saveActiveTemplateToLocalStorage } from "./localStorage";
+import { CompletedWorkout } from "../types/CompletedWorkout";
+import { getCurrentTimestamp } from "@/helpers/getCurrentTimeStamp";
+import {
+  calculateTotalSets,
+  calculateCompletedSets,
+} from "@/helpers/workoutCalculations";
 
 // Active template object used during workout sessions
-interface ActiveTemplate {
+export interface ActiveTemplate {
   exercises: Exercise[];
   id: string;
   name: string;
@@ -29,7 +36,19 @@ const activeTemplateSlice = createSlice({
 
     // Finish the current workout and clear active template
     finishTemplate(state) {
-      // TODO: Add finished workouts to localStorage and then display sets done
+      if (state.activeTemplate) {
+        const completedWorkout: CompletedWorkout = {
+          id: state.activeTemplate.id,
+          name: state.activeTemplate.name,
+          sets: calculateTotalSets(state.activeTemplate),
+          completedSets: calculateCompletedSets(state.activeTemplate),
+          timestamp: getCurrentTimestamp(),
+          exercises: state.activeTemplate.exercises,
+        };
+
+        saveActiveTemplateToLocalStorage(completedWorkout);
+      }
+
       state.activeTemplate = null;
     },
 

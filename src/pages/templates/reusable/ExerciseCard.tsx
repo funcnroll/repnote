@@ -97,9 +97,13 @@ function ExerciseCard({
               if (onEdit) {
                 onEdit(exercise.id);
               } else if (activeTemplateId) {
-                navigate(`/active-template/${activeTemplateId}/add-exercise/${exercise.id}`);
+                navigate(
+                  `/active-template/${activeTemplateId}/add-exercise/${exercise.id}`
+                );
               } else if (templateId) {
-                navigate(`/add-template/${templateId}/add-exercise/${exercise.id}`);
+                navigate(
+                  `/add-template/${templateId}/add-exercise/${exercise.id}`
+                );
               } else {
                 // This shouldn't happen with the new nested structure, but fallback
                 navigate(`/add-template/new/add-exercise/${exercise.id}`);

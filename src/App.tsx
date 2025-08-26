@@ -8,6 +8,7 @@ import AddTemplate from "./pages/templates/AddTemplate";
 import AddExercise from "./pages/templates/AddExercise";
 import { useAppSelector } from "@/app/hooks";
 import ActiveTemplate from "./pages/templates/ActiveTemplate";
+import RecentActiveTemplate from "./pages/templates/RecentActiveTemplate";
 
 export default function App() {
   const name = useAppSelector((state) => state.home.name);
@@ -55,6 +56,10 @@ export default function App() {
               <Route
                 path="/activeTemplate/:activeTemplateId"
                 element={<ActiveTemplate />}
+              />
+              <Route
+                path="/recentActiveTemplate/:recentActiveTemplateId"
+                element={<RecentActiveTemplate />}
               />
             </Routes>
           </div>

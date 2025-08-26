@@ -39,7 +39,7 @@ function AddTemplate() {
   const isEditMode = templates.some((t) => String(t.id) === String(templateId));
 
   return (
-    <div className="dvh-full overflow-y-auto bg-backgroundColor text-white px-6 py-8">
+    <div className="h-screen overflow-y-auto bg-backgroundColor text-white px-6 py-8 pb-24">
       <ChevronBack />
 
       {error && <Error msg={error} />}
