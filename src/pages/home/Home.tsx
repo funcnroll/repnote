@@ -82,6 +82,7 @@ function Home() {
                       startAngle={90}
                       endAngle={-270}
                       dataKey="value"
+                      stroke="none"
                     >
                       {progressData.map((entry, index) => (
                         <Cell
