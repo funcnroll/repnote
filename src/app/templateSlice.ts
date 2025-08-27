@@ -3,6 +3,7 @@ import { generateId } from "../helpers/generateId";
 import { loadTemplatesFromLocalStorage } from "./localStorage";
 import { Exercise } from "@/types/Exercise";
 import { Set } from "@/types/Set";
+import { templateSliceFunctions } from "./templateSliceFunctions";
 
 // Complete workout template containing multiple exercises
 export interface Template {
@@ -135,8 +136,10 @@ const templateSlice = createSlice({
       action: PayloadAction<Omit<Exercise, "id"> | Exercise>
     ) {
       const exercise = action.payload;
+
       const exerciseWithId =
-        "id" in exercise ? exercise : { ...exercise, id: generateId() };
+        templateSliceFunctions.EnsureExerciseHasId(exercise);
+
       state.draftTemplate.exercises.push(exerciseWithId);
     },
 
@@ -146,8 +149,9 @@ const templateSlice = createSlice({
     ) {
       const { exerciseId, set } = action.payload;
 
-      const exercise = state.draftTemplate.exercises.find(
-        (ex) => ex.id === exerciseId
+      const exercise = templateSliceFunctions.findExercise(
+        exerciseId,
+        state.draftTemplate.exercises
       );
 
       if (exercise) exercise.sets.push(set);
@@ -156,29 +160,21 @@ const templateSlice = createSlice({
     removeExerciseFromTemplate(state, action: PayloadAction<string>) {
       const exerciseId = action.payload;
 
-      state.draftTemplate.exercises = state.draftTemplate.exercises.filter(
-        (exercise) => exercise.id !== exerciseId
+      state.draftTemplate.exercises = templateSliceFunctions.filterExerciseOut(
+        exerciseId,
+        state.draftTemplate.exercises
       );
     },
     // Update an existing exercise in the temporary template
     editExerciseInTemplate(state, action: PayloadAction<Exercise>) {
       const { id, exerciseName, sets } = action.payload;
 
-      const index = state.draftTemplate.exercises.findIndex(
-        (exercise) => exercise.id === id
+      templateSliceFunctions.editExercise(
+        id,
+        exerciseName,
+        sets,
+        state.draftTemplate.exercises
       );
-
-      if (index !== -1) {
-        const currentExercise = state.draftTemplate.exercises[index];
-
-        if (currentExercise) {
-          state.draftTemplate.exercises[index] = {
-            id: currentExercise.id,
-            exerciseName,
-            sets,
-          };
-        }
-      }
     },
 
     // Reorder exercises within the temporary template
@@ -187,29 +183,15 @@ const templateSlice = createSlice({
       action: PayloadAction<{ from: number; to: number }>
     ) {
       const { from, to } = action.payload;
-      const list = state.draftTemplate.exercises;
 
-      // Validate indices to prevent array manipulation errors
-      if (
-        from === to ||
-        from < 0 ||
-        to < 0 ||
-        from >= list.length ||
-        to >= list.length
-      )
-        return;
-
-      const copy = [...list];
-
-      // Move exercise from 'from' index to 'to' index
-      const movedArray = copy.splice(from, 1);
-      const moved = movedArray[0];
-      if (moved) {
-        copy.splice(to, 0, moved);
-        state.draftTemplate.exercises = copy;
-      }
+      state.draftTemplate.exercises = templateSliceFunctions.reorderExercises(
+        from,
+        to,
+        state.draftTemplate.exercises
+      );
     },
-    // Optionally update specifictemplate data with activeTemplate
+
+    // Optionally update specific template data with activeTemplate
     updateTemplateFromActive(
       state,
       action: PayloadAction<{ templateId: string; exercises: Exercise[] }>
