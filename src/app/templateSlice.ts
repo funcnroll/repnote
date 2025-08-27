@@ -24,7 +24,6 @@ interface State {
   templates: Template[]; // All saved workout templates
   draftTemplate: DraftTemplate; // Draft template being created/edited
   // TODO: Optional until starting a workout is finished
-  activeTemplate?: DraftTemplate | null; // Tracks current active template
   templateToView: Template | null; // Template selected for viewing/starting
 }
 
@@ -40,7 +39,6 @@ const initialState: State = {
   templates: loadTemplatesFromLocalStorage() || [],
 
   draftTemplate: defaultDraftTemplate,
-  activeTemplate: null,
   templateToView: null,
 };
 const templateSlice = createSlice({
