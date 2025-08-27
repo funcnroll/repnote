@@ -26,7 +26,6 @@
 
 - [x] Add an option next to each exercise to reorder exercises
 - [x] Display an **X** next to each set to remove it
-- [ ] Show a **persistent bar at the bottom** to add new sets or exercises
 
 ## 🗂️ Misc
 

@@ -1,5 +1,6 @@
 import ChevronBack from "@/components/reusable/ChevronBack";
 import H1 from "@/components/reusable/H1";
+import Button from "@/components/reusable/Button";
 import { useAppSelector, useAppDispatch } from "@/app/hooks";
 import {
   removeExerciseFromActiveTemplate,
@@ -48,6 +49,16 @@ function ActiveTemplate() {
             }
           />
         ))}
+      </div>
+
+      {/* Add Exercise Button */}
+      <div className="mt-6">
+        <Button
+          to={`/active-template/${activeTemplate?.id}/add-exercise`}
+          fullWidth
+        >
+          + Add Exercise
+        </Button>
       </div>
 
       {/* Finish Workout Buttons */}

@@ -4,7 +4,7 @@ import {
   addExerciseToTemplate,
   editExerciseInTemplate,
 } from "../../app/templateSlice";
-import { editExerciseInActiveTemplate } from "../../app/activeTemplateSlice";
+import { editExerciseInActiveTemplate, addExerciseToActiveTemplate } from "../../app/activeTemplateSlice";
 import {
   setAddExerciseError,
   clearAddExerciseError,
@@ -239,12 +239,16 @@ function AddExercise() {
               dispatch(editExerciseInTemplate(exerciseData));
             }
           } else {
-            // Adding new exercise - only valid in template creation context
-            if (isTemplateEdit) {
-              const exerciseData = {
-                exerciseName: name,
-                sets,
-              };
+            // Adding new exercise
+            const exerciseData: Exercise = {
+              id: Date.now().toString(),
+              exerciseName: name,
+              sets,
+            };
+
+            if (isActiveTemplateEdit) {
+              dispatch(addExerciseToActiveTemplate(exerciseData));
+            } else if (isTemplateEdit) {
               dispatch(addExerciseToTemplate(exerciseData));
             }
           }

@@ -192,6 +192,14 @@ const activeTemplateSlice = createSlice({
         }
       }
     },
+
+    addExerciseToActiveTemplate(state, action: PayloadAction<Exercise>) {
+      const newExercise = action.payload;
+      if (state.activeTemplate) {
+        state.activeTemplate.exercises.push(newExercise);
+        saveActiveTemplateToLocalStorage(state.activeTemplate);
+      }
+    },
   },
 });
 
@@ -205,6 +213,7 @@ export const {
   updateSetWeight,
   removeSetFromActiveTemplate,
   editExerciseInActiveTemplate,
+  addExerciseToActiveTemplate,
 } = activeTemplateSlice.actions;
 
 export default activeTemplateSlice.reducer;
