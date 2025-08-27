@@ -4,7 +4,10 @@ import {
   addExerciseToTemplate,
   editExerciseInTemplate,
 } from "../../app/templateSlice";
-import { editExerciseInActiveTemplate, addExerciseToActiveTemplate } from "../../app/activeTemplateSlice";
+import {
+  editExerciseInActiveTemplate,
+  addExerciseToActiveTemplate,
+} from "../../app/activeTemplateSlice";
 import {
   setAddExerciseError,
   clearAddExerciseError,
@@ -262,7 +265,7 @@ function AddExercise() {
         }}
         className="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 font-medium transition cursor-pointer"
       >
-        {exerciseId ? "Edit Exercise" : "Add Exercise"}
+        {exerciseId && exerciseToEditData ? "Edit Exercise" : "Add Exercise"}
       </button>
     </div>
   );
