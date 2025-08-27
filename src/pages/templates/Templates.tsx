@@ -1,8 +1,8 @@
 import { Link, useNavigate } from "react-router";
 import {
-  createdraftTemplate,
+  createDraftTemplate,
   deleteTemplate,
-  loaddraftTemplate,
+  loadDraftTemplate,
 } from "../../app/templateSlice";
 import { startTemplate } from "../../app/activeTemplateSlice";
 import { ChevronRight, Play, X } from "lucide-react";
@@ -29,7 +29,7 @@ function Templates() {
         <Link
           to="/add-template"
           className="bg-blue-500 hover:bg-blue-600 text-white font-medium px-6 py-3 rounded-md shadow-md transition"
-          onClick={() => dispatch(createdraftTemplate())}
+          onClick={() => dispatch(createDraftTemplate())}
         >
           New Template
         </Link>
@@ -74,7 +74,7 @@ function Templates() {
                     className="text-gray-400 hover:text-blue-400 transition cursor-pointer"
                     onClick={(e) => {
                       e.preventDefault();
-                      dispatch(loaddraftTemplate(template.id));
+                      dispatch(loadDraftTemplate(template.id));
                       navigate(`/add-template/${template.id}`);
                     }}
                   />

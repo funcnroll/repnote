@@ -29,7 +29,7 @@ interface State {
 }
 
 // Default empty template used for resetting the temporary template
-const defaultdraftTemplate: DraftTemplate = {
+const defaultDraftTemplate: DraftTemplate = {
   exercises: [],
   id: "",
   name: "",
@@ -39,7 +39,7 @@ const initialState: State = {
   // Load existing templates from localStorage, or start with empty array
   templates: loadTemplatesFromLocalStorage() || [],
 
-  draftTemplate: defaultdraftTemplate,
+  draftTemplate: defaultDraftTemplate,
   activeTemplate: null,
   templateToView: null,
 };
@@ -48,7 +48,7 @@ const templateSlice = createSlice({
   initialState,
   reducers: {
     // Initialize a new temporary template for creation
-    createdraftTemplate(state) {
+    createDraftTemplate(state) {
       const id = generateId();
       state.draftTemplate = {
         exercises: [],
@@ -58,7 +58,7 @@ const templateSlice = createSlice({
     },
 
     // Load an existing template into the temporary template for editing
-    loaddraftTemplate(state, action: PayloadAction<string>) {
+    loadDraftTemplate(state, action: PayloadAction<string>) {
       const templateId = action.payload;
 
       const found = state.templates.find(
@@ -77,7 +77,7 @@ const templateSlice = createSlice({
         };
       } else {
         // Reset to default if template not found
-        state.draftTemplate = defaultdraftTemplate;
+        state.draftTemplate = defaultDraftTemplate;
       }
     },
 
@@ -104,7 +104,7 @@ const templateSlice = createSlice({
       });
 
       // Clear the temporary template after saving
-      state.draftTemplate = defaultdraftTemplate;
+      state.draftTemplate = defaultDraftTemplate;
     },
     // Remove a template from the templates array
     deleteTemplate(state, action: PayloadAction<string>) {
@@ -128,7 +128,7 @@ const templateSlice = createSlice({
       }
 
       // Clear the temporary template after updating
-      state.draftTemplate = defaultdraftTemplate;
+      state.draftTemplate = defaultDraftTemplate;
     },
 
     // Add a new exercise to the temporary template
@@ -232,11 +232,11 @@ export const {
   addTemplate,
   editExerciseInTemplate,
   addExerciseToTemplate,
-  createdraftTemplate,
+  createDraftTemplate,
   removeExerciseFromTemplate,
   deleteTemplate,
   editTemplateName,
-  loaddraftTemplate,
+  loadDraftTemplate,
   updateTemplate,
   reorderExerciseInTemplate,
   updateTemplateFromActive,
