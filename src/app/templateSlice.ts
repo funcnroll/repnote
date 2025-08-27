@@ -13,7 +13,7 @@ export interface Template {
 
 // Temporary template object used during template creation/editing
 // Separated from main templates to allow draft states without affecting saved data
-interface draftTemplateObj {
+interface DraftTemplate {
   exercises: Exercise[];
   id: string;
   name: string;
@@ -22,14 +22,14 @@ interface draftTemplateObj {
 // Main state structure for template management
 interface State {
   templates: Template[]; // All saved workout templates
-  draftTemplate: draftTemplateObj; // Draft template being created/edited
+  draftTemplate: DraftTemplate; // Draft template being created/edited
   // TODO: Optional until starting a workout is finished
-  activeTemplate?: draftTemplateObj | null; // Tracks current active template
+  activeTemplate?: DraftTemplate | null; // Tracks current active template
   templateToView: Template | null; // Template selected for viewing/starting
 }
 
 // Default empty template used for resetting the temporary template
-const defaultdraftTemplate: draftTemplateObj = {
+const defaultdraftTemplate: DraftTemplate = {
   exercises: [],
   id: "",
   name: "",
@@ -91,7 +91,7 @@ const templateSlice = createSlice({
       state,
       action: PayloadAction<{
         templateName: string;
-        draftTemplate: draftTemplateObj;
+        draftTemplate: DraftTemplate;
       }>
     ) {
       const { templateName: name, draftTemplate } = action.payload;
@@ -116,7 +116,7 @@ const templateSlice = createSlice({
     },
 
     // Update an existing template with changes from the temporary template
-    updateTemplate(state, action: PayloadAction<draftTemplateObj>) {
+    updateTemplate(state, action: PayloadAction<DraftTemplate>) {
       const templateIdToUpdate = state.draftTemplate.id;
 
       const index = state.templates.findIndex(
