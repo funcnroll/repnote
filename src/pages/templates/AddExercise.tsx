@@ -22,7 +22,7 @@ import H1 from "../../components/reusable/H1";
 import { Search } from "lucide-react";
 import exercisesRaw from "../../data/exercises.json";
 import { ExerciseFromDB } from "../../types/ExerciseFromDB";
-import { searchExercises } from "../../helpers/searchExercises";
+import { searchExercises } from "../../services/exercises/searchExercises";
 import { useDebouncedValue } from "../../helpers/useDebouncedValue";
 import SearchExerciseCard from "./reusable/SearchExerciseCard";
 import SetRow from "./reusable/SetRow";

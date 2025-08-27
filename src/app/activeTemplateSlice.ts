@@ -12,7 +12,7 @@ import { loadActiveTemplateFromLocalStorage } from "./localStorage";
 import {
   calculateTotalSets,
   calculateCompletedSets,
-} from "@/helpers/workoutCalculations";
+} from "@/services/exercises/workoutCalculations";
 
 // Active template object used during workout sessions
 export interface ActiveTemplate {

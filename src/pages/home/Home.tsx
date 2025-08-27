@@ -12,7 +12,7 @@ import {
   calculateTotalSets,
   calculateCompletedSets,
   calculateWorkoutProgress,
-} from "@/helpers/workoutCalculations";
+} from "@/services/exercises/workoutCalculations";
 
 function Home() {
   const name = useAppSelector((state) => state.home.name);
