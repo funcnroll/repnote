@@ -31,6 +31,7 @@
 
 - [x] Convert Javascript to Typescript after finishing template builder logic (adding/removing/editing template, editing/adding/removing/reodering exercises)
 - [ ] Refactor all logic and JSX within templates for easier readability (!!)
+- [ ] Abstract and simplify exercise logic within templateSlice.js for easier readability (!!)
 
 ---
 
