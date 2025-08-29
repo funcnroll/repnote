@@ -3,7 +3,8 @@ import { generateId } from "../helpers/generateId";
 import { loadTemplatesFromLocalStorage } from "./localStorage";
 import { Exercise } from "@/types/Exercise";
 import { Set } from "@/types/Set";
-import { templateSliceFunctions } from "./templateSliceFunctions";
+import { exerciseUtils } from "./exerciseUtils";
+import { templateUtils } from "./templateUtils";
 
 // Complete workout template containing multiple exercises
 export interface Template {
@@ -14,7 +15,7 @@ export interface Template {
 
 // Temporary template object used during template creation/editing
 // Separated from main templates to allow draft states without affecting saved data
-interface DraftTemplate {
+export interface DraftTemplate {
   exercises: Exercise[];
   id: string;
   name: string;
@@ -93,6 +94,8 @@ const templateSlice = createSlice({
         draftTemplate: DraftTemplate;
       }>
     ) {
+      // No separate function needed as this is just a basic array operation
+
       const { templateName: name, draftTemplate } = action.payload;
       const { exercises, id } = draftTemplate;
 
@@ -109,22 +112,18 @@ const templateSlice = createSlice({
     deleteTemplate(state, action: PayloadAction<string>) {
       const templateId = action.payload;
 
-      state.templates = state.templates.filter(
-        (template) => template.id !== String(templateId)
-      );
+      state.templates = templateUtils.delete(templateId, state.templates);
     },
 
     // Update an existing template with changes from the temporary template
     updateTemplate(state, action: PayloadAction<DraftTemplate>) {
       const templateIdToUpdate = state.draftTemplate.id;
 
-      const index = state.templates.findIndex(
-        (template) => template.id === templateIdToUpdate
+      state.templates = templateUtils.update(
+        templateIdToUpdate,
+        state.templates,
+        action.payload
       );
-
-      if (index !== -1) {
-        state.templates[index] = action.payload;
-      }
 
       // Clear the temporary template after updating
       state.draftTemplate = defaultDraftTemplate;
@@ -137,8 +136,7 @@ const templateSlice = createSlice({
     ) {
       const exercise = action.payload;
 
-      const exerciseWithId =
-        templateSliceFunctions.EnsureExerciseHasId(exercise);
+      const exerciseWithId = exerciseUtils.ensureHasId(exercise);
 
       state.draftTemplate.exercises.push(exerciseWithId);
     },
@@ -149,7 +147,7 @@ const templateSlice = createSlice({
     ) {
       const { exerciseId, set } = action.payload;
 
-      const exercise = templateSliceFunctions.findExercise(
+      const exercise = exerciseUtils.find(
         exerciseId,
         state.draftTemplate.exercises
       );
@@ -160,7 +158,7 @@ const templateSlice = createSlice({
     removeExerciseFromTemplate(state, action: PayloadAction<string>) {
       const exerciseId = action.payload;
 
-      state.draftTemplate.exercises = templateSliceFunctions.filterExerciseOut(
+      state.draftTemplate.exercises = exerciseUtils.filterOut(
         exerciseId,
         state.draftTemplate.exercises
       );
@@ -169,7 +167,7 @@ const templateSlice = createSlice({
     editExerciseInTemplate(state, action: PayloadAction<Exercise>) {
       const { id, exerciseName, sets } = action.payload;
 
-      templateSliceFunctions.editExercise(
+      state.draftTemplate.exercises = exerciseUtils.edit(
         id,
         exerciseName,
         sets,
@@ -184,7 +182,7 @@ const templateSlice = createSlice({
     ) {
       const { from, to } = action.payload;
 
-      state.draftTemplate.exercises = templateSliceFunctions.reorderExercises(
+      state.draftTemplate.exercises = exerciseUtils.reorder(
         from,
         to,
         state.draftTemplate.exercises
@@ -198,9 +196,7 @@ const templateSlice = createSlice({
     ) {
       const { templateId, exercises } = action.payload;
 
-      const templateToModify = state.templates.findIndex(
-        (template) => template.id === templateId
-      );
+      const templateToModify = templateUtils.find(templateId, state.templates);
 
       // Tell TS that this element will ALWAYS exist
       state.templates[templateToModify]!.exercises = exercises;
