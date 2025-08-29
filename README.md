@@ -1,6 +1,6 @@
 # 🏋️ RepNote
 
-## **RepNote** is a minimalist workout tracking app with a mobile-style interface designed to simulate a phone experience directly in the browser, built with React, TailwindCSS, and Redux Toolkit
+## **RepNote** is a minimalist workout tracking app with a mobile-style interface designed to simulate a phone experience directly in the browser, built with React, TailwindCSS, and Redux Toolkit.
 
 ## 🎨 Concept Design
 
@@ -16,7 +16,8 @@ Below is the planned UI for Repnote. The current build is still in early develop
 - 🗂️ Saved templates & planned exercises
 - 🔁 Global state with **Redux Toolkit**
 - 📍 Page routing with **React Router**
-- 🧠 Designed for simplicityand demo effectiveness
+- 📊 Foundations for **data visualisation** and **stats-based insights**
+- 🧠 Designed for simplicity and demo effectiveness
 
 ---
 
@@ -25,6 +26,8 @@ Below is the planned UI for Repnote. The current build is still in early develop
 This app is designed as a **developer portfolio project** to demonstrate:
 
 - Clean and scalable React architecture
+- Explore data visualisation ideas related to workouts and performance
+  Serve as a playground for experimenting with UI/UX and "playing" around with data and structure in a relaxed way
 - State management patterns with Redux
 - Local UI design via TailwindCSS
 - Data flow in medium-complexity fitness tools
@@ -37,6 +40,7 @@ This app is designed as a **developer portfolio project** to demonstrate:
 - Redux Toolkit
 - React Router
 - TailwindCSS
+- Recharts
 
 ---
 
