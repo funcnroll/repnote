@@ -20,7 +20,19 @@
 
 - [x] Support adding **custom exercises**
 - [x] Include a searchable list of **common exercises**
+
   - [x] Remove exerciseName and base logic off isCustom (centralised exercise metadata)
+
+## 📈 Data & Visualisation
+
+- [ ] Track exercise history (weight, reps, sets over time)
+- [ ] Add chart view per exercise to show progress over time
+- [ ] Integrate with charting library (e.g. Chart.js, Recharts)
+- [ ] Toggle between views: e.g. weight over time, volume over time, etc.
+- [ ] Create summary view/dashboard for workout statistics
+  - [ ] Total sets per week
+  - [ ] Most trained muscle groups
+  - [ ] Personal bests, etc.
 
 ## 🧩 Exercise Editing UI
 
@@ -30,8 +42,8 @@
 ## 🗂️ Misc
 
 - [x] Convert Javascript to Typescript after finishing template builder logic (adding/removing/editing template, editing/adding/removing/reodering exercises)
-- [ ] Refactor all logic and JSX within templates for easier readability (!!)
-- [ ] Abstract and simplify exercise logic within templateSlice.js for easier readability (!!)
+- [ ] Refactor all logic and JSX within the /templates page folder for easier readability (!!)
+- [x] Abstract and simplify exercise logic within templateSlice.js for easier readability (!!)
 
 ---
 
