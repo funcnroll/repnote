@@ -39,6 +39,7 @@ import {
   updateLocalSet,
   removeLocalSet,
 } from "../../services/exercises/setLogic";
+import SearchExercises from "./reusable/SearchExercises";
 
 const exercises: ExerciseFromDB[] = exercisesRaw as ExerciseFromDB[];
 
@@ -128,19 +129,13 @@ function AddExercise() {
         onChange={setIsCustom}
       />
 
+      {/* Search the database for exercises if not custom */}
       {!isCustom && (
         <div>
-          <div className="mb-6">
-            <div className="relative">
-              <FormInput
-                placeholder="Search for an exercise.."
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-              <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" />
-            </div>
-          </div>
+          <SearchExercises
+            search={search}
+            setSearch={setSearch}
+          />
 
           {search.length > 0 &&
             exercises
@@ -175,6 +170,7 @@ function AddExercise() {
       )}
       {error && <Error msg={error} />}
 
+      {/* Sets section */}
       <div className="flex flex-col mb-6">
         {localSets.map((set, index) => (
           <SetRow
