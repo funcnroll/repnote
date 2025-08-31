@@ -34,6 +34,11 @@ import {
   loadIsCustomFromLocalStorage,
   removeIsCustomFromLocalStorage,
 } from "../../app/localStorage";
+import {
+  addLocalSet,
+  updateLocalSet,
+  removeLocalSet,
+} from "../../services/exercises/setLogic";
 
 const exercises: ExerciseFromDB[] = exercisesRaw as ExerciseFromDB[];
 
@@ -111,32 +116,6 @@ function AddExercise() {
     setSearch("");
   }
 
-  // Add a new set to local state
-  function addLocalSet() {
-    const newSet: Set = {
-      id: localSets.length, // Use index as temporary ID
-      reps: null,
-      weight: null,
-      actualReps: null,
-      completed: false,
-      notes: "",
-      rpe: null,
-    };
-    setLocalSets([...localSets, newSet]);
-  }
-
-  // Update a specific set
-  function updateLocalSet(index: number, updatedSet: Partial<Set>) {
-    setLocalSets(
-      localSets.map((set, i) => (i === index ? { ...set, ...updatedSet } : set))
-    );
-  }
-
-  // Remove a set
-  function removeLocalSet(index: number) {
-    setLocalSets(localSets.filter((_, i) => i !== index));
-  }
-
   return (
     <div className="h-screen overflow-y-auto bg-backgroundColor text-white px-6 py-8 pb-24">
       <ChevronBack />
@@ -203,13 +182,17 @@ function AddExercise() {
             setNumber={index + 1}
             reps={set.reps}
             weight={set.weight}
-            onRepsChange={(reps) => updateLocalSet(index, { reps })}
-            onWeightChange={(weight) => updateLocalSet(index, { weight })}
-            onRemove={() => removeLocalSet(index)}
+            onRepsChange={(reps) =>
+              updateLocalSet(localSets, setLocalSets, index, { reps })
+            }
+            onWeightChange={(weight) =>
+              updateLocalSet(localSets, setLocalSets, index, { weight })
+            }
+            onRemove={() => removeLocalSet(localSets, setLocalSets, index)}
           />
         ))}
 
-        <AddSetButton onClick={addLocalSet} />
+        <AddSetButton onClick={() => addLocalSet(localSets, setLocalSets)} />
       </div>
 
       <button
