@@ -22,13 +22,13 @@ export function useExerciseForm() {
   const { exerciseId, activeTemplateId, templateId } = useParams();
 
   // Check if we're editing in an active template context
-  const isActiveTemplateEdit = Boolean(activeTemplateId);
+  const isActiveTemplate = Boolean(activeTemplateId);
   // Check if we're in template creation context
-  const isTemplateEdit = Boolean(templateId);
+  const isTemplate = Boolean(templateId);
 
   // Find exercise data if we're in edit mode
   const exerciseToEditData = useAppSelector((state) => {
-    if (isActiveTemplateEdit) {
+    if (isActiveTemplate) {
       return state.activeTemplate.activeTemplate?.exercises.find(
         (e) => String(e.id) === String(exerciseId)
       );
@@ -90,8 +90,8 @@ export function useExerciseForm() {
     search,
     setSearch,
     exerciseId,
-    isActiveTemplateEdit,
-    isTemplateEdit,
+    isActiveTemplate,
+    isTemplate,
     exerciseToEditData,
     error,
     exerciseToSelect,

@@ -52,8 +52,8 @@ function AddExercise() {
     search,
     setSearch,
     exerciseId,
-    isActiveTemplateEdit,
-    isTemplateEdit,
+    isActiveTemplate,
+    isTemplate,
     exerciseToEditData,
     error,
     exerciseToSelect,
@@ -152,31 +152,41 @@ function AddExercise() {
           dispatch(clearAddExerciseError());
 
           // Update existing exercise or add new one based on mode
-          if (exerciseId && exerciseToEditData?.id) {
-            const exerciseData: Exercise = {
-              id: exerciseToEditData.id,
-              exerciseName: name,
-              sets,
-            };
+          const exerciseDataSwitch: Exercise =
+            exerciseId && exerciseToEditData?.id
+              ? {
+                  id: exerciseToEditData.id,
+                  exerciseName: name,
+                  sets,
+                }
+              : {
+                  id: Date.now().toString(),
+                  exerciseName: name,
+                  sets,
+                };
 
-            if (isActiveTemplateEdit) {
-              dispatch(editExerciseInActiveTemplate(exerciseData));
-            } else {
-              dispatch(editExerciseInTemplate(exerciseData));
-            }
-          } else {
-            // Adding new exercise
-            const exerciseData: Exercise = {
-              id: Date.now().toString(),
-              exerciseName: name,
-              sets,
-            };
+          switch (true) {
+            //  Exercise is being edited in an active template
+            case isActiveTemplate && Boolean(exerciseToEditData):
+              dispatch(editExerciseInActiveTemplate(exerciseDataSwitch));
+              break;
 
-            if (isActiveTemplateEdit) {
-              dispatch(addExerciseToActiveTemplate(exerciseData));
-            } else if (isTemplateEdit) {
-              dispatch(addExerciseToTemplate(exerciseData));
-            }
+            //  Exercise is being edited in a non-active template
+            case !isActiveTemplate && Boolean(exerciseToEditData):
+              dispatch(editExerciseInTemplate(exerciseDataSwitch));
+              break;
+
+            //  Adding a new exercise to a non-active template
+            case isTemplate && !Boolean(exerciseId):
+              dispatch(addExerciseToTemplate(exerciseDataSwitch));
+              break;
+            //  Adding a new exercise to an active template
+            case isActiveTemplate && !Boolean(exerciseToEditData):
+              dispatch(addExerciseToActiveTemplate(exerciseDataSwitch));
+              break;
+
+            default:
+              console.error("Invalid state for adding/editing exercise");
           }
 
           // Clean up localStorage for isCustom when done editing
