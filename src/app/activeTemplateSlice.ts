@@ -7,7 +7,6 @@ import {
   saveFinishedWorkoutToLocalStorage,
 } from "./localStorage";
 import { CompletedWorkout } from "../types/CompletedWorkout";
-import { getCurrentTimestamp } from "@/helpers/getCurrentTimeStamp";
 import { loadActiveTemplateFromLocalStorage } from "./localStorage";
 import {
   calculateTotalSets,
@@ -48,7 +47,7 @@ const activeTemplateSlice = createSlice({
           name: state.activeTemplate.name,
           sets: calculateTotalSets(state.activeTemplate),
           completedSets: calculateCompletedSets(state.activeTemplate),
-          timestamp: getCurrentTimestamp(),
+          timestamp: new Date().toISOString(),
           exercises: state.activeTemplate.exercises,
         };
 

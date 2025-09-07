@@ -13,6 +13,8 @@ import {
   calculateCompletedSets,
   calculateWorkoutProgress,
 } from "@/services/exercises/workoutCalculations";
+import { generatePPLWorkoutHistory, generatePPLTemplates } from "../../helpers/seedWorkoutData";
+import { seedWorkoutsToLocalStorage, saveTemplatesToLocalStorage } from "../../app/localStorage";
 
 function Home() {
   const name = useAppSelector((state) => state.home.name);
@@ -21,6 +23,13 @@ function Home() {
 
   const activeTemplate = useAppSelector(
     (state) => state.activeTemplate.activeTemplate
+  );
+  
+  const recentWorkouts = useAppSelector((state) => state.templates?.templates || []);
+  const hasPreloadedData = recentWorkouts.some(template => 
+    template.name.includes("Push Day") || 
+    template.name.includes("Pull Day") || 
+    template.name.includes("Legs Day")
   );
 
   useEffect(() => {
@@ -40,6 +49,25 @@ function Home() {
     { name: "Remaining", value: totalSets - completedSets, fill: "#1E293B" },
   ];
 
+  const handlePreloadData = () => {
+    if (hasPreloadedData) {
+      // Clear all data
+      localStorage.removeItem("recentWorkouts");
+      localStorage.removeItem("templates");
+    } else {
+      // Generate and seed workout history
+      const historicalWorkouts = generatePPLWorkoutHistory();
+      seedWorkoutsToLocalStorage(historicalWorkouts);
+      
+      // Generate and seed PPL templates
+      const pplTemplates = generatePPLTemplates();
+      saveTemplatesToLocalStorage(pplTemplates);
+    }
+    
+    // Force refresh by reloading the page to show updated data
+    window.location.reload();
+  };
+
   if (!name) {
     return (
       <div className="dvh-full overflow-y-auto flex items-center justify-center">
@@ -56,8 +84,23 @@ function Home() {
 
       <div className="max-w-4xl mx-auto">
         {!isWorkingOutState ? (
-          <div className="mt-14 flex justify-center">
-            <NoWorkout />
+          <div className="mt-14">
+            <div className="flex justify-center mb-8">
+              <NoWorkout />
+            </div>
+            <div className="flex justify-center">
+              <Button
+                variant="secondary"
+                onClick={handlePreloadData}
+                className={`${
+                  hasPreloadedData 
+                    ? "bg-red-600 hover:bg-red-700" 
+                    : "bg-blue-600 hover:bg-blue-700"
+                } text-white px-6 py-3 rounded-lg font-medium`}
+              >
+                {hasPreloadedData ? "Clear Data" : "Preload Data"}
+              </Button>
+            </div>
           </div>
         ) : (
           <>

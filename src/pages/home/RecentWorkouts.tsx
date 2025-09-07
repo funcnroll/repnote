@@ -3,7 +3,9 @@ import { loadRecentWorkoutsFromLocalStorage } from "@/app/localStorage";
 import { useNavigate } from "react-router";
 
 function RecentWorkouts() {
-  const recentWorkouts = loadRecentWorkoutsFromLocalStorage();
+  const allWorkouts = loadRecentWorkoutsFromLocalStorage();
+  // Only show the last 4 workouts (most recent)
+  const recentWorkouts = allWorkouts.slice(-4).reverse(); // Get last 4 and reverse for newest first
 
   const navigate = useNavigate();
 
@@ -38,7 +40,11 @@ function RecentWorkouts() {
                   <div className="flex items-center gap-2">
                     <div className="w-2 h-2 bg-green-500 rounded-full"></div>
                     <span className="text-gray-400 text-sm">
-                      {workout.timestamp}
+                      {new Date(workout.timestamp).toLocaleDateString("en-US", {
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric"
+                      })}
                     </span>
                   </div>
                 </div>

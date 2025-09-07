@@ -88,6 +88,19 @@ export function loadRecentWorkoutsFromLocalStorage(): CompletedWorkout[] {
 }
 
 /**
+ * Saves multiple completed workouts to localStorage for seeding purposes
+ * Temporarily removes the 4-workout limit to allow bulk historical data
+ */
+export function seedWorkoutsToLocalStorage(workouts: CompletedWorkout[]) {
+  // Sort workouts by timestamp (oldest first)
+  const sortedWorkouts = workouts.sort((a, b) => 
+    new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+  );
+  
+  localStorage.setItem("recentWorkouts", JSON.stringify(sortedWorkouts));
+}
+
+/**
  * Saves the currently active workout template to localStorage
  * Used to persist in-progress workouts between browser sessions
  */

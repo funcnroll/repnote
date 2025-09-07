@@ -43,11 +43,11 @@
 - [x] Convert Javascript to Typescript after finishing template builder logic (adding/removing/editing template, editing/adding/removing/reodering exercises)
 - [x] Refactor all logic and JSX within the /templates page folder for easier readability (!!)
 - [x] Abstract and simplify exercise logic within templateSlice.js for easier readability (!!)
-- [ ] Seed application with realistic historical workout data
-  - [ ] Generate 2-3 months of sample workout sessions
-  - [ ] Include variety in exercises, weights, and progression patterns
-  - [ ] Ensure data demonstrates realistic strength progression over time
-  - [ ] Add both completed workouts and partial sessions for authenticity
+- [x] Seed application with realistic historical workout data
+  - [x] Generate 2-3 months of sample workout sessions
+  - [x] Include variety in exercises, weights, and progression patterns
+  - [x] Ensure data demonstrates realistic strength progression over time
+  - [x] Add both completed workouts and partial sessions for authenticity
 
 ---
 

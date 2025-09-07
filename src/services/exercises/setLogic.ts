@@ -10,8 +10,6 @@ export function addLocalSet(
     weight: null,
     actualReps: null,
     completed: false,
-    notes: "",
-    rpe: null,
   };
   setLocalSets([...localSets, newSet]);
 }
