@@ -388,7 +388,7 @@ export function generatePPLTemplates(): Template[] {
     exercises: pullDay2Exercises,
   });
 
-  // Legs Day 1 Template
+  // Leg Day 1 Template
   const legsDay1Exercises = [
     "Barbell Squat",
     "Romanian Deadlift",
@@ -400,11 +400,11 @@ export function generatePPLTemplates(): Template[] {
 
   templates.push({
     id: generateId(),
-    name: "Legs Day 1",
+    name: "Leg Day 1",
     exercises: legsDay1Exercises,
   });
 
-  // Legs Day 2 Template
+  // Leg Day 2 Template
   const legsDay2Exercises = [
     "Leg Press",
     "Bulgarian Split Squat",
@@ -416,7 +416,7 @@ export function generatePPLTemplates(): Template[] {
 
   templates.push({
     id: generateId(),
-    name: "Legs Day 2",
+    name: "Leg Day 2",
     exercises: legsDay2Exercises,
   });
 
