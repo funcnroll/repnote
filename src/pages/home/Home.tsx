@@ -114,7 +114,7 @@ function Home() {
         ) : (
           <>
             {/* Workout Progress */}
-            <div className="bg-[#1c2331] p-8 rounded-xl mb-8 flex items-center justify-between">
+            <div className="bg-cardColor p-8 rounded-xl mb-8 flex items-center justify-between">
               <div className="flex flex-col gap-3">
                 <Button
                   variant="text"

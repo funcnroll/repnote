@@ -12,7 +12,7 @@ const links: LinkItem[] = [
   { to: "/", title: "Home", icon: <Home size={24} /> },
   { to: "/templates", title: "Templates", icon: <FileText size={24} /> },
   { to: "/history", title: "History", icon: <History size={24} /> },
-  { to: "/tracking", title: "Tracking", icon: <BarChart2 size={24} /> },
+  { to: "/statistics", title: "Statistics", icon: <BarChart2 size={24} /> },
 ];
 
 function NavMenu() {

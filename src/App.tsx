@@ -3,7 +3,7 @@ import NavMenu from "./components/nav/NavMenu";
 import Home from "./pages/home/Home";
 import Templates from "./pages/templates/Templates";
 import History from "./pages/history/History";
-import Tracking from "./pages/tracking/Tracking";
+import Statistics from "./pages/statistics/Statistics";
 import AddTemplate from "./pages/templates/AddTemplate";
 import AddExercise from "./pages/templates/AddExercise";
 import { useAppSelector } from "@/app/hooks";
@@ -37,8 +37,8 @@ export default function App() {
                 element={<History />}
               />
               <Route
-                path="/tracking"
-                element={<Tracking />}
+                path="/statistics"
+                element={<Statistics />}
               />
 
               <Route

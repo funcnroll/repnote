@@ -4,5 +4,6 @@
 @theme {
   --color-primaryColor: #1e293b;
   --color-secondaryColor: #2c3a54;
-  --color-backgroundColor: #0f172a
+  --color-backgroundColor: #0f172a;
+  --color-cardColor: #1c2331;
 }
