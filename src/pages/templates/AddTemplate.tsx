@@ -8,7 +8,7 @@ import {
 import { setAddTemplateError, clearAddTemplateError } from "@/app/errorSlice";
 import Button from "../../components/reusable/Button";
 import FormInput from "../../components/reusable/FormInput";
-import ExerciseCard from "./reusable/ExerciseCard";
+import ExerciseCard from "./reusable/exercise/ExerciseCard";
 import Error from "../../components/reusable/Error";
 import H1 from "../../components/reusable/H1";
 

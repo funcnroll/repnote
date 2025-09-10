@@ -8,7 +8,7 @@ import {
   finishTemplate,
 } from "@/app/activeTemplateSlice";
 import { updateTemplateFromActive } from "@/app/templateSlice";
-import ExerciseCard from "./reusable/ExerciseCard";
+import ExerciseCard from "./reusable/exercise/ExerciseCard";
 import { useNavigate } from "react-router";
 import { isNotWorkingOut } from "@/app/homeSlice";
 

@@ -1,6 +1,6 @@
 import { Exercise } from "@/types/Exercise";
 import ExerciseHeader from "./ExerciseHeader";
-import SetDisplay from "./SetDisplay";
+import SetDisplay from "../set/SetDisplay";
 
 interface RecentExerciseCardProps {
   exercise: Exercise;

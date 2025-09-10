@@ -1,8 +1,8 @@
 import { X, Edit, ArrowUp, ArrowDown } from "lucide-react";
 import { useNavigate, useParams } from "react-router";
 import { Exercise } from "@/types/Exercise";
-import ActiveTemplate from "../ActiveTemplate";
-import ActiveSetRow from "./ActiveSetRow";
+import ActiveTemplate from "../../ActiveTemplate";
+import ActiveSetRow from "../set/ActiveSetRow";
 import { useAppDispatch } from "@/app/hooks";
 import {
   toggleSetComplete,

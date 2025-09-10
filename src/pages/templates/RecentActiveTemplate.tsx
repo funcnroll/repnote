@@ -1,9 +1,9 @@
 import { loadRecentWorkoutsFromLocalStorage } from "@/app/localStorage";
 import { useParams } from "react-router";
-import WorkoutNotFound from "./reusable/WorkoutNotFound";
-import WorkoutPageLayout from "./reusable/WorkoutPageLayout";
-import WorkoutHeader from "./reusable/WorkoutHeader";
-import RecentExerciseCard from "./reusable/RecentExerciseCard";
+import WorkoutNotFound from "./reusable/workout/WorkoutNotFound";
+import WorkoutPageLayout from "./reusable/workout/WorkoutPageLayout";
+import WorkoutHeader from "./reusable/workout/WorkoutHeader";
+import RecentExerciseCard from "./reusable/exercise/RecentExerciseCard";
 
 function RecentActiveTemplate() {
   const { recentActiveTemplateId } = useParams();

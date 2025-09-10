@@ -3,18 +3,18 @@ import { useNavigate } from "react-router";
 import {
   addExerciseToTemplate,
   editExerciseInTemplate,
-} from "../../../app/templateSlice";
+} from "../../../../app/templateSlice";
 import {
   editExerciseInActiveTemplate,
   addExerciseToActiveTemplate,
-} from "../../../app/activeTemplateSlice";
+} from "../../../../app/activeTemplateSlice";
 import {
   setAddExerciseError,
   clearAddExerciseError,
-} from "../../../app/errorSlice";
+} from "../../../../app/errorSlice";
 import { Set } from "@/types/Set";
 import { Exercise } from "@/types/Exercise";
-import { removeIsCustomFromLocalStorage } from "../../../app/localStorage";
+import { removeIsCustomFromLocalStorage } from "../../../../app/localStorage";
 import { ForceType, MechanicType } from "@/types/ExerciseTypes";
 
 interface AddExerciseButtonProps {

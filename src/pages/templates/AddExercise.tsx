@@ -9,17 +9,17 @@ import exercisesRaw from "../../data/exercises.json";
 import { ExerciseFromDB } from "../../types/ExerciseFromDB";
 import { searchExercises } from "../../services/exercises/searchExercises";
 import { useDebouncedValue } from "../../hooks/useDebouncedValue";
-import SearchExerciseCard from "./reusable/SearchExerciseCard";
-import SetRow from "./reusable/SetRow";
-import AddSetButton from "./reusable/AddSetButton";
+import SearchExerciseCard from "./reusable/search/SearchExerciseCard";
+import SetRow from "./reusable/set/SetRow";
+import AddSetButton from "./reusable/set/AddSetButton";
 
 import {
   addLocalSet,
   updateLocalSet,
   removeLocalSet,
 } from "../../services/exercises/setLogic";
-import SearchExercises from "./reusable/SearchExercises";
-import AddExerciseButton from "./reusable/AddExerciseButton";
+import SearchExercises from "./reusable/search/SearchExercises";
+import AddExerciseButton from "./reusable/add/AddExerciseButton";
 import { useExerciseForm } from "@/hooks/useExerciseForm";
 
 const exercises: ExerciseFromDB[] = exercisesRaw as ExerciseFromDB[];
