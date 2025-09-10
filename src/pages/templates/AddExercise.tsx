@@ -42,6 +42,10 @@ function AddExercise() {
     exerciseToEditData,
     error,
     exerciseToSelect,
+    primaryMuscles,
+    secondaryMuscles,
+    force,
+    mechanic,
   } = useExerciseForm();
 
   const debouncedSearch = useDebouncedValue(search, 150);
@@ -127,6 +131,10 @@ function AddExercise() {
         exerciseToEditData={exerciseToEditData}
         isActiveTemplate={isActiveTemplate}
         isTemplate={isTemplate}
+        primaryMuscles={primaryMuscles}
+        secondaryMuscles={secondaryMuscles}
+        force={force}
+        mechanic={mechanic}
       />
     </div>
   );

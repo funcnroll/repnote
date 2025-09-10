@@ -1,3 +1,4 @@
+import { ForceType, MechanicType } from "./ExerciseTypes";
 import { Set } from "./Set";
 
 export interface Exercise {
@@ -6,6 +7,6 @@ export interface Exercise {
   sets: Set[];
   primaryMuscles?: string[];
   secondaryMuscles?: string[];
-  force?: "push" | "pull" | "static" | null;
-  mechanic?: "compound" | "isolation" | null;
+  force?: ForceType;
+  mechanic?: MechanicType;
 }

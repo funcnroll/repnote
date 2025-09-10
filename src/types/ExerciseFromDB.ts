@@ -1,9 +1,11 @@
+import { ForceType, MechanicType } from "./ExerciseTypes";
+
 export interface ExerciseFromDB {
   id: string;
   name: string;
-  force: "push" | "pull" | "static" | null;
+  force: ForceType;
   level: "beginner" | "intermediate" | "expert";
-  mechanic: "compound" | "isolation" | null;
+  mechanic: MechanicType;
   equipment: string; // more flexible
   primaryMuscles: string[];
   secondaryMuscles: string[];

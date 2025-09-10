@@ -8,11 +8,20 @@ import { Set } from "@/types/Set";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import exercisesRaw from "../data/exercises.json";
+import { ForceType } from "@/types/ExerciseTypes";
+import { MechanicType } from "../types/ExerciseTypes";
 
 export function useExerciseForm() {
   const exercises: ExerciseFromDB[] = exercisesRaw as ExerciseFromDB[];
 
   const [name, setName] = useState("");
+
+  const [primaryMuscles, setPrimaryMuscles] = useState(<string[]>[]);
+
+  const [secondaryMuscles, setSecondaryMuscles] = useState(<string[]>[]);
+  const [force, setForce] = useState(<ForceType>"");
+
+  const [mechanic, setMechanic] = useState(<MechanicType>"");
 
   const [localSets, setLocalSets] = useState<Set[]>([]);
 
@@ -77,6 +86,10 @@ export function useExerciseForm() {
 
   function exerciseToSelect(e: ExerciseFromDB) {
     setName(e.name);
+    setPrimaryMuscles(e.primaryMuscles);
+    setSecondaryMuscles(e.secondaryMuscles);
+    setMechanic(e.mechanic || null);
+    setForce(e.force || null);
     setSearch("");
   }
 
@@ -95,5 +108,9 @@ export function useExerciseForm() {
     exerciseToEditData,
     error,
     exerciseToSelect,
+    primaryMuscles,
+    secondaryMuscles,
+    force,
+    mechanic,
   };
 }

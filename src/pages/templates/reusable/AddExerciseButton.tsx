@@ -15,6 +15,7 @@ import {
 import { Set } from "@/types/Set";
 import { Exercise } from "@/types/Exercise";
 import { removeIsCustomFromLocalStorage } from "../../../app/localStorage";
+import { ForceType, MechanicType } from "@/types/ExerciseTypes";
 
 interface AddExerciseButtonProps {
   name: string;
@@ -23,6 +24,11 @@ interface AddExerciseButtonProps {
   exerciseToEditData: Exercise | undefined;
   isActiveTemplate: boolean;
   isTemplate: boolean;
+  primaryMuscles: string[];
+  secondaryMuscles: string[];
+
+  force: ForceType;
+  mechanic: MechanicType;
 }
 
 function AddExerciseButton({
@@ -32,6 +38,10 @@ function AddExerciseButton({
   exerciseToEditData,
   isActiveTemplate,
   isTemplate,
+  primaryMuscles,
+  secondaryMuscles,
+  mechanic,
+  force,
 }: AddExerciseButtonProps) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -59,11 +69,17 @@ function AddExerciseButton({
                 id: exerciseToEditData.id,
                 exerciseName: name,
                 sets,
+                primaryMuscles,
+                secondaryMuscles,
               }
             : {
                 id: Date.now().toString(),
                 exerciseName: name,
                 sets,
+                primaryMuscles,
+                secondaryMuscles,
+                force,
+                mechanic,
               };
 
         switch (true) {

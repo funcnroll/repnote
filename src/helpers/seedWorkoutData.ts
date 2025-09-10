@@ -3,6 +3,10 @@ import { Exercise } from "../types/Exercise";
 import { Set } from "../types/Set";
 import { generateId } from "./generateId";
 import { Template } from "../app/templateSlice";
+import exercisesRaw from "../data/exercises.json";
+import { ExerciseFromDB } from "../types/ExerciseFromDB";
+
+const exercises: ExerciseFromDB[] = exercisesRaw as ExerciseFromDB[];
 
 // PPL Exercise mapping with specific exercises from the database
 const PPL_EXERCISES = {
@@ -181,10 +185,16 @@ function createWorkoutExercise(
     );
   }
 
+  const dbExercise = exercises.find((e) => e.name === exerciseName);
+
   return {
     id: generateId(),
     exerciseName,
     sets,
+    primaryMuscles: dbExercise?.primaryMuscles,
+    secondaryMuscles: dbExercise?.secondaryMuscles,
+    force: dbExercise?.force,
+    mechanic: dbExercise?.mechanic,
   };
 }
 
@@ -301,7 +311,10 @@ function createTemplateExercise(exerciseName: string): Exercise {
     throw new Error(`Exercise not found: ${exerciseName}`);
   }
 
-  const { sets: numSets, min } = getRepRange(exerciseName, exerciseData.isCompound);
+  const { sets: numSets, min } = getRepRange(
+    exerciseName,
+    exerciseData.isCompound
+  );
   const sets: Set[] = [];
 
   for (let i = 1; i <= numSets; i++) {
