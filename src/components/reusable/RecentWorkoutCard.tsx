@@ -9,6 +9,16 @@ interface RecentWorkoutCardProps {
 function RecentWorkoutCard({ workout, index }: RecentWorkoutCardProps) {
   const navigate = useNavigate();
 
+  function formatDuration(seconds: number): string {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+
+    if (hours > 0 && minutes > 0) return `${hours}h ${minutes}m`;
+    if (hours > 0) return `${hours}h`;
+    if (minutes > 0) return `${minutes}m`;
+    return "0m";
+  }
+
   return (
     <div
       onClick={() => {
@@ -22,7 +32,7 @@ function RecentWorkoutCard({ workout, index }: RecentWorkoutCardProps) {
           <h3 className="font-semibold text-white group-hover:text-blue-400 transition-colors duration-200">
             {workout.name}
           </h3>
-          <div className="flex items-center gap-4 mt-2">
+          <div className="flex items-center gap-2 mt-2">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
               <span className="text-gray-400 text-sm">
@@ -35,10 +45,14 @@ function RecentWorkoutCard({ workout, index }: RecentWorkoutCardProps) {
                 {new Date(workout.timestamp).toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
-                  year: "numeric"
+                  year: "numeric",
                 })}
               </span>
             </div>
+            <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
+            <span className="text-gray-400 text-sm">
+              {formatDuration(workout.duration)}
+            </span>
           </div>
         </div>
         <div className="text-gray-500 group-hover:text-blue-400 transition-colors duration-200">
