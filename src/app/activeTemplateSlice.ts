@@ -18,6 +18,7 @@ export interface ActiveTemplate {
   exercises: Exercise[];
   id: string;
   name: string;
+  duration?: number | undefined;
 }
 
 // Main state structure for active template management
@@ -35,8 +36,13 @@ const activeTemplateSlice = createSlice({
   reducers: {
     // Start a workout with a template
     startTemplate(state, action: PayloadAction<ActiveTemplate>) {
-      saveActiveTemplateToLocalStorage(action.payload);
-      state.activeTemplate = action.payload;
+      const templateWithDuration = {
+        ...action.payload,
+        duration: Date.now(),
+      };
+
+      saveActiveTemplateToLocalStorage(templateWithDuration);
+      state.activeTemplate = templateWithDuration;
     },
 
     // Finish the current workout and clear active template
@@ -49,6 +55,11 @@ const activeTemplateSlice = createSlice({
           completedSets: calculateCompletedSets(state.activeTemplate),
           timestamp: new Date().toISOString(),
           exercises: state.activeTemplate.exercises,
+
+          // Calculate the duration of the workout in seconds: Get the date it currently is, and subtract the date it started at, then convert to seconds
+          duration: state.activeTemplate.duration
+            ? Math.floor((Date.now() - state.activeTemplate.duration) / 1000)
+            : null,
         };
 
         saveFinishedWorkoutToLocalStorage(completedWorkout);
