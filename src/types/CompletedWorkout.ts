@@ -8,5 +8,5 @@ export interface CompletedWorkout {
   sets: number;
   timestamp: string;
   exercises: Exercise[];
-  duration: number | null;
+  duration: number | null; // In seconds
 }

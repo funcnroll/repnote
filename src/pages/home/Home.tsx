@@ -20,6 +20,7 @@ import {
 import {
   seedWorkoutsToLocalStorage,
   saveTemplatesToLocalStorage,
+  loadRecentWorkoutsFromLocalStorage,
 } from "../../app/localStorage";
 
 function Home() {
@@ -31,9 +32,10 @@ function Home() {
     (state) => state.activeTemplate.activeTemplate
   );
 
-  const recentWorkouts = useAppSelector(
-    (state) => state.templates?.templates || []
-  );
+  const recentWorkouts = loadRecentWorkoutsFromLocalStorage()
+    .reverse()
+    .slice(0, 4);
+
   const hasPreloadedData = recentWorkouts.some(
     (template) =>
       template.name.includes("Push Day") ||

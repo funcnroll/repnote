@@ -74,7 +74,7 @@ export function removeIsCustomFromLocalStorage(exerciseId: string) {
  */
 export function saveFinishedWorkoutToLocalStorage(workout: CompletedWorkout) {
   const existingWorkouts = loadRecentWorkoutsFromLocalStorage();
-  const updatedWorkouts = [workout, ...existingWorkouts].slice(0, 4); // Keep only last 4 workouts
+  const updatedWorkouts = [workout, ...existingWorkouts];
   localStorage.setItem("recentWorkouts", JSON.stringify(updatedWorkouts));
 }
 
@@ -93,10 +93,10 @@ export function loadRecentWorkoutsFromLocalStorage(): CompletedWorkout[] {
  */
 export function seedWorkoutsToLocalStorage(workouts: CompletedWorkout[]) {
   // Sort workouts by timestamp (oldest first)
-  const sortedWorkouts = workouts.sort((a, b) => 
-    new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
+  const sortedWorkouts = workouts.sort(
+    (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
   );
-  
+
   localStorage.setItem("recentWorkouts", JSON.stringify(sortedWorkouts));
 }
 

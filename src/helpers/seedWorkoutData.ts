@@ -291,6 +291,13 @@ function createWorkout(
     .charAt(0)
     .toUpperCase()}${workoutType.slice(1)} Day ${dayVariation}`;
 
+  // Generate a workout that lasts between 45 and 135 minutes in seconds
+  const minDuration = 45 * 60;
+  const maxDuration = 135 * 60;
+  const duration = Math.floor(
+    Math.random() * (maxDuration - minDuration + 1) + minDuration
+  );
+
   return {
     id: generateId(),
     name: workoutName,
@@ -298,6 +305,7 @@ function createWorkout(
     completedSets,
     timestamp: workoutDate.toISOString(),
     exercises: workoutExercises,
+    duration: duration,
   };
 }
 
