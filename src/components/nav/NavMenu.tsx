@@ -26,7 +26,7 @@ function NavMenu() {
             className={(nav) => {
               const isActive = nav.isActive;
               return `flex flex-col items-center text-xs transition-colors duration-150 ${
-                isActive ? "text-blue-400" : "text-gray-400 hover:text-white"
+                isActive ? "text-blue" : "text-textSecondary hover:text-textPrimary"
               }`;
             }}
           >

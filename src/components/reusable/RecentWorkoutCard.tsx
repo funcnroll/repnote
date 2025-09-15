@@ -25,23 +25,23 @@ function RecentWorkoutCard({ workout, index }: RecentWorkoutCardProps) {
         navigate(`/recentActiveTemplate/${workout.id}`);
       }}
       key={index}
-      className="bg-[#0f1419] p-5 rounded-lg border border-gray-700 hover:border-blue-500 cursor-pointer transition-colors duration-200 group"
+      className="bg-darkCard p-5 rounded-lg border border-borderDefault hover:border-borderHover cursor-pointer transition-colors duration-200 group"
     >
       <div className="flex justify-between items-start">
         <div className="flex-1">
-          <h3 className="font-semibold text-white group-hover:text-blue-400 transition-colors duration-200">
+          <h3 className="font-semibold text-textPrimary group-hover:text-blue transition-colors duration-200">
             {workout.name}
           </h3>
           <div className="flex items-center gap-2 mt-2">
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
-              <span className="text-gray-400 text-sm">
+              <div className="w-2 h-2 bg-blue rounded-full"></div>
+              <span className="text-textSecondary text-sm">
                 {workout.completedSets}/{workout.sets} sets
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-              <span className="text-gray-400 text-sm">
+              <div className="w-2 h-2 bg-green rounded-full"></div>
+              <span className="text-textSecondary text-sm">
                 {new Date(workout.timestamp).toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
@@ -49,13 +49,13 @@ function RecentWorkoutCard({ workout, index }: RecentWorkoutCardProps) {
                 })}
               </span>
             </div>
-            <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
-            <span className="text-gray-400 text-sm">
+            <div className="w-2 h-2 bg-purple rounded-full"></div>
+            <span className="text-textSecondary text-sm">
               {formatDuration(workout.duration)}
             </span>
           </div>
         </div>
-        <div className="text-gray-500 group-hover:text-blue-400 transition-colors duration-200">
+        <div className="text-textMuted group-hover:text-blue transition-colors duration-200">
           <svg
             className="w-5 h-5"
             fill="none"

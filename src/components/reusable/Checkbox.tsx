@@ -14,7 +14,7 @@ function Checkbox({ label, checked, onChange, className = "" }: CheckboxProps) {
         type="checkbox"
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
-        className="w-4 h-4 text-blue-600 bg-gray-800 border-gray-600 rounded focus:ring-blue-500 focus:ring-2"
+        className="w-4 h-4 text-blue bg-darkCard border-borderDefault rounded focus:ring-blue focus:ring-2"
       />
       <span className="text-sm font-medium">{label}</span>
     </label>

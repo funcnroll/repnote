@@ -17,7 +17,7 @@ function SearchExercises({
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
-        <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5 pointer-events-none" />
+        <Search className="absolute right-4 top-1/2 transform -translate-y-1/2 text-textSecondary w-5 h-5 pointer-events-none" />
       </div>
     </div>
   );

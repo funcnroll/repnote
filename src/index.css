@@ -6,4 +6,30 @@
   --color-secondaryColor: #2c3a54;
   --color-backgroundColor: #0f172a;
   --color-cardColor: #1c2331;
+
+  /* Dark card background  */
+  --color-darkCard: #0f1419;
+
+  /* App background */
+  --color-appBg: #111827;
+
+  /* Accent colors  */
+  --color-blue: #3b82f6;
+  --color-blueHover: #2563eb;
+  --color-green: #22c55e;
+  --color-greenHover: #16a34a;
+  --color-red: #ef4444;
+  --color-redHover: #dc2626;
+  --color-purple: #a855f7;
+  --color-yellow: #eab308;
+
+  /* Text colors */
+  --color-textPrimary: #ffffff;
+  --color-textSecondary: #9ca3af;
+  --color-textMuted: #6b7280;
+  --color-textDisabled: #4b5563;
+
+  /* Border colors */
+  --color-borderDefault: #374151;
+  --color-borderHover: #3b82f6;
 }

@@ -45,11 +45,11 @@ function ExerciseCard({
       {/* Exercise header */}
       <div className="px-4 py-3 flex justify-between items-start">
         <div>
-          <h2 className="text-lg font-semibold text-white">
+          <h2 className="text-lg font-semibold text-textPrimary">
             {exercise.exerciseName}
           </h2>
           {!activeTemplateId && (
-            <p className="text-gray-400">Sets: {exercise.sets.length}</p>
+            <p className="text-textSecondary">Sets: {exercise.sets.length}</p>
           )}
         </div>
 
@@ -66,8 +66,8 @@ function ExerciseCard({
             <ArrowUp
               className={`w-5 h-5 cursor-pointer ${
                 index === 0
-                  ? "text-gray-600"
-                  : "text-gray-400 hover:text-yellow-400"
+                  ? "text-textDisabled"
+                  : "text-textSecondary hover:text-yellow"
               }`}
             />
           </button>
@@ -83,8 +83,8 @@ function ExerciseCard({
             <ArrowDown
               className={`w-5 h-5 cursor-pointer ${
                 index === total - 1
-                  ? "text-gray-600"
-                  : "text-gray-400 hover:text-yellow-400"
+                  ? "text-textDisabled"
+                  : "text-textSecondary hover:text-yellow"
               }`}
             />
           </button>
@@ -110,12 +110,12 @@ function ExerciseCard({
               }
             }}
           >
-            <Edit className="text-gray-400 hover:text-blue-400 w-5 h-5 cursor-pointer" />
+            <Edit className="text-textSecondary hover:text-blue w-5 h-5 cursor-pointer" />
           </button>
 
           {/* Remove exercise from template */}
           <button onClick={() => onRemove(exercise.id)}>
-            <X className="text-gray-400 hover:text-red-500 w-5 h-5 cursor-pointer" />
+            <X className="text-textSecondary hover:text-red w-5 h-5 cursor-pointer" />
           </button>
         </div>
       </div>

@@ -113,7 +113,7 @@ function AddExerciseButton({
 
         navigate(-1);
       }}
-      className="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 font-medium transition cursor-pointer"
+      className="w-full py-3 rounded-lg bg-blue hover:bg-blueHover font-medium transition cursor-pointer"
     >
       {exerciseId && exerciseToEditData ? "Edit Exercise" : "Add Exercise"}
     </button>

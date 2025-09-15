@@ -14,8 +14,8 @@ export default function App() {
   const name = useAppSelector((state) => state.home.name);
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-slate-200">
-      <div className="w-full min-h-screen sm:w-[375px] sm:h-[812px] bg-[#111827] text-white sm:rounded-3xl sm:shadow-2xl overflow-hidden flex flex-col relative">
+    <div className="flex items-center justify-center min-h-screen bg-textSecondary">
+      <div className="w-full min-h-screen sm:w-[375px] sm:h-[812px] bg-appBg text-textPrimary sm:rounded-3xl sm:shadow-2xl overflow-hidden flex flex-col relative">
         <Router>
           <div
             className={`flex-1 flex flex-col ${

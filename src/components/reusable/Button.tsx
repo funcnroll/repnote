@@ -16,11 +16,11 @@ interface ButtonProps {
 }
 
 const variantStyles: Record<ButtonVariant, string> = {
-  primary: "bg-primaryColor text-white hover:bg-secondaryColor",
-  secondary: "bg-gray-600 text-white hover:bg-gray-700",
-  text: "text-blue-400 hover:text-blue-500 bg-transparent",
+  primary: "bg-primaryColor text-textPrimary hover:bg-secondaryColor",
+  secondary: "bg-textDisabled text-textPrimary hover:bg-borderDefault",
+  text: "text-blue hover:text-blueHover bg-transparent",
   outline:
-    "border border-primaryColor text-primaryColor hover:bg-primaryColor hover:text-white",
+    "border border-primaryColor text-primaryColor hover:bg-primaryColor hover:text-textPrimary",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {

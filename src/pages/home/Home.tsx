@@ -88,7 +88,7 @@ function Home() {
   }
 
   return (
-    <div className="h-screen overflow-y-auto p-4 pb-24 text-white">
+    <div className="h-screen overflow-y-auto p-4 pb-24 text-textPrimary">
       <div className="flex justify-center items-center flex-wrap">
         <H1>Welcome back, {name}</H1>
       </div>
@@ -105,9 +105,9 @@ function Home() {
                 onClick={handlePreloadData}
                 className={`${
                   hasPreloadedData
-                    ? "bg-red-600 hover:bg-red-700"
-                    : "bg-blue-600 hover:bg-blue-700"
-                } text-white px-6 py-3 rounded-lg font-medium`}
+                    ? "bg-red hover:bg-redHover"
+                    : "bg-blue hover:bg-blueHover"
+                } text-textPrimary px-6 py-3 rounded-lg font-medium`}
               >
                 {hasPreloadedData ? "Clear Data" : "Preload Data"}
               </Button>
@@ -125,7 +125,7 @@ function Home() {
                 >
                   {activeTemplate?.name}
                 </Button>
-                <p className="text-gray-400">Workout Progress</p>
+                <p className="text-textSecondary">Workout Progress</p>
               </div>
               <div className="w-24 h-24 relative">
                 <ResponsiveContainer

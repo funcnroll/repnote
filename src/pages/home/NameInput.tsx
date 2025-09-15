@@ -29,7 +29,7 @@ function NameInput() {
       <input
         type="text"
         placeholder="Your name"
-        className="w-full px-4 py-3 rounded-xl bg-slate-700 text-white placeholder-gray-400"
+        className="w-full px-4 py-3 rounded-xl bg-darkCard text-textPrimary placeholder-textSecondary"
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setInput(e.target.value)
         }

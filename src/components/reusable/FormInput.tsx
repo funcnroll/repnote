@@ -7,14 +7,14 @@ function FormInput({
 }: { label?: string } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <div className="mb-6">
-      <label className={`block text-sm mb-2 ${disabled ? 'text-gray-500' : 'text-gray-400'}`}>{label}</label>
+      <label className={`block text-sm mb-2 ${disabled ? 'text-textMuted' : 'text-textSecondary'}`}>{label}</label>
       <input
         {...props}
         disabled={disabled}
-        className={`w-full px-4 py-3 rounded-lg placeholder-gray-400 focus:outline-none ${
+        className={`w-full px-4 py-3 rounded-lg placeholder-textSecondary focus:outline-none ${
           disabled 
-            ? 'bg-gray-700 text-gray-500 cursor-not-allowed' 
-            : 'bg-primaryColor text-white'
+            ? 'bg-borderDefault text-textMuted cursor-not-allowed' 
+            : 'bg-primaryColor text-textPrimary'
         }`}
       />
     </div>

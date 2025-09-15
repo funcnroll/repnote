@@ -8,17 +8,17 @@ function History() {
   const workouts = allWorkouts.slice().reverse();
 
   return (
-    <div className="h-screen overflow-y-auto p-4 pb-24 text-white">
+    <div className="h-screen overflow-y-auto p-4 pb-24 text-textPrimary">
       <div className="max-w-4xl mx-auto">
         <div className="bg-cardColor p-6 rounded-xl">
           <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
-            <div className="w-2 h-6 bg-blue-500 rounded-full"></div>
+            <div className="w-2 h-6 bg-blue rounded-full"></div>
             Workout History
           </h2>
 
           <div className="space-y-4">
             {workouts.length === 0 ? (
-              <div className="text-center py-8 text-gray-400">
+              <div className="text-center py-8 text-textSecondary">
                 <p>No workout history found.</p>
                 <p className="text-sm mt-2">
                   Complete some workouts to see them here!

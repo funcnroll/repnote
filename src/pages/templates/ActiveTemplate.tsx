@@ -21,7 +21,7 @@ function ActiveTemplate() {
   );
 
   return (
-    <div className="h-screen overflow-y-auto bg-backgroundColor text-white px-6 py-8 pb-24">
+    <div className="h-screen overflow-y-auto bg-backgroundColor text-textPrimary px-6 py-8 pb-24">
       <ChevronBack />
 
       <H1 variant="medium">Active Template</H1>
@@ -69,7 +69,7 @@ function ActiveTemplate() {
             dispatch(isNotWorkingOut());
             navigate("/");
           }}
-          className="w-full py-3 rounded-lg bg-green-600 hover:bg-green-700 font-medium transition cursor-pointer"
+          className="w-full py-3 rounded-lg bg-green hover:bg-greenHover font-medium transition cursor-pointer"
         >
           Finish Workout
         </button>
@@ -89,7 +89,7 @@ function ActiveTemplate() {
               navigate("/");
             }
           }}
-          className="w-full py-3 rounded-lg bg-blue-600 hover:bg-blue-700 font-medium transition cursor-pointer"
+          className="w-full py-3 rounded-lg bg-blue hover:bg-blueHover font-medium transition cursor-pointer"
         >
           Finish Workout (Modify Template)
         </button>
