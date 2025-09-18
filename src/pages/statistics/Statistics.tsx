@@ -1,6 +1,15 @@
+import { loadRecentWorkoutsFromLocalStorage } from "@/app/localStorage";
 import StatCard from "../../components/reusable/StatisticCard";
 
 function Statistics() {
+  const data = loadRecentWorkoutsFromLocalStorage();
+
+  // Sort data descending (most recent first)
+  const sortedData = data.sort(
+    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+  );
+  console.log(sortedData);
+
   return (
     <div className="h-screen overflow-y-auto p-4 pb-24 text-textPrimary">
       <div className="max-w-4xl mx-auto">
@@ -12,8 +21,8 @@ function Statistics() {
 
           <div className="space-y-4">
             <StatCard
-              title="Workout Frequency"
-              subtitle="Sessions this week"
+              title="Volume"
+              subtitle="Sets, reps, and weight moved"
               statistic="12"
               onClick={() =>
                 console.log("Navigate to Workout Frequency details")
@@ -21,26 +30,19 @@ function Statistics() {
             />
 
             <StatCard
-              title="Performance Over Time"
-              subtitle="Strength progress"
+              title="Performance"
+              subtitle="Personal records & best lifts"
               statistic="+15%"
               onClick={() => console.log("Navigate to Performance details")}
             />
 
             <StatCard
-              title="Template Breakdown"
-              subtitle="Push / Pull / Legs"
+              title="Consistency"
+              subtitle="Your training patterns"
               statistic="3/2/1"
               onClick={() =>
                 console.log("Navigate to Template Breakdown details")
               }
-            />
-
-            <StatCard
-              title="Workout Duration"
-              subtitle="Average session length"
-              statistic="45min"
-              onClick={() => console.log("Navigate to Duration details")}
             />
           </div>
         </div>
