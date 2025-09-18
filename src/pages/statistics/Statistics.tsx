@@ -1,14 +1,36 @@
 import { loadRecentWorkoutsFromLocalStorage } from "@/app/localStorage";
 import StatCard from "../../components/reusable/StatisticCard";
+import { differenceInCalendarWeeks } from "date-fns";
+import { CompletedWorkout } from "@/types/CompletedWorkout";
 
 function Statistics() {
   const data = loadRecentWorkoutsFromLocalStorage();
 
-  // Sort data descending (most recent first)
+  // Sort data ascending (oldest to newest)
+  // Most likely redundant but just in case (as data by default is store chronologically)
   const sortedData = data.sort(
-    (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+    (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
   );
-  console.log(sortedData);
+
+  const firstDate = sortedData ? sortedData[0]?.timestamp : [];
+
+  const weeks: Record<number, CompletedWorkout[]> = {};
+
+  // Create an array of total weeks between the first workout and last finished workout
+
+  for (const week of sortedData) {
+    const day = new Date(week.timestamp);
+    const weekIndex = differenceInCalendarWeeks(day, firstDate, {
+      // Week starts on monday
+      weekStartsOn: 1,
+    });
+    const weekNum = weekIndex + 1; // Week numbers start at 1, not 0
+
+    if (!weeks[weekNum]) weeks[weekNum] = [];
+    weeks[weekNum].push(week);
+  }
+
+  console.log(weeks);
 
   return (
     <div className="h-screen overflow-y-auto p-4 pb-24 text-textPrimary">
