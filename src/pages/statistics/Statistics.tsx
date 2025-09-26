@@ -37,7 +37,6 @@ function Statistics() {
   // Create an array of total weeks between the first workout and last finished workout
 
   for (const week of sortedData) {
-    if (!week.timestamp) continue;
     const day = new Date(week.timestamp);
     const weekIndex = differenceInCalendarWeeks(day, firstDate, {
       // Week starts on monday
