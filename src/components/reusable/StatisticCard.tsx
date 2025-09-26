@@ -32,7 +32,11 @@ export default function StatCard({
           {subtitle && <p className="text-sm text-textSecondary">{subtitle}</p>}
         </div>
 
-        {statistic && <div className="shrink-0">{statistic}</div>}
+        {statistic && (
+          <div className="shrink-0 w-16 h-12 flex items-center justify-center">
+            {statistic}
+          </div>
+        )}
 
         <ChevronRight className="h-5 w-5 text-textMuted group-hover:text-blue group-hover:translate-x-0.5 transition-all duration-200" />
       </div>

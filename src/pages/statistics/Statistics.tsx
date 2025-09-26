@@ -1,7 +1,10 @@
 import { loadRecentWorkoutsFromLocalStorage } from "@/app/localStorage";
 import StatCard from "../../components/reusable/StatisticCard";
 import { differenceInCalendarWeeks } from "date-fns";
-import { CompletedWorkout } from "@/types/CompletedWorkout";
+
+import { StatisticsWeeks } from "@/types/StatisticsWeeks";
+import { Line, LineChart, ResponsiveContainer } from "recharts";
+import { chartColors } from "../../../chartColors";
 
 function Statistics() {
   const data = loadRecentWorkoutsFromLocalStorage();
@@ -32,23 +35,29 @@ function Statistics() {
 
   const firstDate = new Date(sortedData[0]!?.timestamp);
 
-  const weeks: Record<number, CompletedWorkout[]> = {};
+  const weeks: StatisticsWeeks = {};
 
   // Create an array of total weeks between the first workout and last finished workout
-
   for (const week of sortedData) {
     const day = new Date(week.timestamp);
     const weekIndex = differenceInCalendarWeeks(day, firstDate, {
       // Week starts on monday
       weekStartsOn: 1,
     });
-    const weekNum = weekIndex + 1; // Week numbers start at 1, not 0
+    const weekNum = weekIndex + 1; // Week numbers start at 1, not 0 (Array starts at [1], not [0])
 
     if (!weeks[weekNum]) weeks[weekNum] = [];
     weeks[weekNum].push(week);
   }
 
-  console.log(weeks);
+  const weeklySetData = Object.values(weeks).map((week, index) => {
+    return {
+      value: week.reduce((acc, workout) => acc + workout.completedSets, 0),
+      week: index + 1,
+    };
+  });
+
+  console.log(Object.values(weeks));
 
   return (
     <div className="h-screen overflow-y-auto p-4 pb-24 text-textPrimary">
@@ -63,7 +72,22 @@ function Statistics() {
             <StatCard
               title="Volume"
               subtitle="Sets, reps, and weight moved"
-              statistic="12"
+              statistic={
+                <ResponsiveContainer
+                  width="100%"
+                  height="100%"
+                >
+                  <LineChart data={weeklySetData}>
+                    <Line
+                      type="monotone"
+                      dataKey="value"
+                      stroke={chartColors.blue}
+                      strokeWidth={1.5}
+                      dot={false}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              }
               onClick={() =>
                 console.log("Navigate to Workout Frequency details")
               }
