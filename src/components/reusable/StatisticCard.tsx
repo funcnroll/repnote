@@ -33,7 +33,7 @@ export default function StatCard({
         </div>
 
         {statistic && (
-          <div className="shrink-0 w-16 h-12 flex items-center justify-center">
+          <div className="shrink-0 w-16 h-8 flex items-center justify-center">
             {statistic}
           </div>
         )}

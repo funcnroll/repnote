@@ -38,26 +38,59 @@ function Statistics() {
   const weeks: StatisticsWeeks = {};
 
   // Create an array of total weeks between the first workout and last finished workout
-  for (const week of sortedData) {
-    const day = new Date(week.timestamp);
-    const weekIndex = differenceInCalendarWeeks(day, firstDate, {
-      // Week starts on monday
-      weekStartsOn: 1,
-    });
-    const weekNum = weekIndex + 1; // Week numbers start at 1, not 0 (Array starts at [1], not [0])
+  for (const workout of sortedData) {
+    const day = new Date(workout.timestamp);
 
-    if (!weeks[weekNum]) weeks[weekNum] = [];
-    weeks[weekNum].push(week);
+    // Get the number of weeks between the first workout and the current workout
+    const weekIndex = differenceInCalendarWeeks(day, firstDate, {
+      weekStartsOn: 1, // Monday
+    });
+
+    const weekNum = weekIndex + 1;
+
+    // Create array if not there yet, then push
+    (weeks[weekNum] ||= []).push(workout);
   }
 
-  const weeklySetData = Object.values(weeks).map((week, index) => {
+  const weeksArr = Object.values(weeks);
+
+  const weeklyPreviewSetData = weeksArr.map((week, index) => {
     return {
       value: week.reduce((acc, workout) => acc + workout.completedSets, 0),
       week: index + 1,
     };
   });
 
-  console.log(Object.values(weeks));
+  const weeklyPreviewWeightData = weeksArr.map((week, index) => {
+    // Grab the first exercise name of the first workout of the first week
+    const defaultExercise =
+      weeksArr?.[0]?.[0]?.exercises[0]?.exerciseName || null;
+
+    // Find the exercise in all weeks
+    const matchingSet = week.map((workout) => {
+      return workout.exercises.filter(
+        (ex) => ex.exerciseName === defaultExercise
+      );
+    });
+
+    const maxWeightWeekly = matchingSet
+      .flatMap((ex) => ex.map((e) => e.sets.map((s) => s.weight)))
+      .flat();
+
+    // Ensure there are no nulls for type safety
+    const nums = maxWeightWeekly.filter((n): n is number => n !== null);
+
+    // If no number is present, return null (recharts can handle it)
+    const maxWeight = maxWeightWeekly.length > 0 ? Math.max(...nums) : null;
+
+    return {
+      value: maxWeight,
+      // value: week.reduce((acc, workout) => acc + workout.exercises[0])
+      week: index + 1,
+    };
+  });
+
+  console.log(weeklyPreviewWeightData);
 
   return (
     <div className="h-screen overflow-y-auto p-4 pb-24 text-textPrimary">
@@ -77,7 +110,7 @@ function Statistics() {
                   width="100%"
                   height="100%"
                 >
-                  <LineChart data={weeklySetData}>
+                  <LineChart data={weeklyPreviewSetData}>
                     <Line
                       type="monotone"
                       dataKey="value"
@@ -96,7 +129,24 @@ function Statistics() {
             <StatCard
               title="Performance"
               subtitle="Personal records & best lifts"
-              statistic="+15%"
+              statistic={
+                <ResponsiveContainer
+                  width="100%"
+                  height="100%"
+                >
+                  <LineChart data={weeklyPreviewWeightData}>
+                    <Line
+                      type="monotone"
+                      dataKey="value"
+                      stroke={chartColors.blue}
+                      strokeWidth={1.5}
+                      dot={false}
+                      connectNulls
+                      strokeLinecap="round"
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              }
               onClick={() => console.log("Navigate to Performance details")}
             />
 
