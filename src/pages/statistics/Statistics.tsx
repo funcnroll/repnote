@@ -73,24 +73,24 @@ function Statistics() {
       );
     });
 
-    const maxWeightWeekly = matchingSet
+    const weeklyPreviewmaxWeight = matchingSet
       .flatMap((ex) => ex.map((e) => e.sets.map((s) => s.weight)))
       .flat();
 
     // Ensure there are no nulls for type safety
-    const nums = maxWeightWeekly.filter((n): n is number => n !== null);
+    const nums = weeklyPreviewmaxWeight.filter((n): n is number => n !== null);
 
     // If no number is present, return null (recharts can handle it)
-    const maxWeight = maxWeightWeekly.length > 0 ? Math.max(...nums) : null;
+    const maxWeight =
+      weeklyPreviewmaxWeight.length > 0 ? Math.max(...nums) : null;
 
     return {
       value: maxWeight,
-      // value: week.reduce((acc, workout) => acc + workout.exercises[0])
       week: index + 1,
     };
   });
 
-  console.log(weeklyPreviewWeightData);
+  const weeklyPreviewConsistencyData = "";
 
   return (
     <div className="h-screen overflow-y-auto p-4 pb-24 text-textPrimary">
