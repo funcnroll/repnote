@@ -1,6 +1,6 @@
 import { loadRecentWorkoutsFromLocalStorage } from "@/app/localStorage";
 import StatCard from "../../components/reusable/StatisticCard";
-import { differenceInCalendarWeeks } from "date-fns";
+import { differenceInCalendarWeeks, min } from "date-fns";
 
 import { StatisticsWeeks } from "@/types/StatisticsWeeks";
 import { Line, LineChart, ResponsiveContainer } from "recharts";
@@ -90,7 +90,13 @@ function Statistics() {
     };
   });
 
-  const weeklyPreviewConsistencyData = "";
+  const weeklyPreviewConsistencyData = weeksArr.map((week, index) => {
+    const minutes = Math.round(
+      week.reduce((acc, workout) => acc + workout.duration, 0) / 60
+    );
+
+    return { week: index + 1, value: minutes };
+  });
 
   return (
     <div className="h-screen overflow-y-auto p-4 pb-24 text-textPrimary">
@@ -142,7 +148,6 @@ function Statistics() {
                       strokeWidth={1.5}
                       dot={false}
                       connectNulls
-                      strokeLinecap="round"
                     />
                   </LineChart>
                 </ResponsiveContainer>
@@ -153,7 +158,22 @@ function Statistics() {
             <StatCard
               title="Consistency"
               subtitle="Your training patterns"
-              statistic="3/2/1"
+              statistic={
+                <ResponsiveContainer
+                  width="100%"
+                  height="100%"
+                >
+                  <LineChart data={weeklyPreviewConsistencyData}>
+                    <Line
+                      type="monotone"
+                      dataKey="value"
+                      stroke={chartColors.blue}
+                      strokeWidth={1.5}
+                      dot={false}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              }
               onClick={() =>
                 console.log("Navigate to Template Breakdown details")
               }
