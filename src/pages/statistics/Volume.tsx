@@ -2,7 +2,16 @@
 import VolumeChart from "./VolumeChart";
 import { useStatisticsData } from "@/hooks/useStatisticsData";
 import { getWeeklyCompletedSetData } from "@/helpers/getWeeklyCompletedSetData";
-import { BarChart } from "recharts";
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+import { chartColors } from "../../../chartColors";
 
 function Volume() {
   const { weeksArr } = useStatisticsData();
@@ -31,8 +40,34 @@ function Volume() {
         </header>
 
         <div className="flex flex-wrap gap-4">
-          <VolumeChart subtitle="Completed sets vs actual sets">
-            <BarChart data={setComparisonData}></BarChart>
+          <VolumeChart subtitle="Completed Sets (green) vs Actual Sets (Blue">
+            <div className="flex items-center justify-center w-full h-full">
+              <ResponsiveContainer
+                width="90%"
+                height="100%"
+              >
+                <BarChart data={setComparisonData}>
+                  <CartesianGrid
+                    stroke="#374151"
+                    strokeDasharray="0"
+                    vertical={false}
+                  />
+                  <XAxis dataKey="week" />
+                  <YAxis />
+                  <Tooltip />
+                  <Bar
+                    dataKey="completedSets"
+                    fill={chartColors.green}
+                    name="Completed Sets"
+                  />
+                  <Bar
+                    dataKey="totalSets"
+                    fill={chartColors.blue}
+                    name="Total Sets"
+                  />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
           </VolumeChart>
         </div>
       </div>
