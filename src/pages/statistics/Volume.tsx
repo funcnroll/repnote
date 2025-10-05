@@ -3,8 +3,9 @@ import VolumeChart from "./VolumeChart";
 import { useStatisticsData } from "@/hooks/useStatisticsData";
 
 function Volume() {
-  const { sortedData } = useStatisticsData();
+  const { weeksArr } = useStatisticsData();
 
+  console.log(weeksArr);
   return (
     <div className="h-screen overflow-y-auto bg-backgroundColor text-textPrimary px-6 py-8 pb-24">
       <ChevronBack label="Statistics" />

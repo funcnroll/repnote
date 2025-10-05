@@ -4,6 +4,7 @@ import { StatisticsWeeks } from "@/types/StatisticsWeeks";
 import { differenceInCalendarWeeks } from "date-fns";
 
 export function useStatisticsData(): {
+  weeksArr: CompletedWorkout[][];
   sortedData: CompletedWorkout[];
   weeklyPreviewSetData: { week: number; value: number }[];
   weeklyPreviewConsistencyData: { week: number; value: number }[];
@@ -23,14 +24,16 @@ export function useStatisticsData(): {
     const day = new Date(workout.timestamp);
 
     // Get the number of weeks between the first workout and the current workout
-    const weekIndex = differenceInCalendarWeeks(day, firstDate, {
+    const weeksSinceStart = differenceInCalendarWeeks(day, firstDate, {
       weekStartsOn: 1, // Monday
     });
 
-    const weekNum = weekIndex + 1;
-
     // Create array if not there yet, then push
-    (weeks[weekNum] ||= []).push(workout);
+    if (!weeks[weeksSinceStart]) {
+      weeks[weeksSinceStart] = [];
+    }
+
+    weeks[weeksSinceStart].push(workout);
   }
 
   const weeksArr = Object.values(weeks);
@@ -60,7 +63,7 @@ export function useStatisticsData(): {
 
     return {
       value: maxWeight,
-      week: index + 1,
+      week: index,
     };
   });
 
@@ -69,18 +72,19 @@ export function useStatisticsData(): {
       week.reduce((acc, workout) => acc + workout.duration, 0) / 60
     );
 
-    return { week: index + 1, value: minutes };
+    return { week: index, value: minutes };
   });
 
   const weeklyPreviewSetData = weeksArr.map((week, index) => {
     return {
       value: week.reduce((acc, workout) => acc + workout.completedSets, 0),
-      week: index + 1,
+      week: index,
     };
   });
 
   return {
     sortedData,
+    weeksArr,
     weeklyPreviewSetData,
     weeklyPreviewConsistencyData,
     weeklyPreviewWeightData,
