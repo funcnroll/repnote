@@ -9,6 +9,9 @@ import AddExercise from "./pages/templates/AddExercise";
 import { useAppSelector } from "@/app/hooks";
 import ActiveTemplate from "./pages/templates/ActiveTemplate";
 import RecentActiveTemplate from "./pages/templates/RecentActiveTemplate";
+import Volume from "./pages/statistics/Volume";
+import Performance from "./pages/statistics/Performance";
+import Consistency from "./pages/statistics/Consistency";
 
 export default function App() {
   const name = useAppSelector((state) => state.home.name);
@@ -39,6 +42,18 @@ export default function App() {
               <Route
                 path="/statistics"
                 element={<Statistics />}
+              />
+              <Route
+                path="/statistics/consistency"
+                element={<Consistency />}
+              />
+              <Route
+                path="/statistics/volume"
+                element={<Volume />}
+              />
+              <Route
+                path="/statistics/performance"
+                element={<Performance />}
               />
 
               <Route
