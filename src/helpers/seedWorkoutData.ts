@@ -143,7 +143,7 @@ function createExerciseSet(
 
   // Determine if set is completed (partial workouts have some incomplete sets)
   let completed = true;
-  if (isPartialWorkout && setNumber > 2 && Math.random() < 0.3) {
+  if (isPartialWorkout && setNumber > 2 && Math.random() < 0.6) {
     completed = false;
   }
 
@@ -204,7 +204,7 @@ function createWorkout(
   weekNumber: number,
   dayVariation: 1 | 2
 ): CompletedWorkout {
-  const isPartialWorkout = Math.random() < 0.15; // 15% partial workouts
+  const isPartialWorkout = Math.random() < 0.2; // 20% partial workouts
 
   let exerciseSelection: string[] = [];
 

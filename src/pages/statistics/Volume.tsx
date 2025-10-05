@@ -1,11 +1,22 @@
 ﻿import ChevronBack from "@/components/reusable/ChevronBack";
 import VolumeChart from "./VolumeChart";
 import { useStatisticsData } from "@/hooks/useStatisticsData";
+import { getWeeklyCompletedSetData } from "@/helpers/getWeeklyCompletedSetData";
+import { BarChart } from "recharts";
 
 function Volume() {
   const { weeksArr } = useStatisticsData();
 
   console.log(weeksArr);
+
+  const setComparisonData = weeksArr.map((week, index) => ({
+    week: index + 1, // Week number starting from 1
+    completedSets: getWeeklyCompletedSetData(week),
+    totalSets: week.reduce((acc, workout) => acc + workout.sets, 0),
+  }));
+
+  console.log(setComparisonData);
+
   return (
     <div className="h-screen overflow-y-auto bg-backgroundColor text-textPrimary px-6 py-8 pb-24">
       <ChevronBack label="Statistics" />
@@ -21,7 +32,7 @@ function Volume() {
 
         <div className="flex flex-wrap gap-4">
           <VolumeChart subtitle="Completed sets vs actual sets">
-            Primary weekly trend
+            <BarChart data={setComparisonData}></BarChart>
           </VolumeChart>
         </div>
       </div>

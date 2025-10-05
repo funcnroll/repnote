@@ -1,4 +1,5 @@
 import { loadRecentWorkoutsFromLocalStorage } from "@/app/localStorage";
+import { getWeeklyCompletedSetData } from "@/helpers/getWeeklyCompletedSetData";
 import { CompletedWorkout } from "@/types/CompletedWorkout";
 import { StatisticsWeeks } from "@/types/StatisticsWeeks";
 import { differenceInCalendarWeeks } from "date-fns";
@@ -77,7 +78,7 @@ export function useStatisticsData(): {
 
   const weeklyPreviewSetData = weeksArr.map((week, index) => {
     return {
-      value: week.reduce((acc, workout) => acc + workout.completedSets, 0),
+      value: getWeeklyCompletedSetData(week),
       week: index,
     };
   });
