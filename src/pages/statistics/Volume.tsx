@@ -13,7 +13,8 @@ function Volume() {
         <header className="mb-6">
           <h1 className="text-2xl font-semibold">Training volume</h1>
           <p className="text-sm text-textSecondary">
-            Drop your charts into any slot below.
+            Total work performed each week, measured by sets, reps, and weight
+            lifted.
           </p>
         </header>
 
