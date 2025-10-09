@@ -1,5 +1,5 @@
 ﻿import ChevronBack from "@/components/reusable/ChevronBack";
-import VolumeChart from "./VolumeChart";
+import Chart from "./Chart";
 import { useStatisticsData } from "@/hooks/useStatisticsData";
 import { getWeeklyCompletedSetData } from "@/helpers/getWeeklyCompletedSetData";
 import {
@@ -7,7 +7,6 @@ import {
   BarChart,
   CartesianGrid,
   ResponsiveContainer,
-  Tooltip,
   XAxis,
   YAxis,
 } from "recharts";
@@ -39,22 +38,34 @@ function Volume() {
           </p>
         </header>
 
-        <div className="flex flex-wrap gap-4">
-          <VolumeChart subtitle="Completed Sets (green) vs Actual Sets (Blue">
+        <div className="flex flex-wrap gap-4 justify-center">
+          <Chart subtitle="Completed Sets (green) vs Actual Sets (Blue)">
             <div className="flex items-center justify-center w-full h-full">
               <ResponsiveContainer
-                width="90%"
-                height="100%"
+                width="100%"
+                height="90%"
               >
-                <BarChart data={setComparisonData}>
+                <BarChart
+                  data={setComparisonData}
+                  margin={{ top: 10, right: 15, left: -22, bottom: 0 }}
+                  barCategoryGap="20%"
+                  barGap={2}
+                  maxBarSize={40}
+                >
                   <CartesianGrid
                     stroke="#374151"
                     strokeDasharray="0"
                     vertical={false}
                   />
-                  <XAxis dataKey="week" />
+                  <XAxis
+                    dataKey="week"
+                    type="category"
+                    scale="band"
+                    tickFormatter={(value) => (value % 2 === 0 ? value : "")}
+                    padding={{ left: 2.5, right: 2.5 }}
+                  />
                   <YAxis />
-                  <Tooltip />
+
                   <Bar
                     dataKey="completedSets"
                     fill={chartColors.green}
@@ -68,7 +79,7 @@ function Volume() {
                 </BarChart>
               </ResponsiveContainer>
             </div>
-          </VolumeChart>
+          </Chart>
         </div>
       </div>
     </div>
