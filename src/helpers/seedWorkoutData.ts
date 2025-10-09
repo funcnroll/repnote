@@ -129,16 +129,18 @@ function createExerciseSet(
 ): Set {
   const weight = getExerciseWeight(exerciseName, weekNumber);
   const { min, max } = getRepRange(exerciseName, isCompound);
-  const targetReps = Math.floor(Math.random() * (max - min + 1)) + min;
-
+  const baseReps = Math.floor(Math.random() * (max - min + 1)) + min;
+  const fatigueDrop = Math.floor(Math.random() * setNumber);
+  const wiggleRoom = Math.floor(Math.random() * 3) - 1;
+  const finalTargetReps = Math.max(1, baseReps - fatigueDrop + wiggleRoom);
   // Bodyweight exercises
   const isBodyweight = weight === 0;
 
   // Progressive rep increases for bodyweight exercises
-  let actualReps = targetReps;
+  let actualReps = finalTargetReps;
   if (isBodyweight && weekNumber > 0) {
     const repProgression = Math.floor(weekNumber / 4); // Add 1 rep every 4 weeks
-    actualReps = Math.min(targetReps + repProgression, 15);
+    actualReps = Math.min(finalTargetReps + repProgression, 15);
   }
 
   // Determine if set is completed (partial workouts have some incomplete sets)
@@ -149,7 +151,7 @@ function createExerciseSet(
 
   return {
     id: setNumber,
-    reps: targetReps,
+    reps: finalTargetReps,
     weight: isBodyweight ? null : weight,
     actualReps: completed ? actualReps : null,
     completed,

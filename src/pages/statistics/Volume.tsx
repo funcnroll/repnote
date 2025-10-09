@@ -6,6 +6,9 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
+  Legend,
+  Line,
+  LineChart,
   ResponsiveContainer,
   XAxis,
   YAxis,
@@ -15,15 +18,35 @@ import { chartColors } from "../../../chartColors";
 function Volume() {
   const { weeksArr } = useStatisticsData();
 
-  console.log(weeksArr);
+  const weeklySetComparisonData = weeksArr.map((week, index) => {
+    const completed = getWeeklyCompletedSetData(week);
+    const total = week.reduce((acc, workout) => acc + workout.sets, 0);
 
-  const setComparisonData = weeksArr.map((week, index) => ({
-    week: index + 1, // Week number starting from 1
-    completedSets: getWeeklyCompletedSetData(week),
-    totalSets: week.reduce((acc, workout) => acc + workout.sets, 0),
+    return {
+      week: index + 1, // Week number starting from 1
+      completedSets: completed,
+      missedSets: total - completed,
+    };
+  });
+
+  console.log(weeklySetComparisonData);
+
+  const weeklyRepsData = weeksArr.map((week, index) => ({
+    week: index + 1,
+    // Accumulate actualReps from all sets in all exercises in all workouts of the week
+    // Not the prettiest but it works
+    completedReps: week.reduce(
+      (acc, workout) =>
+        acc +
+        workout.exercises.reduce(
+          (exAcc, ex) =>
+            exAcc +
+            ex.sets.reduce((setAcc, set) => setAcc + (set.actualReps || 0), 0),
+          0
+        ),
+      0
+    ),
   }));
-
-  console.log(setComparisonData);
 
   return (
     <div className="h-screen overflow-y-auto bg-backgroundColor text-textPrimary px-6 py-8 pb-24">
@@ -39,18 +62,18 @@ function Volume() {
         </header>
 
         <div className="flex flex-wrap gap-4 justify-center">
-          <Chart subtitle="Completed Sets (green) vs Actual Sets (Blue)">
+          <Chart>
             <div className="flex items-center justify-center w-full h-full">
               <ResponsiveContainer
                 width="100%"
                 height="90%"
               >
                 <BarChart
-                  data={setComparisonData}
-                  margin={{ top: 10, right: 15, left: -22, bottom: 0 }}
-                  barCategoryGap="20%"
-                  barGap={2}
-                  maxBarSize={40}
+                  data={weeklySetComparisonData}
+                  margin={{ right: 16, left: 16, bottom: 6 }}
+                  barCategoryGap="40%"
+                  barGap={1.5}
+                  barSize={7}
                 >
                   <CartesianGrid
                     stroke="#374151"
@@ -59,24 +82,77 @@ function Volume() {
                   />
                   <XAxis
                     dataKey="week"
-                    type="category"
-                    scale="band"
-                    tickFormatter={(value) => (value % 2 === 0 ? value : "")}
-                    padding={{ left: 2.5, right: 2.5 }}
+                    tickMargin={8}
+                    padding={{ left: 12, right: 12 }}
+                    tickFormatter={(v) => (v % 2 === 0 ? v : "")}
                   />
-                  <YAxis />
+                  <YAxis
+                    width={36}
+                    tickMargin={6}
+                  />
 
                   <Bar
                     dataKey="completedSets"
-                    fill={chartColors.green}
+                    fill={chartColors.blue}
                     name="Completed Sets"
+                    stackId={1}
                   />
                   <Bar
-                    dataKey="totalSets"
-                    fill={chartColors.blue}
-                    name="Total Sets"
+                    dataKey="missedSets"
+                    fill={chartColors.red}
+                    name="Missed Sets"
+                    stackId={1}
+                  />
+
+                  <Legend
+                    height={48}
+                    verticalAlign="top"
+                    align="center"
+                    iconType="circle"
                   />
                 </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </Chart>
+          <Chart>
+            <div className="flex items-center justify-center w-full h-full">
+              <ResponsiveContainer
+                width="100%"
+                height="90%"
+              >
+                <LineChart
+                  data={weeklyRepsData}
+                  margin={{ right: 16, left: 16, bottom: 6 }}
+                >
+                  <CartesianGrid
+                    stroke="#374151"
+                    strokeDasharray="0"
+                    vertical={false}
+                  />
+                  <XAxis
+                    dataKey="week"
+                    tickMargin={8}
+                    padding={{ left: 12, right: 12 }}
+                    tickFormatter={(v) => (v % 2 === 0 ? v : "")}
+                  />
+                  <YAxis
+                    width={36}
+                    tickMargin={6}
+                  />
+                  <Line
+                    dataKey="completedReps"
+                    dot={false}
+                    type="monotone"
+                    name="Completed Reps"
+                  />
+
+                  <Legend
+                    height={48}
+                    verticalAlign="top"
+                    align="center"
+                    iconType="circle"
+                  />
+                </LineChart>
               </ResponsiveContainer>
             </div>
           </Chart>

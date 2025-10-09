@@ -1,6 +1,41 @@
 @import "tailwindcss";
 
 
+html {
+  scrollbar-gutter: stable;
+  /* reserve space */
+  scrollbar-width: thin;
+
+  scrollbar-color: rgba(255, 255, 255, .15) transparent;
+}
+
+html::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Chrome/Safari/Edge */
+html::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, .15);
+  border-radius: 9999px;
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, .28);
+}
+
+body {
+  overflow-y: scroll;
+}
+
+
+
+
+
 @theme {
   --color-primaryColor: #1e293b;
   --color-secondaryColor: #2c3a54;
@@ -32,4 +67,6 @@
   /* Border colors */
   --color-borderDefault: #374151;
   --color-borderHover: #3b82f6;
+
+
 }
