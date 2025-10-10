@@ -69,7 +69,7 @@ function Volume() {
 
   return (
     <div className="h-screen overflow-y-auto bg-backgroundColor text-textPrimary px-6 py-8 pb-24">
-      <ChevronBack label="Statistics" />
+      <ChevronBack />
 
       <div className="mx-auto mt-10 max-w-4xl">
         <header className="mb-6">
