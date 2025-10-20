@@ -25,11 +25,12 @@
 ## 📈 Data & Visualisation
 
 - [ ] Track exercise history (weight, reps, sets over time)
+- [ ] Add radar chart for each total sets per muscle group over total weeks in Volume.tsx
+- [ ] Add 1RM line chart for each individual unique exercise in Performance.tsx
 - [ ] Add chart view per exercise to show progress over time
-- [ ] Integrate with charting library (e.g. Chart.js, Recharts)
-- [ ] Toggle between views: e.g. weight over time, volume over time, etc.
+- [x] Integrate with charting library (e.g. Chart.js, Recharts)
 - [ ] Create summary view/dashboard for workout statistics
-  - [ ] Total sets per week
+  - [x] Total sets per week
   - [ ] Most trained muscle groups
   - [ ] Personal bests, etc.
 
