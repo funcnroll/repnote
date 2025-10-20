@@ -1,7 +1,7 @@
 export interface Set {
   id: number;
   reps: number | null; // Target/planned reps for this set
-  weight: number | null; // Weight used for this set (optional for bodyweight exercises)
+  weight: number | null; // Weight used for this set
   actualReps?: number | null; // Actual reps performed (may differ from planned)
   completed: boolean; // Whether this set has been completed
 }

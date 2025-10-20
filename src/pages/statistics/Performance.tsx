@@ -46,21 +46,33 @@ function Performance() {
       ? exerciseObjectsFromDB.filter((e) => searchExercises(e, debouncedSearch))
       : [];
 
-  console.log(selected);
-
   function getSelectedExerciseData(selectedExercise: string) {
     const query = selectedExercise.trim().toLowerCase();
 
     return weeksArr.map((week, i) => {
-      const matches = week
-        .flatMap((w) => w.exercises)
+      const exercises = week
+        .flatMap((workout) => workout.exercises)
         .filter((ex) => ex.exerciseName.trim().toLowerCase() === query);
 
-      return { week: i + 1, exercises: matches };
+      return { week: i + 1, exercises };
     });
   }
 
-  console.log(selected ? getSelectedExerciseData(selected.name) : null);
+  function getSelectedExerciseSets(selectedExercise: string) {
+    const query = selectedExercise.trim().toLowerCase();
+
+    return weeksArr.map((week, i) => {
+      const sets = week
+        .flatMap((workout) => workout.exercises)
+        .filter((ex) => ex.exerciseName.trim().toLowerCase() === query)
+        .flatMap((ex) => ex.sets);
+
+      return { week: i + 1, sets };
+    });
+  }
+
+  console.log(selected ? getSelectedExerciseData(selected.name) : "");
+  console.log(selected ? getSelectedExerciseSets(selected.name) : "");
 
   return (
     <div className="h-screen overflow-y-auto bg-backgroundColor text-textPrimary px-6 py-8 pb-24">
