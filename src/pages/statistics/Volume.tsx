@@ -69,7 +69,14 @@ function Volume() {
           workout.exercises.reduce(
             (exAcc, ex) =>
               exAcc +
-              ex.sets.reduce((setAcc, set) => setAcc + (set.weight || 0), 0),
+              ex.sets.reduce(
+                (setAcc, set) =>
+                  setAcc +
+                  (set.completed
+                    ? (set.weight || 0) * (set.actualReps || 0)
+                    : 0),
+                0
+              ),
             0
           ),
         0
