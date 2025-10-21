@@ -2,6 +2,7 @@
 import Chart from "./Chart";
 import { useStatisticsData } from "@/hooks/useStatisticsData";
 import { getWeeklyCompletedSetData } from "@/helpers/getWeeklyCompletedSetData";
+import exercisesRaw from "@/data/exercises.json";
 import {
   Bar,
   BarChart,
@@ -23,6 +24,7 @@ import {
   gridStyle,
   barStyle,
 } from "../../../chartColors";
+import { getAllMuscleGroups } from "@/helpers/getAllMuscleGroups";
 
 function Volume() {
   const { weeksArr } = useStatisticsData();
@@ -83,6 +85,12 @@ function Volume() {
       )
     ),
   }));
+
+  console.log(getAllMuscleGroups());
+
+  const weeklyMuscleGroups = weeksArr.map((week, index) => {
+    const muscleGroupCounts: Record<string, number> = {};
+  });
 
   return (
     <div className="h-screen px-6 py-8 pb-24 overflow-y-auto bg-backgroundColor text-textPrimary">
