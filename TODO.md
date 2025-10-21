@@ -22,17 +22,24 @@
 - [x] Include a searchable list of **common exercises**
 - [x] Remove exerciseName and base logic off isCustom (centralised exercise metadata)
 
-## 📈 Data & Visualisation
+# 📈 Data & Visualisation
 
 - [ ] Refactor statistics logic once everything is working(!)
 - [x] Track exercise history (weight, reps, sets over time)
-- [ ] Add radar chart for each total sets per muscle group over total weeks in Volume.tsx
-- [x] Add 1RM line chart for each individual unique exercise in Performance.tsx
-- [ ] Add chart view per exercise to show progress over time
-- [x] Integrate with charting library (e.g. Chart.js, Recharts)
-- [ ] Create summary view/dashboard for workout statistics
-  - [x] Total sets per week
-  - [ ] Personal bests, etc.
+- [ ] Finish statistics pages
+  - Volume
+    - [x] Total sets per week
+    - [ ] Radar chart for total sets per muscle group across all weeks
+    - [x] Total reps per week
+    - [x] Total weight per week
+  - Performance
+    - [x] 1RM line chart for each unique exercise
+    - [ ] Personal bests (actual 1RM, top weight)
+    - [ ] Chart view per exercise to show progression over time
+  - Consistency
+    - [ ] Consistency rate (completed vs missed sets)
+    - [ ] Average workout duration
+    - [ ] Streaks / weekly adherence view
 
 ## 🧩 Exercise Editing UI
 
