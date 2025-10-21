@@ -27,16 +27,23 @@ import {
 function Volume() {
   const { weeksArr } = useStatisticsData();
 
-  const weeklySetComparisonData = weeksArr.map((week, index) => {
-    const completed = getWeeklyCompletedSetData(week);
-    const total = week.reduce((acc, workout) => acc + workout.sets, 0);
+  // TODO: Remove comparison between completed sets and missed sets; move missed sets to Consistency and keep volume focused on completed sets
 
-    return {
-      week: index + 1,
-      completedSets: completed,
-      missedSets: total - completed,
-    };
-  });
+  // const weeklySetComparisonData = weeksArr.map((week, index) => {
+  //   const completed = getWeeklyCompletedSetData(week);
+  //   const total = week.reduce((acc, workout) => acc + workout.sets, 0);
+
+  //   return {
+  //     week: index + 1,
+  //     completedSets: completed,
+  //     missedSets: total - completed,
+  //   };
+  // });
+
+  const weeklySetsData = weeksArr.map((week, index) => ({
+    week: index + 1,
+    completedSets: getWeeklyCompletedSetData(week),
+  }));
 
   const weeklyRepsData = weeksArr.map((week, index) => ({
     week: index + 1,
@@ -71,10 +78,10 @@ function Volume() {
   }));
 
   return (
-    <div className="h-screen overflow-y-auto bg-backgroundColor text-textPrimary px-6 py-8 pb-24">
+    <div className="h-screen px-6 py-8 pb-24 overflow-y-auto bg-backgroundColor text-textPrimary">
       <ChevronBack />
 
-      <div className="mx-auto mt-10 max-w-4xl">
+      <div className="max-w-4xl mx-auto mt-10">
         <header className="mb-6">
           <h1 className="text-2xl font-semibold">Training volume</h1>
           <p className="text-sm text-textSecondary">
@@ -83,14 +90,14 @@ function Volume() {
           </p>
         </header>
 
-        <div className="flex flex-wrap gap-4 justify-center">
+        <div className="flex flex-wrap justify-center gap-4">
           <Chart>
             <ResponsiveContainer
               width="100%"
               height="100%"
             >
               <BarChart
-                data={weeklySetComparisonData}
+                data={weeklySetsData}
                 margin={{ top: 16, right: 16, left: 16, bottom: 32 }}
                 barCategoryGap="40%"
                 barGap={1.5}
@@ -129,14 +136,6 @@ function Volume() {
                   dataKey="completedSets"
                   fill={chartColors.blue}
                   name="Completed Sets"
-                  stackId={1}
-                  {...barStyle}
-                />
-                <Bar
-                  dataKey="missedSets"
-                  fill={chartColors.red}
-                  name="Missed Sets"
-                  stackId={1}
                   {...barStyle}
                 />
                 <Legend
@@ -247,7 +246,7 @@ function Volume() {
                   dataKey="completedWeight"
                   dot={false}
                   type="monotone"
-                  name="Completed Weight "
+                  name="Completed Weight"
                 />
                 <Legend
                   height={48}
