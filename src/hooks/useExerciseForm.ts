@@ -1,8 +1,4 @@
 import { useAppSelector } from "@/app/hooks";
-import {
-  loadIsCustomFromLocalStorage,
-  saveIsCustomToLocalStorage,
-} from "@/app/localStorage";
 import { ExerciseFromDB } from "@/types/ExerciseFromDB";
 import { Set } from "@/types/Set";
 import { useEffect, useState } from "react";
@@ -15,27 +11,18 @@ export function useExerciseForm() {
   const exercises: ExerciseFromDB[] = exercisesRaw as ExerciseFromDB[];
 
   const [name, setName] = useState("");
-
-  const [primaryMuscles, setPrimaryMuscles] = useState(<string[]>[]);
-
-  const [secondaryMuscles, setSecondaryMuscles] = useState(<string[]>[]);
-  const [force, setForce] = useState(<ForceType>"");
-
-  const [mechanic, setMechanic] = useState(<MechanicType>"");
-
+  const [primaryMuscles, setPrimaryMuscles] = useState<string[]>([]);
+  const [secondaryMuscles, setSecondaryMuscles] = useState<string[]>([]);
+  const [force, setForce] = useState<ForceType | null>(null);
+  const [mechanic, setMechanic] = useState<MechanicType | null>(null);
   const [localSets, setLocalSets] = useState<Set[]>([]);
-
-  const [isCustom, setIsCustom] = useState(false);
   const [search, setSearch] = useState("");
 
   const { exerciseId, activeTemplateId, templateId } = useParams();
 
-  // Check if we're editing in an active template context
   const isActiveTemplate = Boolean(activeTemplateId);
-  // Check if we're in template creation context
   const isTemplate = Boolean(templateId);
 
-  // Find exercise data if we're in edit mode
   const exerciseToEditData = useAppSelector((state) => {
     if (isActiveTemplate) {
       return state.activeTemplate.activeTemplate?.exercises.find(
@@ -50,39 +37,39 @@ export function useExerciseForm() {
 
   const error = useAppSelector((state) => state.error.addExercise);
 
-  // Populate form with existing data when editing an exercise
   useEffect(() => {
     if (exerciseToEditData && exerciseId) {
       setName(exerciseToEditData.exerciseName);
       setLocalSets(exerciseToEditData.sets);
 
-      // Check if this exercise exists in the predefined exercises list
-      const isExerciseFromDB = exercises.some(
+      if (exerciseToEditData.primaryMuscles) {
+        setPrimaryMuscles(exerciseToEditData.primaryMuscles);
+      }
+      if (exerciseToEditData.secondaryMuscles) {
+        setSecondaryMuscles(exerciseToEditData.secondaryMuscles);
+      }
+      if (exerciseToEditData.force) {
+        setForce(exerciseToEditData.force);
+      }
+      if (exerciseToEditData.mechanic) {
+        setMechanic(exerciseToEditData.mechanic);
+      }
+
+      // Sync with DB exercise metadata if it exists
+      const exerciseFromDb = exercises.find(
         (dbExercise) =>
           dbExercise.name.toLowerCase() ===
           exerciseToEditData.exerciseName.toLowerCase()
       );
 
-      // If exercise doesn't exist in DB, it's custom
-      // Otherwise, check localStorage for user preference
-      if (!isExerciseFromDB) {
-        setIsCustom(true);
-        // Save this as custom to localStorage for future reference
-        saveIsCustomToLocalStorage(exerciseId, true);
-      } else {
-        // Load isCustom state from localStorage for DB exercises
-        const savedIsCustom = loadIsCustomFromLocalStorage(exerciseId);
-        setIsCustom(savedIsCustom);
+      if (exerciseFromDb) {
+        setPrimaryMuscles(exerciseFromDb.primaryMuscles);
+        setSecondaryMuscles(exerciseFromDb.secondaryMuscles);
+        setForce(exerciseFromDb.force || null);
+        setMechanic(exerciseFromDb.mechanic || null);
       }
     }
   }, [exerciseToEditData, exerciseId]);
-
-  // Save isCustom state to localStorage whenever it changes (only when editing)
-  useEffect(() => {
-    if (exerciseId && exerciseToEditData) {
-      saveIsCustomToLocalStorage(exerciseId, isCustom);
-    }
-  }, [isCustom, exerciseId, exerciseToEditData]);
 
   function exerciseToSelect(e: ExerciseFromDB) {
     setName(e.name);
@@ -98,8 +85,6 @@ export function useExerciseForm() {
     setName,
     localSets,
     setLocalSets,
-    isCustom,
-    setIsCustom,
     search,
     setSearch,
     exerciseId,

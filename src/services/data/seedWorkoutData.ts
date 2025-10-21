@@ -30,7 +30,7 @@ const PPL_EXERCISES = {
     { name: "Barbell Deadlift", isCompound: true },
     { name: "Wide-Grip Lat Pulldown", isCompound: true },
     { name: "Barbell Rows", isCompound: true },
-    { name: "Pull-ups", isCompound: true },
+    { name: "Pullups", isCompound: true },
 
     // Accessories
     { name: "Cable Rows", isCompound: false },
@@ -70,7 +70,7 @@ const EXERCISE_PROGRESSIONS = {
   "Romanian Deadlift": { startWeight: 155, weeklyIncrease: 5 },
   "Leg Press": { startWeight: 270, weeklyIncrease: 10 },
   "Close-Grip Barbell Bench Press": { startWeight: 115, weeklyIncrease: 2.5 },
-  "Pull-ups": { startWeight: 0, weeklyIncrease: 1.25 },
+  Pullups: { startWeight: 0, weeklyIncrease: 1.25 },
   "Bulgarian Split Squat": { startWeight: 30, weeklyIncrease: 2.5 },
 
   // Isolation movements - lower starting weights, slower progression
@@ -243,7 +243,7 @@ function createWorkout(
       ];
     } else {
       exerciseSelection = [
-        "Pull-ups",
+        "Pullups",
         "Cable Rows",
         "Wide-Grip Lat Pulldown",
         "Preacher Curl",
@@ -397,7 +397,7 @@ export function generatePPLTemplates(): Template[] {
 
   // Pull Day 2 Template
   const pullDay2Exercises = [
-    "Pull-ups",
+    "Pullups",
     "Cable Rows",
     "Wide-Grip Lat Pulldown",
     "Preacher Curl",

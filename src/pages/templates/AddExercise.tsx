@@ -1,9 +1,6 @@
-import { useDispatch } from "react-redux";
-import { clearAddExerciseError } from "../../app/errorSlice";
 import FormInput from "../../components/reusable/FormInput";
 import ChevronBack from "../../components/reusable/ChevronBack";
 import Error from "../../components/reusable/Error";
-import Checkbox from "../../components/reusable/Checkbox";
 import H1 from "../../components/reusable/H1";
 import exercisesRaw from "../../data/exercises.json";
 import { ExerciseFromDB } from "../../types/ExerciseFromDB";
@@ -25,15 +22,10 @@ import { useExerciseForm } from "@/hooks/useExerciseForm";
 const exercises: ExerciseFromDB[] = exercisesRaw as ExerciseFromDB[];
 
 function AddExercise() {
-  const dispatch = useDispatch();
-
   const {
     name,
-    setName,
     localSets,
     setLocalSets,
-    isCustom,
-    setIsCustom,
     search,
     setSearch,
     exerciseId,
@@ -51,56 +43,38 @@ function AddExercise() {
   const debouncedSearch = useDebouncedValue(search, 150);
 
   return (
-    <div className="h-screen overflow-y-auto bg-backgroundColor text-textPrimary px-6 py-8 pb-24">
+    <div className="h-screen px-6 py-8 pb-24 overflow-y-auto bg-backgroundColor text-textPrimary">
       <ChevronBack />
 
       <H1 variant="medium">{exerciseId ? "Edit Exercise" : "Add Exercise"}</H1>
 
-      <Checkbox
-        label="Custom exercise?"
-        checked={isCustom}
-        onChange={setIsCustom}
-      />
-
-      {/* Search the database for exercises if not custom */}
-      {!isCustom && (
-        <div>
-          <SearchExercises
-            search={search}
-            setSearch={setSearch}
-          />
-
-          {search.length > 0 &&
-            exercises
-              .filter((e) => searchExercises(e, debouncedSearch))
-              .map((e) => (
-                <SearchExerciseCard
-                  key={e.id}
-                  e={e}
-                  func={exerciseToSelect}
-                />
-              ))}
-        </div>
-      )}
-
-      {(isCustom || name) && (
-        <FormInput
-          required
-          label="Exercise name"
-          placeholder="Squats"
-          disabled={!isCustom}
-          onChange={(e) => {
-            // If custom exercise, allow user input
-
-            if (!isCustom) return;
-            setName(e.target.value);
-
-            if (error) dispatch(clearAddExerciseError());
-          }}
-          type="text"
-          value={name}
+      <div>
+        <SearchExercises
+          search={search}
+          setSearch={setSearch}
         />
-      )}
+
+        {search.length > 0 &&
+          exercises
+            .filter((e) => searchExercises(e, debouncedSearch))
+            .map((e) => (
+              <SearchExerciseCard
+                key={e.id}
+                e={e}
+                func={exerciseToSelect}
+              />
+            ))}
+      </div>
+
+      <FormInput
+        required
+        label="Selected exercise"
+        placeholder="Choose an exercise from the list"
+        disabled
+        type="text"
+        value={name}
+        readOnly
+      />
       {error && <Error msg={error} />}
 
       {/* Sets section */}

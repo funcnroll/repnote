@@ -20,7 +20,7 @@
 
 - [x] Support adding **custom exercises**
 - [x] Include a searchable list of **common exercises**
-  - [x] Remove exerciseName and base logic off isCustom (centralised exercise metadata)
+- [x] Remove exerciseName and base logic off isCustom (centralised exercise metadata)
 
 ## 📈 Data & Visualisation
 

@@ -14,7 +14,6 @@ import {
 } from "../../../../app/errorSlice";
 import { Set } from "@/types/Set";
 import { Exercise } from "@/types/Exercise";
-import { removeIsCustomFromLocalStorage } from "../../../../app/localStorage";
 import { ForceType, MechanicType } from "@/types/ExerciseTypes";
 
 interface AddExerciseButtonProps {
@@ -104,11 +103,6 @@ function AddExerciseButton({
 
           default:
             console.error("Invalid state for adding/editing exercise");
-        }
-
-        // Clean up localStorage for isCustom when done editing
-        if (exerciseId) {
-          removeIsCustomFromLocalStorage(exerciseId);
         }
 
         navigate(-1);
