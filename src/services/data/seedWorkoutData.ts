@@ -70,13 +70,13 @@ const EXERCISE_PROGRESSIONS = {
   "Romanian Deadlift": { startWeight: 155, weeklyIncrease: 5 },
   "Leg Press": { startWeight: 270, weeklyIncrease: 10 },
   "Close-Grip Barbell Bench Press": { startWeight: 115, weeklyIncrease: 2.5 },
-  "Pull-ups": { startWeight: 0, weeklyIncrease: 0 }, // Bodyweight progression
+  "Pull-ups": { startWeight: 0, weeklyIncrease: 1.25 },
   "Bulgarian Split Squat": { startWeight: 30, weeklyIncrease: 2.5 },
 
   // Isolation movements - lower starting weights, slower progression
   "Incline Dumbbell Flyes": { startWeight: 25, weeklyIncrease: 1.25 },
   "Lateral Raise": { startWeight: 15, weeklyIncrease: 1.25 },
-  "Dips - Triceps Version": { startWeight: 0, weeklyIncrease: 0 }, // Bodyweight
+  "Dips - Triceps Version": { startWeight: 0, weeklyIncrease: 1.25 },
   "Triceps Dumbbell Extension": { startWeight: 25, weeklyIncrease: 1.25 },
   "Cable Rows": { startWeight: 100, weeklyIncrease: 2.5 },
   "Hammer Curls": { startWeight: 25, weeklyIncrease: 1.25 },
