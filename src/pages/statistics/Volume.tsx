@@ -14,7 +14,15 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { chartColors } from "../../../chartColors";
+import {
+  chartColors,
+  labelStyle,
+  tickStyleXAxis,
+  tickStyleYAxis,
+  legendStyle,
+  gridStyle,
+  barStyle,
+} from "../../../chartColors";
 
 function Volume() {
   const { weeksArr } = useStatisticsData();
@@ -24,7 +32,7 @@ function Volume() {
     const total = week.reduce((acc, workout) => acc + workout.sets, 0);
 
     return {
-      week: index + 1, // Week number starting from 1
+      week: index + 1,
       completedSets: completed,
       missedSets: total - completed,
     };
@@ -32,8 +40,6 @@ function Volume() {
 
   const weeklyRepsData = weeksArr.map((week, index) => ({
     week: index + 1,
-    // Accumulate actualReps from all sets in all exercises in all workouts of the week
-    // Not the prettiest but it works
     completedReps: week.reduce(
       (acc, workout) =>
         acc +
@@ -49,7 +55,6 @@ function Volume() {
 
   const weeklyWeightData = weeksArr.map((week, index) => ({
     week: index + 1,
-    // Accumulate weight from all sets in all exercises in all workouts of the week
     completedWeight: Math.round(
       week.reduce(
         (acc, workout) =>
@@ -64,8 +69,6 @@ function Volume() {
       )
     ),
   }));
-
-  console.log(weeklyWeightData);
 
   return (
     <div className="h-screen overflow-y-auto bg-backgroundColor text-textPrimary px-6 py-8 pb-24">
@@ -82,191 +85,179 @@ function Volume() {
 
         <div className="flex flex-wrap gap-4 justify-center">
           <Chart>
-            <div className="flex items-center justify-center w-full h-full">
-              <ResponsiveContainer
-                width="100%"
-                height="100%"
+            <ResponsiveContainer
+              width="100%"
+              height="100%"
+            >
+              <BarChart
+                data={weeklySetComparisonData}
+                margin={{ top: 16, right: 16, left: 16, bottom: 32 }}
+                barCategoryGap="40%"
+                barGap={1.5}
+                barSize={7}
               >
-                <BarChart
-                  data={weeklySetComparisonData}
-                  margin={{ top: 16, right: 16, left: 16, bottom: 32 }}
-                  barCategoryGap="40%"
-                  barGap={1.5}
-                  barSize={7}
+                <CartesianGrid {...gridStyle} />
+                <XAxis
+                  dataKey="week"
+                  tickMargin={8}
+                  padding={{ left: 12, right: 12 }}
+                  tickFormatter={(v) => (v % 2 === 0 ? v : "")}
+                  tick={tickStyleXAxis}
                 >
-                  <CartesianGrid
-                    stroke="#374151"
-                    strokeDasharray="0"
-                    vertical={false}
+                  <Label
+                    {...labelStyle}
+                    value="Weeks"
+                    position="insideBottom"
+                    offset={-15}
                   />
-                  <XAxis
-                    dataKey="week"
-                    tickMargin={8}
-                    padding={{ left: 12, right: 12 }}
-                    tickFormatter={(v) => (v % 2 === 0 ? v : "")}
-                    tick={{ fontSize: 14 }}
-                  >
-                    <Label
-                      value="Weeks"
-                      position={"insideBottom"}
-                      offset={-15}
-                    />
-                  </XAxis>
-
-                  <YAxis
-                    width={36}
-                    tickMargin={6}
-                    tickSize={0}
-                    tick={{ fontSize: 14 }}
-                  >
-                    <Label
-                      value="Sets"
-                      position={"insideLeft"}
-                      angle={-90}
-                      offset={-5}
-                    />
-                  </YAxis>
-
-                  <Bar
-                    dataKey="completedSets"
-                    fill={chartColors.blue}
-                    name="Completed Sets"
-                    stackId={1}
+                </XAxis>
+                <YAxis
+                  width={36}
+                  tickMargin={6}
+                  tickSize={0}
+                  tick={tickStyleYAxis}
+                >
+                  <Label
+                    {...labelStyle}
+                    value="Sets"
+                    position="insideLeft"
+                    angle={-90}
+                    offset={-5}
                   />
-                  <Bar
-                    dataKey="missedSets"
-                    fill={chartColors.red}
-                    name="Missed Sets"
-                    stackId={1}
-                  />
-
-                  <Legend
-                    height={48}
-                    verticalAlign="top"
-                    align="center"
-                    iconType="circle"
-                  />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
+                </YAxis>
+                <Bar
+                  dataKey="completedSets"
+                  fill={chartColors.blue}
+                  name="Completed Sets"
+                  stackId={1}
+                  {...barStyle}
+                />
+                <Bar
+                  dataKey="missedSets"
+                  fill={chartColors.red}
+                  name="Missed Sets"
+                  stackId={1}
+                  {...barStyle}
+                />
+                <Legend
+                  height={48}
+                  verticalAlign="top"
+                  align="center"
+                  iconType="circle"
+                  wrapperStyle={legendStyle}
+                />
+              </BarChart>
+            </ResponsiveContainer>
           </Chart>
+
           <Chart>
-            <div className="flex items-center justify-center w-full h-full">
-              <ResponsiveContainer
-                width="100%"
-                height="100%"
+            <ResponsiveContainer
+              width="100%"
+              height="100%"
+            >
+              <LineChart
+                data={weeklyRepsData}
+                margin={{ top: 16, right: 16, left: 16, bottom: 32 }}
               >
-                <LineChart
-                  data={weeklyRepsData}
-                  margin={{ top: 16, right: 16, left: 16, bottom: 32 }}
+                <CartesianGrid {...gridStyle} />
+                <XAxis
+                  dataKey="week"
+                  tickMargin={8}
+                  padding={{ left: 12, right: 12 }}
+                  tickFormatter={(v) => (v % 2 === 0 ? v : "")}
+                  tick={tickStyleXAxis}
                 >
-                  <CartesianGrid
-                    stroke="#374151"
-                    strokeDasharray="0"
-                    vertical={false}
+                  <Label
+                    {...labelStyle}
+                    value="Weeks"
+                    position="insideBottom"
+                    offset={-15}
                   />
-                  <XAxis
-                    dataKey="week"
-                    tickMargin={8}
-                    padding={{ left: 12, right: 12 }}
-                    tickFormatter={(v) => (v % 2 === 0 ? v : "")}
-                    tick={{ fontSize: 14 }}
-                  >
-                    <Label
-                      value="Weeks"
-                      position="insideBottom"
-                      offset={-15}
-                    />
-                  </XAxis>
-                  <YAxis
-                    width={36}
-                    tickMargin={6}
-                    tickSize={0}
-                    tick={{ fontSize: 14 }}
-                  >
-                    <Label
-                      value="Reps"
-                      position="insideLeft"
-                      angle={-90}
-                      offset={-5}
-                    />
-                  </YAxis>
-                  <Line
-                    dataKey="completedReps"
-                    dot={false}
-                    type="monotone"
-                    name="Completed Reps"
+                </XAxis>
+                <YAxis
+                  width={36}
+                  tickMargin={3}
+                  tickSize={0}
+                  tick={tickStyleYAxis}
+                >
+                  <Label
+                    {...labelStyle}
+                    value="Reps"
+                    position="insideLeft"
+                    angle={-90}
+                    offset={-5}
                   />
-                  <Legend
-                    height={48}
-                    verticalAlign="top"
-                    align="center"
-                    iconType="circle"
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
+                </YAxis>
+                <Line
+                  dataKey="completedReps"
+                  dot={false}
+                  type="monotone"
+                  name="Completed Reps"
+                />
+                <Legend
+                  height={48}
+                  verticalAlign="top"
+                  align="center"
+                  iconType="circle"
+                  wrapperStyle={legendStyle}
+                />
+              </LineChart>
+            </ResponsiveContainer>
           </Chart>
+
           <Chart>
-            <div className="flex items-center justify-center w-full h-full">
-              <ResponsiveContainer
-                width="100%"
-                height="100%"
+            <ResponsiveContainer
+              width="100%"
+              height="100%"
+            >
+              <LineChart
+                data={weeklyWeightData}
+                margin={{ top: 16, right: 16, left: 16, bottom: 32 }}
               >
-                <LineChart
-                  data={weeklyWeightData}
-                  margin={{ top: 16, right: 16, left: 16, bottom: 32 }}
+                <CartesianGrid {...gridStyle} />
+                <XAxis
+                  dataKey="week"
+                  tickMargin={8}
+                  padding={{ left: 12, right: 12 }}
+                  tickFormatter={(v) => (v % 2 === 0 ? v : "")}
+                  tick={tickStyleXAxis}
                 >
-                  <CartesianGrid
-                    stroke="#374151"
-                    strokeDasharray="0"
-                    vertical={false}
+                  <Label
+                    {...labelStyle}
+                    value="Weeks"
+                    position="insideBottom"
+                    offset={-15}
                   />
-
-                  <XAxis
-                    dataKey="week"
-                    tickMargin={8}
-                    padding={{ left: 12, right: 12 }}
-                    tickFormatter={(v) => (v % 2 === 0 ? v : "")}
-                    tick={{ fontSize: 14 }}
-                  >
-                    <Label
-                      value="Weeks"
-                      position="insideBottom"
-                      offset={-15}
-                    />
-                  </XAxis>
-
-                  <YAxis
-                    width={48}
-                    tickMargin={6}
-                    tickSize={0}
-                    tick={{ fontSize: 14 }}
-                  >
-                    <Label
-                      value="Weight"
-                      position="insideLeft"
-                      angle={-90}
-                      offset={-5}
-                    />
-                  </YAxis>
-
-                  <Line
-                    dataKey="completedWeight"
-                    dot={false}
-                    type="monotone"
-                    name="Completed Weight"
+                </XAxis>
+                <YAxis
+                  width={48}
+                  tickMargin={6}
+                  tickSize={0}
+                  tick={tickStyleYAxis}
+                >
+                  <Label
+                    {...labelStyle}
+                    value="kg"
+                    position="insideLeft"
+                    angle={-90}
+                    offset={-5}
                   />
-
-                  <Legend
-                    height={48}
-                    verticalAlign="top"
-                    align="center"
-                    iconType="circle"
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </div>
+                </YAxis>
+                <Line
+                  dataKey="completedWeight"
+                  dot={false}
+                  type="monotone"
+                  name="Completed Weight "
+                />
+                <Legend
+                  height={48}
+                  verticalAlign="top"
+                  align="center"
+                  iconType="circle"
+                  wrapperStyle={legendStyle}
+                />
+              </LineChart>
+            </ResponsiveContainer>
           </Chart>
         </div>
       </div>

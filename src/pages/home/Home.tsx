@@ -16,7 +16,7 @@ import {
 import {
   generatePPLWorkoutHistory,
   generatePPLTemplates,
-} from "../../helpers/seedWorkoutData";
+} from "../../services/data/seedWorkoutData";
 import {
   seedWorkoutsToLocalStorage,
   saveTemplatesToLocalStorage,

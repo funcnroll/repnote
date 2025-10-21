@@ -7,6 +7,25 @@ import { searchExercises } from "@/services/exercises/searchExercises";
 import { ExerciseFromDB } from "@/types/ExerciseFromDB";
 import { useMemo, useState } from "react";
 import SearchExercises from "../templates/reusable/search/SearchExercises";
+import { calculate1RM } from "@/helpers/calculate1RM";
+import Chart from "./Chart";
+import {
+  CartesianGrid,
+  Label,
+  Legend,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  XAxis,
+  YAxis,
+} from "recharts";
+import {
+  labelStyle,
+  tickStyleXAxis,
+  tickStyleYAxis,
+  legendStyle,
+  gridStyle,
+} from "../../../chartColors";
 
 function Performance() {
   const exercises: ExerciseFromDB[] = exercisesRaw as ExerciseFromDB[];
@@ -46,18 +65,6 @@ function Performance() {
       ? exerciseObjectsFromDB.filter((e) => searchExercises(e, debouncedSearch))
       : [];
 
-  function getSelectedExerciseData(selectedExercise: string) {
-    const query = selectedExercise.trim().toLowerCase();
-
-    return weeksArr.map((week, i) => {
-      const exercises = week
-        .flatMap((workout) => workout.exercises)
-        .filter((ex) => ex.exerciseName.trim().toLowerCase() === query);
-
-      return { week: i + 1, exercises };
-    });
-  }
-
   function getSelectedExerciseSets(selectedExercise: string) {
     const query = selectedExercise.trim().toLowerCase();
 
@@ -71,8 +78,31 @@ function Performance() {
     });
   }
 
-  console.log(selected ? getSelectedExerciseData(selected.name) : "");
-  console.log(selected ? getSelectedExerciseSets(selected.name) : "");
+  const weeklyMaxWeight = getSelectedExerciseSets(
+    selected ? selected.name : ""
+  ).map((week) =>
+    week.sets.length > 0
+      ? Math.max(...week.sets.map((set) => set.weight!))
+      : null
+  );
+
+  const weeklyMaxReps = getSelectedExerciseSets(
+    selected ? selected.name : ""
+  ).map((week) =>
+    week.sets.length > 0
+      ? Math.max(...week.sets.map((set) => set.actualReps!))
+      : null
+  );
+
+  const weeklyOneRMEstimates = weeklyMaxWeight.map((weight, index) => {
+    const reps = weeklyMaxReps[index];
+    const estimate = calculate1RM(weight ?? null, reps ?? null);
+
+    return {
+      week: index + 1,
+      estimated1RM: estimate != null ? Math.round(estimate) : null,
+    };
+  });
 
   return (
     <div className="h-screen overflow-y-auto bg-backgroundColor text-textPrimary px-6 py-8 pb-24">
@@ -113,6 +143,66 @@ function Performance() {
           </div>
         )}
       </div>
+
+      {selected && (
+        <div className="flex flex-wrap gap-4 justify-center mt-8">
+          <Chart>
+            <ResponsiveContainer
+              width="100%"
+              height="100%"
+            >
+              <LineChart
+                data={weeklyOneRMEstimates}
+                margin={{ top: 16, right: 20, left: 20, bottom: 32 }}
+              >
+                <CartesianGrid {...gridStyle} />
+                <XAxis
+                  dataKey="week"
+                  tickMargin={8}
+                  padding={{ left: 12, right: 12 }}
+                  tickFormatter={(v) => (v % 2 === 0 ? v : "")}
+                  tick={tickStyleXAxis}
+                >
+                  <Label
+                    {...labelStyle}
+                    value="Weeks"
+                    position="insideBottom"
+                    offset={-15}
+                  />
+                </XAxis>
+                <YAxis
+                  width={36}
+                  tickMargin={6}
+                  tickSize={0}
+                  tick={tickStyleYAxis}
+                >
+                  <Label
+                    {...labelStyle}
+                    value="kg"
+                    position="insideLeft"
+                    angle={-90}
+                    offset={-5}
+                  />
+                </YAxis>
+                <Line
+                  dataKey="estimated1RM"
+                  dot={false}
+                  type="monotone"
+                  name="Estimated 1RM"
+                  connectNulls
+                />
+                <Legend
+                  height={48}
+                  verticalAlign="top"
+                  align="center"
+                  iconType="circle"
+                  wrapperStyle={legendStyle}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </Chart>
+        </div>
+      )}
     </div>
   );
 }

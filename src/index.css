@@ -1,4 +1,9 @@
+@import url("https://fonts.bunny.net/css?family=inter:300,400,500,600,700");
 @import "tailwindcss";
+
+html {
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+}
 
 
 html {
@@ -32,8 +37,13 @@ body {
   overflow-y: scroll;
 }
 
-
-
+/* Sometimes the chart text is pixelated */
+.recharts-wrapper text {
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  shape-rendering: geometricPrecision;
+}
 
 
 @theme {

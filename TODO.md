@@ -24,14 +24,14 @@
 
 ## 📈 Data & Visualisation
 
-- [ ] Track exercise history (weight, reps, sets over time)
+- [ ] Refactor statistics logic once everything is working(!)
+- [x] Track exercise history (weight, reps, sets over time)
 - [ ] Add radar chart for each total sets per muscle group over total weeks in Volume.tsx
-- [ ] Add 1RM line chart for each individual unique exercise in Performance.tsx
+- [x] Add 1RM line chart for each individual unique exercise in Performance.tsx
 - [ ] Add chart view per exercise to show progress over time
 - [x] Integrate with charting library (e.g. Chart.js, Recharts)
 - [ ] Create summary view/dashboard for workout statistics
   - [x] Total sets per week
-  - [ ] Most trained muscle groups
   - [ ] Personal bests, etc.
 
 ## 🧩 Exercise Editing UI
@@ -41,6 +41,7 @@
 
 ## 🗂️ Misc
 
+- [ ] Include option to use lbs instead of kg
 - [x] Convert Javascript to Typescript after finishing template builder logic (adding/removing/editing template, editing/adding/removing/reodering exercises)
 - [x] Refactor all logic and JSX within the /templates page folder for easier readability (!!)
 - [x] Abstract and simplify exercise logic within templateSlice.js for easier readability (!!)

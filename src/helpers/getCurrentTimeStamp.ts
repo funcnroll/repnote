@@ -1,7 +1,3 @@
-/**
- * Generates current timestamp in modern format
- * Used for displaying current time on Home page
- */
 export function getCurrentTimestamp(): string {
   const now = new Date();
   return now.toLocaleString("en-US", {

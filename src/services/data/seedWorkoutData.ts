@@ -1,10 +1,10 @@
-import { CompletedWorkout } from "../types/CompletedWorkout";
-import { Exercise } from "../types/Exercise";
-import { Set } from "../types/Set";
-import { generateId } from "./generateId";
-import { Template } from "../app/templateSlice";
-import exercisesRaw from "../data/exercises.json";
-import { ExerciseFromDB } from "../types/ExerciseFromDB";
+import { CompletedWorkout } from "../../types/CompletedWorkout";
+import { Exercise } from "../../types/Exercise";
+import { Set } from "../../types/Set";
+import { generateId } from "../../helpers/generateId";
+import { Template } from "../../app/templateSlice";
+import exercisesRaw from "../../data/exercises.json";
+import { ExerciseFromDB } from "../../types/ExerciseFromDB";
 
 const exercises: ExerciseFromDB[] = exercisesRaw as ExerciseFromDB[];
 
