@@ -1,8 +1,6 @@
 ﻿import ChevronBack from "@/components/reusable/ChevronBack";
 import Chart from "./Chart";
 import { useStatisticsData } from "@/hooks/useStatisticsData";
-import { getWeeklyCompletedSetData } from "@/helpers/getWeeklyCompletedSetData";
-import exercisesRaw from "@/data/exercises.json";
 import {
   Bar,
   BarChart,
@@ -25,10 +23,9 @@ import {
   barStyle,
 } from "../../../chartColors";
 import { getAllMuscleGroups } from "@/helpers/getAllMuscleGroups";
+import { useVolumeData } from "@/hooks/useVolumeData";
 
 function Volume() {
-  const { weeksArr } = useStatisticsData();
-
   // TODO: Remove comparison between completed sets and missed sets; move missed sets to Consistency and keep volume focused on completed sets
 
   // const weeklySetComparisonData = weeksArr.map((week, index) => {
@@ -42,49 +39,8 @@ function Volume() {
   //   };
   // });
 
-  const weeklySetsData = weeksArr.map((week, index) => ({
-    week: index + 1,
-    completedSets: getWeeklyCompletedSetData(week),
-  }));
-
-  const weeklyRepsData = weeksArr.map((week, index) => ({
-    week: index + 1,
-    completedReps: week.reduce(
-      (acc, workout) =>
-        acc +
-        workout.exercises.reduce(
-          (exAcc, ex) =>
-            exAcc +
-            ex.sets.reduce((setAcc, set) => setAcc + (set.actualReps || 0), 0),
-          0
-        ),
-      0
-    ),
-  }));
-
-  const weeklyWeightData = weeksArr.map((week, index) => ({
-    week: index + 1,
-    completedWeight: Math.round(
-      week.reduce(
-        (acc, workout) =>
-          acc +
-          workout.exercises.reduce(
-            (exAcc, ex) =>
-              exAcc +
-              ex.sets.reduce(
-                (setAcc, set) =>
-                  setAcc +
-                  (set.completed
-                    ? (set.weight || 0) * (set.actualReps || 0)
-                    : 0),
-                0
-              ),
-            0
-          ),
-        0
-      )
-    ),
-  }));
+  const { weeksArr } = useStatisticsData();
+  const { weeklySetsData, weeklyRepsData, weeklyWeightData } = useVolumeData();
 
   console.log(getAllMuscleGroups());
 

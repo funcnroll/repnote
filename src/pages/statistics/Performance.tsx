@@ -1,13 +1,7 @@
 import ChevronBack from "@/components/reusable/ChevronBack";
 import SearchExerciseCard from "@/components/reusable/SearchExerciseCard";
 import exercisesRaw from "@/data/exercises.json";
-import { useDebouncedValue } from "@/hooks/useDebouncedValue";
-import { useStatisticsData } from "@/hooks/useStatisticsData";
-import { searchExercises } from "@/services/exercises/searchExercises";
-import { ExerciseFromDB } from "@/types/ExerciseFromDB";
-import { useMemo, useState } from "react";
 import SearchExercises from "../templates/reusable/search/SearchExercises";
-import { calculate1RM } from "@/helpers/calculate1RM";
 import Chart from "./Chart";
 import {
   CartesianGrid,
@@ -26,89 +20,23 @@ import {
   legendStyle,
   gridStyle,
 } from "../../../chartColors";
+import { usePerformanceData } from "@/hooks/usePerformanceData";
 
 function Performance() {
-  const exercises: ExerciseFromDB[] = exercisesRaw as ExerciseFromDB[];
-  const { weeksArr } = useStatisticsData();
-
-  const exerciseNames = useMemo(
-    () =>
-      weeksArr.flatMap((week) =>
-        week.flatMap((workout) =>
-          workout.exercises.map((ex) => ex.exerciseName)
-        )
-      ),
-    [weeksArr]
-  );
-
-  const uniqueExercises = useMemo(
-    () => [...new Set(exerciseNames)],
-    [exerciseNames]
-  );
-
-  const exerciseObjectsFromDB = useMemo(
-    () => exercises.filter((e) => uniqueExercises.includes(e.name)),
-    [exercises, uniqueExercises]
-  );
-
-  const [search, setSearch] = useState("");
-  const debouncedSearch = useDebouncedValue(search, 150);
-
-  const [selected, setSelected] = useState<ExerciseFromDB | null>(null);
-  function exerciseToSelect(ex: ExerciseFromDB) {
-    setSelected(ex);
-    setSearch("");
-  }
-
-  const results =
-    search.length > 0
-      ? exerciseObjectsFromDB.filter((e) => searchExercises(e, debouncedSearch))
-      : [];
-
-  function getSelectedExerciseSets(selectedExercise: string) {
-    const query = selectedExercise.trim().toLowerCase();
-
-    return weeksArr.map((week, i) => {
-      const sets = week
-        .flatMap((workout) => workout.exercises)
-        .filter((ex) => ex.exerciseName.trim().toLowerCase() === query)
-        .flatMap((ex) => ex.sets);
-
-      return { week: i + 1, sets };
-    });
-  }
-
-  const weeklyMaxWeight = getSelectedExerciseSets(
-    selected ? selected.name : ""
-  ).map((week) =>
-    week.sets.length > 0
-      ? Math.max(...week.sets.map((set) => set.weight!))
-      : null
-  );
-
-  const weeklyMaxReps = getSelectedExerciseSets(
-    selected ? selected.name : ""
-  ).map((week) =>
-    week.sets.length > 0
-      ? Math.max(...week.sets.map((set) => set.actualReps!))
-      : null
-  );
-
-  const weeklyOneRMEstimates = weeklyMaxWeight.map((weight, index) => {
-    const reps = weeklyMaxReps[index];
-    const estimate = calculate1RM(weight ?? null, reps ?? null);
-
-    return {
-      week: index + 1,
-      estimated1RM: estimate != null ? Math.round(estimate) : null,
-    };
-  });
+  const {
+    search,
+    results,
+    selected,
+    exerciseToSelect,
+    weeklyOneRMEstimates,
+    setSearch,
+  } = usePerformanceData();
 
   return (
-    <div className="h-screen overflow-y-auto bg-backgroundColor text-textPrimary px-6 py-8 pb-24">
+    <div className="h-screen px-6 py-8 pb-24 overflow-y-auto bg-backgroundColor text-textPrimary">
       <ChevronBack />
 
-      <div className="mx-auto mt-10 max-w-4xl">
+      <div className="max-w-4xl mx-auto mt-10">
         <header className="mb-6">
           <h1 className="text-2xl font-semibold">Performance</h1>
           <p className="text-sm text-textSecondary">
@@ -137,7 +65,7 @@ function Performance() {
 
         {selected && (
           <div className="mt-6">
-            <h2 className="text-lg font-semibold mb-2">
+            <h2 className="mb-2 text-lg font-semibold">
               Trends for: {selected.name}
             </h2>
           </div>
@@ -145,7 +73,7 @@ function Performance() {
       </div>
 
       {selected && (
-        <div className="flex flex-wrap gap-4 justify-center mt-8">
+        <div className="flex flex-wrap justify-center gap-4 mt-8">
           <Chart>
             <ResponsiveContainer
               width="100%"
