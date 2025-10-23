@@ -24,7 +24,7 @@
 
 # 📈 Data & Visualisation
 
-- [ ] Refactor statistics logic once everything is working(!)
+- [ ] Refactor statistics pages once everything is working(!)
 - [x] Track exercise history (weight, reps, sets over time)
 - [ ] Finish statistics pages
   - Volume
