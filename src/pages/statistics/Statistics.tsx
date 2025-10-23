@@ -1,7 +1,7 @@
 import StatCard from "../../components/reusable/StatisticCard";
 
 import { Line, LineChart, ResponsiveContainer } from "recharts";
-import { chartColors } from "../../../chartColors";
+import { chartColors } from "../../../chartStyles";
 import { useNavigate } from "react-router";
 import { useStatisticsData } from "@/hooks/useStatisticsData";
 
@@ -17,11 +17,11 @@ function Statistics() {
 
   if (sortedData.length === 0)
     return (
-      <div className="h-screen overflow-y-auto p-4 pb-24 text-textPrimary">
+      <div className="h-screen p-4 pb-24 overflow-y-auto text-textPrimary">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-cardColor p-6 rounded-xl">
-            <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
-              <div className="w-2 h-6 bg-blue rounded-full"></div>
+          <div className="p-6 bg-cardColor rounded-xl">
+            <h2 className="flex items-center gap-2 mb-6 text-xl font-semibold">
+              <div className="w-2 h-6 rounded-full bg-blue"></div>
               Progress Statistics
             </h2>
             <h3>
@@ -34,11 +34,11 @@ function Statistics() {
     );
 
   return (
-    <div className="h-screen overflow-y-auto p-4 pb-24 text-textPrimary">
+    <div className="h-screen p-4 pb-24 overflow-y-auto text-textPrimary">
       <div className="max-w-4xl mx-auto">
-        <div className="bg-cardColor p-6 rounded-xl">
-          <h2 className="text-xl font-semibold mb-6 flex items-center gap-2">
-            <div className="w-2 h-6 bg-blue rounded-full"></div>
+        <div className="p-6 bg-cardColor rounded-xl">
+          <h2 className="flex items-center gap-2 mb-6 text-xl font-semibold">
+            <div className="w-2 h-6 rounded-full bg-blue"></div>
             Progress Statistics
           </h2>
 

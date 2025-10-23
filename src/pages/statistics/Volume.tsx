@@ -1,6 +1,5 @@
 ﻿import ChevronBack from "@/components/reusable/ChevronBack";
 import Chart from "./Chart";
-import { useStatisticsData } from "@/hooks/useStatisticsData";
 import {
   Bar,
   BarChart,
@@ -25,7 +24,7 @@ import {
   legendStyle,
   gridStyle,
   barStyle,
-} from "../../../chartColors";
+} from "../../../chartStyles";
 import { useVolumeData } from "@/hooks/useVolumeData";
 
 function Volume() {
@@ -68,15 +67,12 @@ function Volume() {
                 data={radarData}
                 outerRadius="75%"
               >
-                <PolarGrid
-                  stroke="#444"
-                  strokeDasharray="0 0"
-                />
+                <PolarGrid {...gridStyle} />
                 <PolarAngleAxis
                   dataKey="category"
                   tick={{
-                    fill: "#aaa",
-                    fontSize: 12.5,
+                    ...tickStyleXAxis,
+                    fontSize: 13,
                     fontWeight: 500,
                   }}
                 />
@@ -86,6 +82,24 @@ function Volume() {
                   fill={chartColors.blue}
                   fillOpacity={0.4}
                   strokeWidth={2}
+                />
+                <Legend
+                  verticalAlign="bottom"
+                  align="center"
+                  content={() => (
+                    <div
+                      style={{
+                        textAlign: "center",
+                        marginBottom: 4,
+                        color: "var(--color-textSecondary)",
+                        fontSize: legendStyle.fontSize,
+                        fontFamily: legendStyle.fontFamily,
+                      }}
+                    >
+                      Total work (sets, all weeks) distributed across major
+                      muscle groups
+                    </div>
+                  )}
                 />
               </RadarChart>
             </ResponsiveContainer>

@@ -1,6 +1,5 @@
 import ChevronBack from "@/components/reusable/ChevronBack";
 import SearchExerciseCard from "@/components/reusable/SearchExerciseCard";
-import exercisesRaw from "@/data/exercises.json";
 import SearchExercises from "../templates/reusable/search/SearchExercises";
 import Chart from "./Chart";
 import {
@@ -19,7 +18,7 @@ import {
   tickStyleYAxis,
   legendStyle,
   gridStyle,
-} from "../../../chartColors";
+} from "../../../chartStyles";
 import { usePerformanceData } from "@/hooks/usePerformanceData";
 
 function Performance() {
