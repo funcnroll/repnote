@@ -14,18 +14,18 @@ import {
   RadarChart,
   ResponsiveContainer,
   XAxis,
-  YAxis,
 } from "recharts";
 import {
   chartColors,
   labelStyle,
   tickStyleXAxis,
-  tickStyleYAxis,
   legendStyle,
   gridStyle,
   barStyle,
 } from "../../../chartStyles";
 import { useVolumeData } from "@/hooks/useVolumeData";
+import { YAxisStyled } from "@/components/reusable/YAxisStyled";
+import { XAxisStyled } from "@/components/reusable/XAxisStyled";
 
 function Volume() {
   // TODO: Remove comparison between completed sets and missed sets; move missed sets to Consistency and keep volume focused on completed sets
@@ -86,7 +86,7 @@ function Volume() {
                 <Legend
                   verticalAlign="bottom"
                   align="center"
-                  content={() => (
+                  content={
                     <div
                       style={{
                         textAlign: "center",
@@ -99,7 +99,7 @@ function Volume() {
                       Total work (sets, all weeks) distributed across major
                       muscle groups
                     </div>
-                  )}
+                  }
                 />
               </RadarChart>
             </ResponsiveContainer>
@@ -118,34 +118,9 @@ function Volume() {
                 barSize={7}
               >
                 <CartesianGrid {...gridStyle} />
-                <XAxis
-                  dataKey="week"
-                  tickMargin={8}
-                  padding={{ left: 12, right: 12 }}
-                  tickFormatter={(v) => (v % 2 === 0 ? v : "")}
-                  tick={tickStyleXAxis}
-                >
-                  <Label
-                    {...labelStyle}
-                    value="Weeks"
-                    position="insideBottom"
-                    offset={-15}
-                  />
-                </XAxis>
-                <YAxis
-                  width={36}
-                  tickMargin={6}
-                  tickSize={0}
-                  tick={tickStyleYAxis}
-                >
-                  <Label
-                    {...labelStyle}
-                    value="Sets"
-                    position="insideLeft"
-                    angle={-90}
-                    offset={-5}
-                  />
-                </YAxis>
+                <XAxisStyled label="week" />
+                <YAxisStyled label="Sets" />
+
                 <Bar
                   dataKey="completedSets"
                   fill={chartColors.blue}
@@ -173,34 +148,10 @@ function Volume() {
                 margin={{ top: 16, right: 16, left: 16, bottom: 32 }}
               >
                 <CartesianGrid {...gridStyle} />
-                <XAxis
-                  dataKey="week"
-                  tickMargin={8}
-                  padding={{ left: 12, right: 12 }}
-                  tickFormatter={(v) => (v % 2 === 0 ? v : "")}
-                  tick={tickStyleXAxis}
-                >
-                  <Label
-                    {...labelStyle}
-                    value="Weeks"
-                    position="insideBottom"
-                    offset={-15}
-                  />
-                </XAxis>
-                <YAxis
-                  width={36}
-                  tickMargin={3}
-                  tickSize={0}
-                  tick={tickStyleYAxis}
-                >
-                  <Label
-                    {...labelStyle}
-                    value="Reps"
-                    position="insideLeft"
-                    angle={-90}
-                    offset={-5}
-                  />
-                </YAxis>
+                <XAxisStyled label="week" />
+
+                <YAxisStyled label="Reps" />
+
                 <Line
                   dataKey="completedReps"
                   dot={false}
@@ -228,34 +179,15 @@ function Volume() {
                 margin={{ top: 16, right: 16, left: 16, bottom: 32 }}
               >
                 <CartesianGrid {...gridStyle} />
-                <XAxis
-                  dataKey="week"
-                  tickMargin={8}
-                  padding={{ left: 12, right: 12 }}
-                  tickFormatter={(v) => (v % 2 === 0 ? v : "")}
-                  tick={tickStyleXAxis}
-                >
-                  <Label
-                    {...labelStyle}
-                    value="Weeks"
-                    position="insideBottom"
-                    offset={-15}
-                  />
-                </XAxis>
-                <YAxis
+                <XAxisStyled label="week" />
+
+                <YAxisStyled
+                  label="Weight"
+                  unit="kg"
                   width={48}
-                  tickMargin={6}
-                  tickSize={0}
-                  tick={tickStyleYAxis}
-                >
-                  <Label
-                    {...labelStyle}
-                    value="kg"
-                    position="insideLeft"
-                    angle={-90}
-                    offset={-5}
-                  />
-                </YAxis>
+                  tickFormatter={(v) => `${v / 1000}k`}
+                />
+
                 <Line
                   dataKey="completedWeight"
                   dot={false}

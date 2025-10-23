@@ -4,22 +4,15 @@ import SearchExercises from "../templates/reusable/search/SearchExercises";
 import Chart from "./Chart";
 import {
   CartesianGrid,
-  Label,
   Legend,
   Line,
   LineChart,
   ResponsiveContainer,
-  XAxis,
-  YAxis,
 } from "recharts";
-import {
-  labelStyle,
-  tickStyleXAxis,
-  tickStyleYAxis,
-  legendStyle,
-  gridStyle,
-} from "../../../chartStyles";
+import { legendStyle, gridStyle, chartColors } from "../../../chartStyles";
 import { usePerformanceData } from "@/hooks/usePerformanceData";
+import { YAxisStyled } from "@/components/reusable/YAxisStyled";
+import { XAxisStyled } from "@/components/reusable/XAxisStyled";
 
 function Performance() {
   const {
@@ -29,6 +22,7 @@ function Performance() {
     exerciseToSelect,
     weeklyOneRMEstimates,
     setSearch,
+    weeklyVolumeLoad,
   } = usePerformanceData();
 
   return (
@@ -83,40 +77,54 @@ function Performance() {
                 margin={{ top: 16, right: 20, left: 20, bottom: 32 }}
               >
                 <CartesianGrid {...gridStyle} />
-                <XAxis
-                  dataKey="week"
-                  tickMargin={8}
-                  padding={{ left: 12, right: 12 }}
-                  tickFormatter={(v) => (v % 2 === 0 ? v : "")}
-                  tick={tickStyleXAxis}
-                >
-                  <Label
-                    {...labelStyle}
-                    value="Weeks"
-                    position="insideBottom"
-                    offset={-15}
-                  />
-                </XAxis>
-                <YAxis
+                <XAxisStyled label="Week" />
+                <YAxisStyled
+                  label="Weight"
+                  unit="kg"
                   width={36}
-                  tickMargin={6}
-                  tickSize={0}
-                  tick={tickStyleYAxis}
-                >
-                  <Label
-                    {...labelStyle}
-                    value="kg"
-                    position="insideLeft"
-                    angle={-90}
-                    offset={-5}
-                  />
-                </YAxis>
+                />
+
                 <Line
                   dataKey="estimated1RM"
                   dot={false}
                   type="monotone"
                   name="Estimated 1RM"
                   connectNulls
+                />
+                <Legend
+                  height={48}
+                  verticalAlign="top"
+                  align="center"
+                  iconType="circle"
+                  wrapperStyle={legendStyle}
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          </Chart>
+          <Chart>
+            <ResponsiveContainer
+              width="100%"
+              height="100%"
+            >
+              <LineChart
+                data={weeklyVolumeLoad}
+                margin={{ top: 16, right: 16, left: 16, bottom: 32 }}
+              >
+                <CartesianGrid {...gridStyle} />
+                <XAxisStyled label="Week" />
+                <YAxisStyled
+                  label="Volume Load"
+                  unit="kg"
+                  width={48}
+                />
+
+                <Line
+                  connectNulls
+                  dataKey="volume"
+                  dot={false}
+                  type="monotone"
+                  name="Volume Load"
+                  stroke={chartColors.blue}
                 />
                 <Legend
                   height={48}

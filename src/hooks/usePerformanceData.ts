@@ -34,6 +34,7 @@ export function usePerformanceData() {
   const debouncedSearch = useDebouncedValue(search, 150);
 
   const [selected, setSelected] = useState<ExerciseFromDB | null>(null);
+
   function exerciseToSelect(ex: ExerciseFromDB) {
     setSelected(ex);
     setSearch("");
@@ -83,6 +84,19 @@ export function usePerformanceData() {
     };
   });
 
+  const weeklyVolumeLoad = getSelectedExerciseSets(
+    selected ? selected.name : ""
+  ).map((week) => {
+    const totalVolume = week.sets.reduce((acc, set) => {
+      if (set.weight != null && set.actualReps != null) {
+        return acc + set.weight * set.actualReps;
+      }
+      return acc;
+    }, 0);
+
+    return { week: week.week, volume: totalVolume === 0 ? null : totalVolume };
+  });
+
   return {
     search,
     setSearch,
@@ -90,7 +104,7 @@ export function usePerformanceData() {
     selected,
     setSelected,
     exerciseToSelect,
-
+    weeklyVolumeLoad,
     weeklyOneRMEstimates,
   };
 }
