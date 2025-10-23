@@ -33,8 +33,8 @@
     - [x] Total reps per week
     - [x] Total weight per week
   - Performance
-    - [x] 1RM line chart for each unique exercise
-    - [ ] Personal bests (actual 1RM, top weight)
+    - [x] 1RM line chart
+    - [x] Volume load line chart
   - Consistency
     - [ ] Consistency rate (completed vs missed sets)
     - [ ] Average workout duration
