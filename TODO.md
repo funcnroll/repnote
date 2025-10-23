@@ -29,13 +29,12 @@
 - [ ] Finish statistics pages
   - Volume
     - [x] Total sets per week
-    - [ ] Radar chart for total sets per muscle group across all weeks
+    - [x] Radar chart for total sets per muscle group across all weeks
     - [x] Total reps per week
     - [x] Total weight per week
   - Performance
     - [x] 1RM line chart for each unique exercise
     - [ ] Personal bests (actual 1RM, top weight)
-    - [ ] Chart view per exercise to show progression over time
   - Consistency
     - [ ] Consistency rate (completed vs missed sets)
     - [ ] Average workout duration
