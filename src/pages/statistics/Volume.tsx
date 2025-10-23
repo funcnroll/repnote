@@ -9,6 +9,10 @@ import {
   Legend,
   Line,
   LineChart,
+  PolarAngleAxis,
+  PolarGrid,
+  Radar,
+  RadarChart,
   ResponsiveContainer,
   XAxis,
   YAxis,
@@ -22,7 +26,6 @@ import {
   gridStyle,
   barStyle,
 } from "../../../chartColors";
-import { getAllMuscleGroups } from "@/helpers/getAllMuscleGroups";
 import { useVolumeData } from "@/hooks/useVolumeData";
 
 function Volume() {
@@ -39,14 +42,8 @@ function Volume() {
   //   };
   // });
 
-  const { weeksArr } = useStatisticsData();
-  const { weeklySetsData, weeklyRepsData, weeklyWeightData } = useVolumeData();
-
-  console.log(getAllMuscleGroups());
-
-  const weeklyMuscleGroups = weeksArr.map((week, index) => {
-    const muscleGroupCounts: Record<string, number> = {};
-  });
+  const { weeklySetsData, weeklyRepsData, weeklyWeightData, radarData } =
+    useVolumeData();
 
   return (
     <div className="h-screen px-6 py-8 pb-24 overflow-y-auto bg-backgroundColor text-textPrimary">
@@ -62,6 +59,38 @@ function Volume() {
         </header>
 
         <div className="flex flex-wrap justify-center gap-4">
+          <Chart>
+            <ResponsiveContainer
+              width="100%"
+              height="100%"
+            >
+              <RadarChart
+                data={radarData}
+                outerRadius="75%"
+              >
+                <PolarGrid
+                  stroke="#444"
+                  strokeDasharray="0 0"
+                />
+                <PolarAngleAxis
+                  dataKey="category"
+                  tick={{
+                    fill: "#aaa",
+                    fontSize: 12.5,
+                    fontWeight: 500,
+                  }}
+                />
+                <Radar
+                  dataKey="sets"
+                  stroke={chartColors.blue}
+                  fill={chartColors.blue}
+                  fillOpacity={0.4}
+                  strokeWidth={2}
+                />
+              </RadarChart>
+            </ResponsiveContainer>
+          </Chart>
+
           <Chart>
             <ResponsiveContainer
               width="100%"

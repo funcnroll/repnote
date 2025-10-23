@@ -8,10 +8,10 @@ import { ExerciseFromDB } from "../../types/ExerciseFromDB";
 
 const exercises: ExerciseFromDB[] = exercisesRaw as ExerciseFromDB[];
 
-// PPL Exercise mapping with specific exercises from the database
+// Push / Pull / Legs exercise pools
 const PPL_EXERCISES = {
   push: [
-    // Compound movements
+    // Compounds
     { name: "Barbell Bench Press - Medium Grip", isCompound: true },
     { name: "Incline Dumbbell Press", isCompound: true },
     { name: "Dumbbell Shoulder Press", isCompound: true },
@@ -26,7 +26,7 @@ const PPL_EXERCISES = {
     { name: "Front Two-Dumbbell Raise", isCompound: false },
   ],
   pull: [
-    // Compound movements
+    // Compounds
     { name: "Barbell Deadlift", isCompound: true },
     { name: "Wide-Grip Lat Pulldown", isCompound: true },
     { name: "Barbell Rows", isCompound: true },
@@ -41,25 +41,21 @@ const PPL_EXERCISES = {
     { name: "Preacher Curl", isCompound: false },
   ],
   legs: [
-    // Compound movements
+    // Compounds (slightly reduced for gymbro bias)
     { name: "Barbell Squat", isCompound: true },
     { name: "Romanian Deadlift", isCompound: true },
     { name: "Leg Press", isCompound: true },
-    { name: "Bulgarian Split Squat", isCompound: true },
 
     // Accessories
     { name: "Leg Extensions", isCompound: false },
     { name: "Lying Leg Curls", isCompound: false },
-    { name: "Walking, Lunge", isCompound: false },
     { name: "Calf Press", isCompound: false },
-    { name: "Glute Ham Raise", isCompound: false },
     { name: "Seated Calf Raise", isCompound: false },
   ],
 };
 
-// Starting weights and progression rates
+// Starting weights + weekly progression
 const EXERCISE_PROGRESSIONS = {
-  // Compound movements - higher starting weights, faster progression
   "Barbell Bench Press - Medium Grip": { startWeight: 135, weeklyIncrease: 5 },
   "Barbell Squat": { startWeight: 185, weeklyIncrease: 5 },
   "Barbell Deadlift": { startWeight: 225, weeklyIncrease: 5 },
@@ -71,9 +67,8 @@ const EXERCISE_PROGRESSIONS = {
   "Leg Press": { startWeight: 270, weeklyIncrease: 10 },
   "Close-Grip Barbell Bench Press": { startWeight: 115, weeklyIncrease: 2.5 },
   Pullups: { startWeight: 0, weeklyIncrease: 1.25 },
-  "Bulgarian Split Squat": { startWeight: 30, weeklyIncrease: 2.5 },
 
-  // Isolation movements - lower starting weights, slower progression
+  // Isolations
   "Incline Dumbbell Flyes": { startWeight: 25, weeklyIncrease: 1.25 },
   "Lateral Raise": { startWeight: 15, weeklyIncrease: 1.25 },
   "Dips - Triceps Version": { startWeight: 0, weeklyIncrease: 1.25 },
@@ -84,10 +79,9 @@ const EXERCISE_PROGRESSIONS = {
   "Face Pull": { startWeight: 40, weeklyIncrease: 1.25 },
   "Leg Extensions": { startWeight: 80, weeklyIncrease: 2.5 },
   "Lying Leg Curls": { startWeight: 60, weeklyIncrease: 2.5 },
-  "Walking, Lunge": { startWeight: 20, weeklyIncrease: 2.5 },
   "Calf Press": { startWeight: 180, weeklyIncrease: 5 },
   "Seated Calf Raise": { startWeight: 45, weeklyIncrease: 2.5 },
-  // Default fallback
+
   default: { startWeight: 35, weeklyIncrease: 2.5 },
 };
 
@@ -100,26 +94,26 @@ function getExerciseWeight(exerciseName: string, weekNumber: number): number {
 
 function getRepRange(
   exerciseName: string,
-  isCompound: boolean
+  isCompound: boolean,
+  workoutType?: "push" | "pull" | "legs"
 ): { min: number; max: number; sets: number } {
   if (isCompound) {
-    return { min: 6, max: 8, sets: 4 }; // Strength focus
+    if (workoutType === "legs") return { min: 6, max: 8, sets: 2 };
+    return { min: 6, max: 8, sets: 4 };
   }
-
-  // Isolation exercises
-  const isolationExercises = [
+  const isoHighRep = [
     "Lateral Raise",
     "Face Pull",
     "Calf Press",
     "Seated Calf Raise",
   ];
-  if (isolationExercises.some((ex) => exerciseName.includes(ex))) {
-    return { min: 12, max: 15, sets: 3 }; // Pump/endurance focus
+  if (isoHighRep.some((ex) => exerciseName.includes(ex))) {
+    return { min: 12, max: 15, sets: 3 };
   }
-
-  return { min: 8, max: 12, sets: 3 }; // Hypertrophy focus
+  return { min: 8, max: 12, sets: 3 };
 }
 
+// Generate a single set
 function createExerciseSet(
   exerciseName: string,
   weekNumber: number,
@@ -133,17 +127,14 @@ function createExerciseSet(
   const fatigueDrop = Math.floor(Math.random() * setNumber);
   const wiggleRoom = Math.floor(Math.random() * 3) - 1;
   const finalTargetReps = Math.max(1, baseReps - fatigueDrop + wiggleRoom);
-  // Bodyweight exercises
-  const isBodyweight = weight === 0;
 
-  // Progressive rep increases for bodyweight exercises
+  const isBodyweight = weight === 0;
   let actualReps = finalTargetReps;
   if (isBodyweight && weekNumber > 0) {
-    const repProgression = Math.floor(weekNumber / 4); // Add 1 rep every 4 weeks
+    const repProgression = Math.floor(weekNumber / 4);
     actualReps = Math.min(finalTargetReps + repProgression, 15);
   }
 
-  // Determine if set is completed (partial workouts have some incomplete sets)
   let completed = true;
   if (isPartialWorkout && setNumber > 2 && Math.random() < 0.6) {
     completed = false;
@@ -158,21 +149,25 @@ function createExerciseSet(
   };
 }
 
+// Generate an exercise with all its sets
 function createWorkoutExercise(
   exerciseName: string,
   weekNumber: number,
-  isPartialWorkout: boolean
+  isPartialWorkout: boolean,
+  workoutType: "push" | "pull" | "legs"
 ): Exercise {
   const exerciseData =
     PPL_EXERCISES.push.find((ex) => ex.name === exerciseName) ||
     PPL_EXERCISES.pull.find((ex) => ex.name === exerciseName) ||
     PPL_EXERCISES.legs.find((ex) => ex.name === exerciseName);
 
-  if (!exerciseData) {
-    throw new Error(`Exercise not found: ${exerciseName}`);
-  }
+  if (!exerciseData) throw new Error(`Exercise not found: ${exerciseName}`);
 
-  const { sets: numSets } = getRepRange(exerciseName, exerciseData.isCompound);
+  const { sets: numSets } = getRepRange(
+    exerciseName,
+    exerciseData.isCompound,
+    workoutType
+  );
   const sets: Set[] = [];
 
   for (let i = 1; i <= numSets; i++) {
@@ -200,86 +195,65 @@ function createWorkoutExercise(
   };
 }
 
+// Generate one workout
 function createWorkout(
   workoutType: "push" | "pull" | "legs",
   workoutDate: Date,
   weekNumber: number,
   dayVariation: 1 | 2
 ): CompletedWorkout {
-  const isPartialWorkout = Math.random() < 0.2; // 20% partial workouts
+  const isPartialWorkout = Math.random() < 0.2;
 
   let exerciseSelection: string[] = [];
-
-  // Select exercises based on workout type and day variation
   if (workoutType === "push") {
-    if (dayVariation === 1) {
-      exerciseSelection = [
-        "Barbell Bench Press - Medium Grip",
-        "Incline Dumbbell Press",
-        "Dumbbell Shoulder Press",
-        "Incline Dumbbell Flyes",
-        "Lateral Raise",
-        "Triceps Dumbbell Extension",
-      ];
-    } else {
-      exerciseSelection = [
-        "Incline Dumbbell Press",
-        "Close-Grip Barbell Bench Press",
-        "Dumbbell Shoulder Press",
-        "Dips - Triceps Version",
-        "Front Two-Dumbbell Raise",
-        "Overhead Cable Extension",
-      ];
-    }
+    exerciseSelection =
+      dayVariation === 1
+        ? [
+            "Barbell Bench Press - Medium Grip",
+            "Incline Dumbbell Press",
+            "Dumbbell Shoulder Press",
+            "Incline Dumbbell Flyes",
+            "Lateral Raise",
+            "Triceps Dumbbell Extension",
+          ]
+        : [
+            "Incline Dumbbell Press",
+            "Close-Grip Barbell Bench Press",
+            "Dumbbell Shoulder Press",
+            "Incline Dumbbell Flyes",
+            "Dips - Triceps Version",
+            "Front Two-Dumbbell Raise",
+          ];
   } else if (workoutType === "pull") {
-    if (dayVariation === 1) {
-      exerciseSelection = [
-        "Barbell Deadlift",
-        "Wide-Grip Lat Pulldown",
-        "Barbell Rows",
-        "Barbell Curl",
-        "Face Pull",
-        "Hammer Curls",
-      ];
-    } else {
-      exerciseSelection = [
-        "Pullups",
-        "Cable Rows",
-        "Wide-Grip Lat Pulldown",
-        "Preacher Curl",
-        "Reverse Flyes",
-        "Hammer Curls",
-      ];
-    }
+    exerciseSelection =
+      dayVariation === 1
+        ? [
+            "Barbell Deadlift",
+            "Wide-Grip Lat Pulldown",
+            "Barbell Rows",
+            "Barbell Curl",
+            "Face Pull",
+            "Hammer Curls",
+          ]
+        : [
+            "Pullups",
+            "Cable Rows",
+            "Barbell Rows",
+            "Preacher Curl",
+            "Reverse Flyes",
+            "Hammer Curls",
+          ];
   } else {
-    // legs
-    if (dayVariation === 1) {
-      exerciseSelection = [
-        "Barbell Squat",
-        "Romanian Deadlift",
-        "Leg Extensions",
-        "Walking, Lunge",
-        "Calf Press",
-        "Glute Ham Raise",
-      ];
-    } else {
-      exerciseSelection = [
-        "Leg Press",
-        "Bulgarian Split Squat",
-        "Lying Leg Curls",
-        "Walking, Lunge",
-        "Seated Calf Raise",
-        "Glute Ham Raise",
-      ];
-    }
+    exerciseSelection =
+      dayVariation === 1
+        ? ["Barbell Squat", "Romanian Deadlift", "Leg Extensions", "Calf Press"]
+        : ["Leg Press", "Lying Leg Curls", "Seated Calf Raise"];
   }
 
-  // Create exercises
   const workoutExercises: Exercise[] = exerciseSelection.map((name) =>
-    createWorkoutExercise(name, weekNumber, isPartialWorkout)
+    createWorkoutExercise(name, weekNumber, isPartialWorkout, workoutType)
   );
 
-  // Calculate totals
   const totalSets = workoutExercises.reduce(
     (sum, ex) => sum + ex.sets.length,
     0
@@ -293,7 +267,6 @@ function createWorkout(
     .charAt(0)
     .toUpperCase()}${workoutType.slice(1)} Day ${dayVariation}`;
 
-  // Generate a workout that lasts between 45 and 135 minutes in seconds
   const minDuration = 45 * 60;
   const maxDuration = 135 * 60;
   const duration = Math.floor(
@@ -311,208 +284,121 @@ function createWorkout(
   };
 }
 
-function createTemplateExercise(exerciseName: string): Exercise {
-  const exerciseData =
-    PPL_EXERCISES.push.find((ex) => ex.name === exerciseName) ||
-    PPL_EXERCISES.pull.find((ex) => ex.name === exerciseName) ||
-    PPL_EXERCISES.legs.find((ex) => ex.name === exerciseName);
+// EXPORTS
 
-  if (!exerciseData) {
-    throw new Error(`Exercise not found: ${exerciseName}`);
-  }
-
-  const { sets: numSets, min } = getRepRange(
-    exerciseName,
-    exerciseData.isCompound
-  );
-  const sets: Set[] = [];
-
-  for (let i = 1; i <= numSets; i++) {
-    sets.push({
-      id: i,
-      reps: min, // Use minimum reps for template
-      weight: null, // Templates don't have preset weights
-      actualReps: null,
-      completed: false,
-    });
-  }
-
-  return {
-    id: generateId(),
-    exerciseName,
-    sets,
-  };
-}
-
+// Templates (for UI use)
 export function generatePPLTemplates(): Template[] {
-  const templates: Template[] = [];
-
-  // Push Day 1 Template
-  const pushDay1Exercises = [
-    "Barbell Bench Press - Medium Grip",
-    "Incline Dumbbell Press",
-    "Dumbbell Shoulder Press",
-    "Incline Dumbbell Flyes",
-    "Lateral Raise",
-    "Triceps Dumbbell Extension",
-  ].map(createTemplateExercise);
-
-  templates.push({
-    id: generateId(),
-    name: "Push Day 1",
-    exercises: pushDay1Exercises,
-  });
-
-  // Push Day 2 Template
-  const pushDay2Exercises = [
-    "Incline Dumbbell Press",
-    "Close-Grip Barbell Bench Press",
-    "Dumbbell Shoulder Press",
-    "Dips - Triceps Version",
-    "Front Two-Dumbbell Raise",
-    "Overhead Cable Extension",
-  ].map(createTemplateExercise);
-
-  templates.push({
-    id: generateId(),
-    name: "Push Day 2",
-    exercises: pushDay2Exercises,
-  });
-
-  // Pull Day 1 Template
-  const pullDay1Exercises = [
-    "Barbell Deadlift",
-    "Wide-Grip Lat Pulldown",
-    "Barbell Rows",
-    "Barbell Curl",
-    "Face Pull",
-    "Hammer Curls",
-  ].map(createTemplateExercise);
-
-  templates.push({
-    id: generateId(),
-    name: "Pull Day 1",
-    exercises: pullDay1Exercises,
-  });
-
-  // Pull Day 2 Template
-  const pullDay2Exercises = [
-    "Pullups",
-    "Cable Rows",
-    "Wide-Grip Lat Pulldown",
-    "Preacher Curl",
-    "Reverse Flyes",
-    "Hammer Curls",
-  ].map(createTemplateExercise);
-
-  templates.push({
-    id: generateId(),
-    name: "Pull Day 2",
-    exercises: pullDay2Exercises,
-  });
-
-  // Leg Day 1 Template
-  const legsDay1Exercises = [
-    "Barbell Squat",
-    "Romanian Deadlift",
-    "Leg Extensions",
-    "Walking, Lunge",
-    "Calf Press",
-    "Glute Ham Raise",
-  ].map(createTemplateExercise);
-
-  templates.push({
-    id: generateId(),
-    name: "Leg Day 1",
-    exercises: legsDay1Exercises,
-  });
-
-  // Leg Day 2 Template
-  const legsDay2Exercises = [
-    "Leg Press",
-    "Bulgarian Split Squat",
-    "Lying Leg Curls",
-    "Walking, Lunge",
-    "Seated Calf Raise",
-    "Glute Ham Raise",
-  ].map(createTemplateExercise);
-
-  templates.push({
-    id: generateId(),
-    name: "Leg Day 2",
-    exercises: legsDay2Exercises,
-  });
-
-  return templates;
+  return [
+    {
+      id: generateId(),
+      name: "Push Day 1",
+      exercises: [
+        "Barbell Bench Press - Medium Grip",
+        "Incline Dumbbell Press",
+        "Dumbbell Shoulder Press",
+        "Incline Dumbbell Flyes",
+        "Lateral Raise",
+        "Triceps Dumbbell Extension",
+      ].map((name) => ({
+        id: generateId(),
+        exerciseName: name,
+        sets: [],
+      })),
+    },
+    {
+      id: generateId(),
+      name: "Pull Day 1",
+      exercises: [
+        "Barbell Deadlift",
+        "Wide-Grip Lat Pulldown",
+        "Barbell Rows",
+        "Barbell Curl",
+        "Face Pull",
+        "Hammer Curls",
+      ].map((name) => ({
+        id: generateId(),
+        exerciseName: name,
+        sets: [],
+      })),
+    },
+    {
+      id: generateId(),
+      name: "Leg Day 1",
+      exercises: [
+        "Barbell Squat",
+        "Romanian Deadlift",
+        "Leg Extensions",
+        "Calf Press",
+      ].map((name) => ({
+        id: generateId(),
+        exerciseName: name,
+        sets: [],
+      })),
+    },
+  ];
 }
 
+// Workout history (seeded log)
 export function generatePPLWorkoutHistory(): CompletedWorkout[] {
   const workouts: CompletedWorkout[] = [];
   const today = new Date();
   const threeMonthsAgo = new Date(today);
   threeMonthsAgo.setMonth(today.getMonth() - 3);
 
-  // Generate workouts following PPL schedule
+  // More push days -> chest bias
   const schedule: ("push" | "pull" | "legs")[] = [
     "push",
     "pull",
     "legs",
     "push",
     "pull",
-    "legs",
+    "push",
   ];
   let scheduleIndex = 0;
 
-  // Start from 3 months ago
   const currentDate = new Date(threeMonthsAgo);
   let weekNumber = 0;
 
   while (currentDate <= today) {
-    const dayOfWeek = currentDate.getDay(); // 0 = Sunday, 1 = Monday, etc.
-
-    // Skip Sundays (rest day)
+    const dayOfWeek = currentDate.getDay();
     if (dayOfWeek !== 0) {
-      // Occasionally skip a day for realism (life happens)
       if (Math.random() > 0.95) {
         currentDate.setDate(currentDate.getDate() + 1);
         continue;
       }
 
       const workoutType = schedule[scheduleIndex];
-
-      // Safety check to ensure workoutType is defined
       if (!workoutType) {
         scheduleIndex = 0;
         continue;
       }
 
-      // Calculate week number from start
       const weeksSinceStart = Math.floor(
         (currentDate.getTime() - threeMonthsAgo.getTime()) /
           (7 * 24 * 60 * 60 * 1000)
       );
       weekNumber = weeksSinceStart;
 
-      // Determine day variation (alternates each week)
       const currentVariation = ((Math.floor(weekNumber / 1) % 2) + 1) as 1 | 2;
 
-      // Create workout with some time variation (not always same time)
       const workoutTime = new Date(currentDate);
-      const randomHour = 17 + Math.floor(Math.random() * 4); // 5-8 PM range
-      const randomMinute = Math.floor(Math.random() * 60);
-      workoutTime.setHours(randomHour, randomMinute, 0, 0);
+      workoutTime.setHours(
+        17 + Math.floor(Math.random() * 4),
+        Math.floor(Math.random() * 60),
+        0,
+        0
+      );
 
       const workout = createWorkout(
         workoutType,
         workoutTime,
         weekNumber,
-        currentVariation as 1 | 2
+        currentVariation
       );
       workouts.push(workout);
 
       scheduleIndex = (scheduleIndex + 1) % schedule.length;
     }
-
     currentDate.setDate(currentDate.getDate() + 1);
   }
 
