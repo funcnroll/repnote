@@ -25,19 +25,6 @@ import { YAxisStyled } from "@/components/reusable/YAxisStyled";
 import { XAxisStyled } from "@/components/reusable/XAxisStyled";
 
 function Volume() {
-  // TODO: Remove comparison between completed sets and missed sets; move missed sets to Consistency and keep volume focused on completed sets
-
-  // const weeklySetComparisonData = weeksArr.map((week, index) => {
-  //   const completed = getWeeklyCompletedSetData(week);
-  //   const total = week.reduce((acc, workout) => acc + workout.sets, 0);
-
-  //   return {
-  //     week: index + 1,
-  //     completedSets: completed,
-  //     missedSets: total - completed,
-  //   };
-  // });
-
   const { weeklySetsData, weeklyRepsData, weeklyWeightData, radarData } =
     useVolumeData();
 
