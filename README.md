@@ -1,6 +1,8 @@
 # 🏋️ RepNote
 
-## **RepNote** is a minimalist workout tracking app, aimed primarily at data visualisation, with a mobile-style interface designed to simulate a phone experience directly in the browser, built with React, TailwindCSS, and Redux Toolkit.
+## **RepNote** is a minimalist training log and performance dashboard, built with a strong focus on **data visualization**. It simulates a mobile-style interface directly in the browser, allowing users to log workouts and instantly see trends in **strength, volume, and consistency**.
+
+---
 
 ## 📱 App Preview
 
@@ -11,84 +13,85 @@
   <img src="preview/preview4.png" alt="Training Volume" width="200" />
 </div>
 
+---
+
 ## ✨ Features
 
 - 👤 **Onboarding**
+  - Simple name-based setup for personalization
 
-  - Simple name-based onboarding to personalize the app
+- 🧩 **Training Templates**
+  - Create and edit custom training plans
+  - Add, remove, and reorder exercises
+  - Draft vs. saved templates (edit vs. workout mode)
 
-- 🧩 **Workout Templates**
+- 💪 **Workout Logging**
+  - Track sets, reps, and weight during training
+  - Edit exercises and sets mid-session
+  - Resume active workouts from local storage
+  - Per-set completion indicators
 
-  - Create and edit custom workout templates
-  - Add, remove, or reorder exercises within templates
-  - Support for both built-in and custom exercises
-  - Draft vs saved template logic (edit mode vs workout mode)
-
-- 💪 **Workout Tracking**
-
-  - Log sets, reps, and weight during workouts
-  - Edit exercises and sets mid-workout
-  - Track progress with per-exercise set completion indicators
-  - Resume active templates from local storage
-
-- 🗂️ **Exercise Management**
-
+- 🗂️ **Exercise Library**
   - Searchable library of common exercises
-  - Support for custom exercise creation
-  - Remove or reorder sets dynamically
+  - Add or modify sets dynamically
 
-- 📈 **Statistics & Data Visualisation**
-
+- 📈 **Statistics & Data Visualization**
   - **Training Volume**
-    - Weekly sets, reps, and weight totals
-    - Radar chart for total sets per muscle group
+    - Weekly totals for sets, reps, and weight
+    - Radar chart of sets distributed across muscle groups
   - **Performance**
-    - Estimated One Rep Max (1RM) progression
-    - Total training volume load trends
+    - One Rep Max (1RM) progression estimates
+    - Volume load trends over time
   - **Consistency**
-    - Completed vs missed sets tracking
-    - Workout duration (average + total minutes)
-    - Weekly adherence / streak view
+    - Completed vs. missed sets
+    - Workout duration tracking
+    - Weekly adherence / streaks
 
 - 🧠 **Data Layer**
-
   - Global state management with Redux Toolkit
-  - Persistent workout history and templates via local storage
-  - Seeded with months of realistic sample workout data (including progression + partial sessions)
+  - Local storage persistence
+  - Seeded with months of realistic sample data (progression + partial sessions)
 
 - 🎨 **UI/UX**
   - Mobile-style layout (375x812) for browser demo
-  - Navigation with React Router
-  - Styled with TailwindCSS
+  - Smooth navigation with React Router
+  - TailwindCSS design system
 
 ---
 
 ## 🧪 Demo Goals
 
-This app is designed as a **developer portfolio project** to demonstrate:
+RepNote was built as a **developer portfolio project** to highlight:
 
-- Clean and scalable React architecture
-- Explore data visualisation ideas related to workouts and performance
-  Serve as a playground for experimenting with UI/UX and "playing" around with data and structure in a relaxed way
-- State management patterns with Redux
-- Local UI design via TailwindCSS
-- Data flow in medium-complexity fitness tools
+- 🏗️ **Scalable React Architecture**  
+  Clean, modular components with reusable chart and layout primitives.
+
+- 📊 **Data Visualization in Practice**  
+  Transforming workout data into meaningful charts with Recharts.
+
+- 🔄 **State Management with Redux Toolkit**  
+  Predictable flows for templates, active workouts, and workout history.
+
+- 🎨 **UI/UX Exploration**  
+  A mobile-style browser experience, styled with TailwindCSS.
+
+- 🗂️ **Local Data Persistence**  
+  Templates and workout history stored in local storage for instant demo use.
+
+- 💡 **Experimentation & Play**  
+  A sandbox for exploring UI ideas, workout data structures, and consistency tracking.
 
 ---
 
 ## 📌 Tech Stack
 
-- React + Vite
-- Redux Toolkit
-- React Router
-- TailwindCSS
-- Recharts
+- React + Vite  
+- Redux Toolkit  
+- React Router  
+- TailwindCSS  
+- Recharts  
 
 ---
-
-## 🚧 Work in Progress
-
-See [TODO](TODO.md) for full roadmap.
 
 ## 🧑‍💻 Getting Started
 
@@ -97,12 +100,3 @@ git clone https://github.com/funcnroll/repnote.git
 cd repnote
 npm install
 npm run dev
-```
-
-## 🙏 Acknowledgments
-
-Exercise data provided by [free-exercise-db](https://github.com/yuhonas/free-exercise-db)
-
-## 📜 License
-
-This project is licensed under the [MIT License](LICENSE).
