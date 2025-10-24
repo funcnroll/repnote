@@ -52,7 +52,7 @@ function Consistency() {
                       strokeDasharray="0"
                       vertical={false}
                     />
-                    <XAxisStyled label="Weeks" />
+                    <XAxisStyled label="Week" />
 
                     <YAxisStyled label="Sets" />
 
@@ -90,7 +90,7 @@ function Consistency() {
                   margin={{ top: 16, right: 16, left: 16, bottom: 32 }}
                 >
                   <CartesianGrid {...gridStyle} />
-                  <XAxisStyled label="Weeks" />
+                  <XAxisStyled label="Week" />
                   <YAxisStyled label="Minutes" />
 
                   <Line
@@ -143,7 +143,7 @@ function Consistency() {
                   <Bar
                     dataKey="adherence"
                     fill={chartColors.blue}
-                    name="Adherence %"
+                    name="Sets  Completed %"
                   />
 
                   <Legend
