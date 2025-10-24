@@ -32,8 +32,7 @@ function Home() {
     (state) => state.activeTemplate.activeTemplate
   );
 
-  const recentWorkouts = loadRecentWorkoutsFromLocalStorage()
-    .slice(0, 4);
+  const recentWorkouts = loadRecentWorkoutsFromLocalStorage().slice(0, 4);
 
   const hasPreloadedData = recentWorkouts.some(
     (workout) =>
@@ -86,7 +85,9 @@ function Home() {
       window.location.reload();
     } catch (error) {
       console.error("Failed to handle preload data:", error);
-      alert("Failed to preload/clear data. Please try again or clear your browser cache.");
+      alert(
+        "Failed to preload/clear data. Please try again or clear your browser cache."
+      );
     }
   }
 
@@ -136,7 +137,9 @@ function Home() {
                 >
                   {activeTemplate?.name}
                 </Button>
-                <p className="text-textSecondary text-sm sm:text-base">Workout Progress</p>
+                <p className="text-textSecondary text-sm sm:text-base">
+                  Workout Progress
+                </p>
               </div>
               <div className="w-20 h-20 sm:w-24 sm:h-24 relative flex-shrink-0">
                 <ResponsiveContainer

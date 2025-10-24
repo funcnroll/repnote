@@ -2,6 +2,7 @@ import { useState } from "react";
 import { changeName } from "../../app/homeSlice";
 import { useDispatch } from "react-redux";
 import Error from "../../components/reusable/Error";
+import Button from "@/components/reusable/Button";
 
 function NameInput() {
   const [input, setInput] = useState<string>("");
@@ -24,7 +25,7 @@ function NameInput() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-64 flex flex-col gap-4"
+      className="flex flex-col w-64 gap-4"
     >
       <input
         type="text"
@@ -37,6 +38,8 @@ function NameInput() {
       />
 
       {error && <Error msg={error} />}
+
+      <Button variant="secondary">Confirm</Button>
     </form>
   );
 }
