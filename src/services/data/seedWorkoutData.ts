@@ -69,12 +69,14 @@ const EXERCISE_PROGRESSIONS = {
   // Isolations
   "Incline Dumbbell Flyes": { startWeight: 10, weeklyIncrease: 1.25 },
   "Side Lateral Raise": { startWeight: 5, weeklyIncrease: 1.25 },
-  "Dips - Triceps Version": { startWeight: 0, weeklyIncrease: 1.25 },
   "Machine Triceps Extension": { startWeight: 10, weeklyIncrease: 1.25 },
+  "Front Two-Dumbbell Raise": { startWeight: 7.5, weeklyIncrease: 1.25 },
   "Seated Cable Rows": { startWeight: 40, weeklyIncrease: 1.25 },
   "Hammer Curls": { startWeight: 10, weeklyIncrease: 1.25 },
   "Barbell Curl": { startWeight: 30, weeklyIncrease: 1.25 },
   "Face Pull": { startWeight: 20, weeklyIncrease: 1.25 },
+  "Reverse Flyes": { startWeight: 7.5, weeklyIncrease: 1.25 },
+  "Machine Preacher Curls": { startWeight: 25, weeklyIncrease: 1.25 },
   "Leg Extensions": { startWeight: 40, weeklyIncrease: 1.25 },
   "Lying Leg Curls": { startWeight: 60, weeklyIncrease: 1.25 },
   "Calf Press": { startWeight: 60, weeklyIncrease: 2.5 },
@@ -260,9 +262,13 @@ function createWorkout(
     0
   );
 
-  const workoutName = `${workoutType
-    .charAt(0)
-    .toUpperCase()}${workoutType.slice(1)} Day ${dayVariation}`;
+  // Map workout types to proper display names
+  const typeNameMap = {
+    push: "Push",
+    pull: "Pull",
+    legs: "Leg"
+  };
+  const workoutName = `${typeNameMap[workoutType]} Day ${dayVariation}`;
 
   const minDuration = 45 * 60;
   const maxDuration = 135 * 60;
@@ -349,7 +355,6 @@ export function generatePPLTemplates(): Template[] {
         "Close-Grip Barbell Bench Press",
         "Dumbbell Shoulder Press",
         "Incline Dumbbell Flyes",
-
         "Front Two-Dumbbell Raise",
       ].map((name) => buildExercise(name, "push")),
     },

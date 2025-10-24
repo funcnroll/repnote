@@ -12,7 +12,7 @@ function H1({ children, variant = "large", centered = false, className = "" }: H
   
   const variantStyles = {
     large: "text-6xl mb-8",
-    medium: "text-2xl font-semibold mb-8", 
+    medium: "text-2xl font-semibold mb-8",
     small: "text-lg font-semibold mb-6"
   };
   

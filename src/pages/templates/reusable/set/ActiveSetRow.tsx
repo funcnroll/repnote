@@ -39,12 +39,14 @@ function ActiveSetRow({
           <span className="text-textPrimary font-medium text-sm">reps</span>
           <input
             type="number"
+            min="0"
             value={actualReps ?? ""}
-            onChange={(e) =>
-              onRepsChange?.(
-                e.target.value === "" ? null : parseInt(e.target.value) || null
-              )
-            }
+            onChange={(e) => {
+              const value = e.target.value === "" ? null : parseInt(e.target.value);
+              // Prevent negative values
+              if (value !== null && value < 0) return;
+              onRepsChange?.(value || null);
+            }}
             className="bg-transparent text-textPrimary font-medium focus:outline-none focus:bg-backgroundColor focus:px-2 focus:py-1 focus:rounded transition-all duration-200 w-full max-w-12 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             placeholder={reps?.toString() || "0"}
           />
@@ -54,12 +56,15 @@ function ActiveSetRow({
           <span className="text-textPrimary font-medium text-sm">kg</span>
           <input
             type="number"
+            min="0"
+            step="0.5"
             value={weight ?? ""}
-            onChange={(e) =>
-              onWeightChange?.(
-                e.target.value === "" ? null : parseInt(e.target.value) || null
-              )
-            }
+            onChange={(e) => {
+              const value = e.target.value === "" ? null : parseFloat(e.target.value);
+              // Prevent negative values
+              if (value !== null && value < 0) return;
+              onWeightChange?.(value || null);
+            }}
             className="bg-transparent text-textPrimary font-medium focus:outline-none focus:bg-backgroundColor focus:px-2 focus:py-1 focus:rounded transition-all duration-200 w-full max-w-12 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             placeholder="0"
           />
@@ -68,6 +73,7 @@ function ActiveSetRow({
       <div className="flex gap-1 items-center justify-center flex-shrink-0">
         <button
           onClick={onToggleComplete}
+          aria-label={completed ? "Mark set as incomplete" : "Mark set as complete"}
           className={`p-2 sm:p-3 rounded-lg transition duration-200 cursor-pointer ${
             completed
               ? "bg-green  text-textPrimary"
@@ -79,6 +85,7 @@ function ActiveSetRow({
 
         <button
           onClick={onRemove}
+          aria-label="Remove set"
           className="p-2 sm:p-3 rounded-lg bg-textDisabled cursor-pointer text-textPrimary transition duration-200 hover:bg-red"
         >
           <X className="w-4 h-4 sm:w-5 sm:h-5" />

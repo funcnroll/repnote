@@ -122,9 +122,9 @@ const activeTemplateSlice = createSlice({
       const set = exercise?.sets.find((s) => s.id === setId);
       if (set) {
         set.completed = !set.completed;
-        state.activeTemplate
-          ? saveActiveTemplateToLocalStorage(state.activeTemplate)
-          : null;
+        if (state.activeTemplate) {
+          saveActiveTemplateToLocalStorage(state.activeTemplate);
+        }
       }
     },
 
@@ -144,9 +144,9 @@ const activeTemplateSlice = createSlice({
       const set = exercise?.sets.find((set) => set.id === setId);
       if (set) {
         set.actualReps = actualReps;
-        state.activeTemplate
-          ? saveActiveTemplateToLocalStorage(state.activeTemplate)
-          : null;
+        if (state.activeTemplate) {
+          saveActiveTemplateToLocalStorage(state.activeTemplate);
+        }
       }
     },
 
@@ -166,9 +166,9 @@ const activeTemplateSlice = createSlice({
       const set = exercise?.sets.find((set) => set.id === setId);
       if (set) {
         set.weight = weight;
-        state.activeTemplate
-          ? saveActiveTemplateToLocalStorage(state.activeTemplate)
-          : null;
+        if (state.activeTemplate) {
+          saveActiveTemplateToLocalStorage(state.activeTemplate);
+        }
       }
     },
 
@@ -183,9 +183,9 @@ const activeTemplateSlice = createSlice({
       );
       if (exercise) {
         exercise.sets = exercise.sets.filter((set) => set.id !== setId);
-        state.activeTemplate
-          ? saveActiveTemplateToLocalStorage(state.activeTemplate)
-          : null;
+        if (state.activeTemplate) {
+          saveActiveTemplateToLocalStorage(state.activeTemplate);
+        }
       }
     },
 

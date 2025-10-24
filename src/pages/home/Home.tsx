@@ -36,10 +36,10 @@ function Home() {
     .slice(0, 4);
 
   const hasPreloadedData = recentWorkouts.some(
-    (template) =>
-      template.name.includes("Push Day") ||
-      template.name.includes("Pull Day") ||
-      template.name.includes("Leg Day")
+    (workout) =>
+      workout.name.includes("Push Day") ||
+      workout.name.includes("Pull Day") ||
+      workout.name.includes("Leg Day")
   );
 
   useEffect(() => {
@@ -60,22 +60,34 @@ function Home() {
   ];
 
   function handlePreloadData() {
-    if (hasPreloadedData) {
-      // Clear all data
-      localStorage.removeItem("recentWorkouts");
-      localStorage.removeItem("templates");
-    } else {
-      // Generate and seed workout history
-      const historicalWorkouts = generatePPLWorkoutHistory();
-      seedWorkoutsToLocalStorage(historicalWorkouts);
+    try {
+      if (hasPreloadedData) {
+        // Confirm before clearing all data
+        const confirmed = window.confirm(
+          "Clear all data?\n\nThis will permanently delete:\n• All workout templates\n• All workout history\n• All statistics data\n\nThis action cannot be undone."
+        );
 
-      // Generate and seed PPL templates
-      const pplTemplates = generatePPLTemplates();
-      saveTemplatesToLocalStorage(pplTemplates);
+        if (!confirmed) return;
+
+        // Clear all data
+        localStorage.removeItem("recentWorkouts");
+        localStorage.removeItem("templates");
+      } else {
+        // Generate and seed workout history
+        const historicalWorkouts = generatePPLWorkoutHistory();
+        seedWorkoutsToLocalStorage(historicalWorkouts);
+
+        // Generate and seed PPL templates
+        const pplTemplates = generatePPLTemplates();
+        saveTemplatesToLocalStorage(pplTemplates);
+      }
+
+      // Force refresh by reloading the page to show updated data
+      window.location.reload();
+    } catch (error) {
+      console.error("Failed to handle preload data:", error);
+      alert("Failed to preload/clear data. Please try again or clear your browser cache.");
     }
-
-    // Force refresh by reloading the page to show updated data
-    window.location.reload();
   }
 
   if (!name) {
@@ -115,18 +127,18 @@ function Home() {
         ) : (
           <>
             {/* Workout Progress */}
-            <div className="bg-cardColor p-8 rounded-xl mb-8 flex items-center justify-between">
-              <div className="flex flex-col gap-3">
+            <div className="bg-cardColor p-4 sm:p-8 rounded-xl mb-8 flex flex-col sm:flex-row items-center sm:justify-between gap-4">
+              <div className="flex flex-col gap-2 sm:gap-3 items-center sm:items-start w-full sm:w-auto">
                 <Button
                   variant="text"
                   to={`/activeTemplate/${activeTemplate?.id}`}
-                  className="text-2xl"
+                  className="text-xl sm:text-2xl text-center sm:text-left"
                 >
                   {activeTemplate?.name}
                 </Button>
-                <p className="text-textSecondary">Workout Progress</p>
+                <p className="text-textSecondary text-sm sm:text-base">Workout Progress</p>
               </div>
-              <div className="w-24 h-24 relative">
+              <div className="w-20 h-20 sm:w-24 sm:h-24 relative flex-shrink-0">
                 <ResponsiveContainer
                   width="100%"
                   height="100%"

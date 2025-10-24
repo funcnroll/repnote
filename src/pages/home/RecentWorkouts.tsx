@@ -15,13 +15,22 @@ function RecentWorkouts() {
       </h2>
 
       <div className="space-y-4">
-        {recentWorkouts.map((workout: CompletedWorkout, index: number) => (
-          <RecentWorkoutCard
-            key={index}
-            workout={workout}
-            index={index}
-          />
-        ))}
+        {recentWorkouts.length === 0 ? (
+          <div className="py-8 text-center text-textSecondary">
+            <p>No workouts yet.</p>
+            <p className="mt-2 text-sm">
+              Complete your first workout to see it here!
+            </p>
+          </div>
+        ) : (
+          recentWorkouts.map((workout: CompletedWorkout, index: number) => (
+            <RecentWorkoutCard
+              key={workout.id}
+              workout={workout}
+              index={index}
+            />
+          ))
+        )}
       </div>
     </div>
   );

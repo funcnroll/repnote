@@ -17,7 +17,18 @@ export function useStatisticsData(): {
     (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
   );
 
-  const firstDate = new Date(sortedData[0]!?.timestamp);
+  // Return empty data if no workouts exist
+  if (sortedData.length === 0) {
+    return {
+      weeksArr: [],
+      sortedData: [],
+      weeklyPreviewSetData: [],
+      weeklyPreviewConsistencyData: [],
+      weeklyPreviewWeightData: [],
+    };
+  }
+
+  const firstDate = new Date(sortedData[0].timestamp);
 
   const weeks: StatisticsWeeks = {};
 

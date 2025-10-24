@@ -29,12 +29,14 @@ function SetRow({
           <span className="text-textPrimary font-medium text-sm">reps</span>
           <input
             type="number"
+            min="0"
             value={reps ?? ""}
-            onChange={(e) =>
-              onRepsChange?.(
-                e.target.value === "" ? null : parseInt(e.target.value) || null
-              )
-            }
+            onChange={(e) => {
+              const value = e.target.value === "" ? null : parseInt(e.target.value);
+              // Prevent negative values
+              if (value !== null && value < 0) return;
+              onRepsChange?.(value || null);
+            }}
             className="bg-transparent text-textPrimary font-medium focus:outline-none focus:bg-backgroundColor focus:px-2 focus:py-1 focus:rounded transition-all duration-200 w-full text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             placeholder="0"
           />
@@ -44,12 +46,15 @@ function SetRow({
           <span className="text-textPrimary font-medium text-sm">kg</span>
           <input
             type="number"
+            min="0"
+            step="0.5"
             value={weight ?? ""}
-            onChange={(e) =>
-              onWeightChange?.(
-                e.target.value === "" ? null : parseInt(e.target.value) || null
-              )
-            }
+            onChange={(e) => {
+              const value = e.target.value === "" ? null : parseFloat(e.target.value);
+              // Prevent negative values
+              if (value !== null && value < 0) return;
+              onWeightChange?.(value || null);
+            }}
             className="bg-transparent text-textPrimary font-medium focus:outline-none focus:bg-backgroundColor focus:px-2 focus:py-1 focus:rounded transition-all duration-200 w-full text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             placeholder="0"
           />
@@ -58,6 +63,7 @@ function SetRow({
       <div className="ml-4 mt-2.5 ">
         <button
           onClick={onRemove}
+          aria-label="Remove set"
           className="p-3   rounded-lg bg-textDisabled  cursor-pointer  text-textPrimary transition duration-200 hover:bg-redHover"
         >
           <X className="w-5 h-5" />

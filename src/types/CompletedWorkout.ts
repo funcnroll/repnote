@@ -5,7 +5,7 @@ export interface CompletedWorkout {
   id: string;
   completedSets: number;
   sets: number;
-  timestamp: string | Date;
+  timestamp: string; // ISO  format timestamp
   exercises: Exercise[];
   duration: number; // In seconds
 }

@@ -17,7 +17,14 @@ export function saveTemplatesToLocalStorage(templates: Template[]) {
  */
 export function loadTemplatesFromLocalStorage() {
   const saved = localStorage.getItem("templates");
-  return saved ? JSON.parse(saved) : [];
+  if (!saved) return [];
+
+  try {
+    return JSON.parse(saved);
+  } catch (error) {
+    console.error("Failed to parse templates from localStorage:", error);
+    return [];
+  }
 }
 
 /**
@@ -34,7 +41,14 @@ export function saveNameToLocalStorage(name: string) {
  */
 export function loadNameFromLocalStorage() {
   const saved = localStorage.getItem("name");
-  return saved ? JSON.parse(saved) : "";
+  if (!saved) return "";
+
+  try {
+    return JSON.parse(saved);
+  } catch (error) {
+    console.error("Failed to parse name from localStorage:", error);
+    return "";
+  }
 }
 
 /*
@@ -53,7 +67,14 @@ export function saveFinishedWorkoutToLocalStorage(workout: CompletedWorkout) {
  */
 export function loadRecentWorkoutsFromLocalStorage(): CompletedWorkout[] {
   const saved = localStorage.getItem("recentWorkouts");
-  return saved ? JSON.parse(saved) : [];
+  if (!saved) return [];
+
+  try {
+    return JSON.parse(saved);
+  } catch (error) {
+    console.error("Failed to parse workouts from localStorage:", error);
+    return [];
+  }
 }
 
 /**
@@ -85,7 +106,14 @@ export function saveActiveTemplateToLocalStorage(
  */
 export function loadActiveTemplateFromLocalStorage(): ActiveTemplate | null {
   const saved = localStorage.getItem("activeTemplate");
-  return saved ? JSON.parse(saved) : null;
+  if (!saved) return null;
+
+  try {
+    return JSON.parse(saved);
+  } catch (error) {
+    console.error("Failed to parse active template from localStorage:", error);
+    return null;
+  }
 }
 
 /**

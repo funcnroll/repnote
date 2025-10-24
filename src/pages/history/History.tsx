@@ -27,7 +27,7 @@ function History() {
             ) : (
               workouts.map((workout: CompletedWorkout, index: number) => (
                 <RecentWorkoutCard
-                  key={index}
+                  key={workout.id}
                   workout={workout}
                   index={index}
                 />
