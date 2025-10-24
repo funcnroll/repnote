@@ -79,9 +79,11 @@ export default function App() {
             </Routes>
           </div>
 
-          <div className="w-full fixed sm:absolute bottom-0 left-0">
-            <NavMenu />
-          </div>
+          {name && (
+            <div className="fixed bottom-0 left-0 w-full sm:absolute">
+              <NavMenu />
+            </div>
+          )}
         </Router>
       </div>
     </div>
