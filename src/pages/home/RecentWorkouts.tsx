@@ -16,7 +16,11 @@ function RecentWorkouts() {
 
       <div className="space-y-4">
         {recentWorkouts.map((workout: CompletedWorkout, index: number) => (
-          <RecentWorkoutCard key={index} workout={workout} index={index} />
+          <RecentWorkoutCard
+            key={index}
+            workout={workout}
+            index={index}
+          />
         ))}
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { YAxis, Label } from "recharts";
-import { tickStyleYAxis, labelStyle } from "../../..//chartStyles";
+import { tickStyleYAxis, labelStyle } from "../../../..//chartStyles";
 
 interface YAxisStyledProps {
   label: string;

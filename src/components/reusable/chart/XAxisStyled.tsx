@@ -1,5 +1,5 @@
 import { XAxis, Label } from "recharts";
-import { tickStyleXAxis, labelStyle } from "../../..//chartStyles";
+import { tickStyleXAxis, labelStyle } from "../../../..//chartStyles";
 
 interface XAxisStyledProps {
   label: string;
