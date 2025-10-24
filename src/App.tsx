@@ -81,7 +81,7 @@ export default function App() {
 
           {name && (
             <div
-              className="sticky bottom-0 w-full sm:w-[375px] sm:rounded-b-3xl bg-appBg z-50"
+              className="fixed bottom-0 left-0 w-full sm:absolute"
               style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
             >
               <NavMenu />
