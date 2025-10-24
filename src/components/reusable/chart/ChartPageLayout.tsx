@@ -12,7 +12,7 @@ export function ChartPageLayout({
   children,
 }: ChartPageLayoutProps) {
   return (
-    <div className="h-screen px-6 py-8 pb-24 overflow-y-auto bg-backgroundColor text-textPrimary">
+    <div className="h-screen px-6 pb-24 overflow-y-auto bg-backgroundColor text-textPrimary">
       <ChevronBack />
 
       <div className="max-w-4xl mx-auto mt-10">
