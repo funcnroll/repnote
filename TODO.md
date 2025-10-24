@@ -26,7 +26,7 @@
 
 - [ ] Refactor statistics pages once everything is working(!)
 - [x] Track exercise history (weight, reps, sets over time)
-- [ ] Finish statistics pages
+- [x] Finish statistics pages
   - Volume
     - [x] Total sets per week
     - [x] Radar chart for total sets per muscle group across all weeks
@@ -36,9 +36,9 @@
     - [x] 1RM line chart
     - [x] Volume load line chart
   - Consistency
-    - [ ] Consistency rate (completed vs missed sets)
-    - [ ] Average workout duration
-    - [ ] Streaks / weekly adherence view
+    - [x] Consistency rate (completed vs missed sets)
+    - [x] Workout duration (average + total)
+    - [x] Streaks / weekly adherence view
 
 ## 🧩 Exercise Editing UI
 

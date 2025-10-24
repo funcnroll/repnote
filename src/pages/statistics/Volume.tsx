@@ -4,7 +4,6 @@ import {
   Bar,
   BarChart,
   CartesianGrid,
-  Label,
   Legend,
   Line,
   LineChart,
@@ -13,11 +12,9 @@ import {
   Radar,
   RadarChart,
   ResponsiveContainer,
-  XAxis,
 } from "recharts";
 import {
   chartColors,
-  labelStyle,
   tickStyleXAxis,
   legendStyle,
   gridStyle,
