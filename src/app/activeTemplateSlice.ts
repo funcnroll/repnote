@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Exercise } from "@/types/Exercise";
-import ActiveTemplate from "../pages/templates/ActiveTemplate";
 import {
   deleteActiveTemplateFromLocalStorage,
   saveActiveTemplateToLocalStorage,
@@ -59,7 +58,7 @@ const activeTemplateSlice = createSlice({
           // Calculate the duration of the workout in seconds: Get the date it currently is, and subtract the date it started at, then convert to seconds
           duration: state.activeTemplate.duration
             ? Math.floor((Date.now() - state.activeTemplate.duration) / 1000)
-            : null,
+            : 0,
         };
 
         saveFinishedWorkoutToLocalStorage(completedWorkout);

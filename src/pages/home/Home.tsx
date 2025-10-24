@@ -33,7 +33,6 @@ function Home() {
   );
 
   const recentWorkouts = loadRecentWorkoutsFromLocalStorage()
-    .reverse()
     .slice(0, 4);
 
   const hasPreloadedData = recentWorkouts.some(

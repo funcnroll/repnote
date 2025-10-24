@@ -4,8 +4,8 @@ import RecentWorkoutCard from "../../components/reusable/RecentWorkoutCard";
 
 function RecentWorkouts() {
   const allWorkouts = loadRecentWorkoutsFromLocalStorage();
-  // Only show the last 4 workouts (most recent)
-  const recentWorkouts = allWorkouts.slice(-4).reverse(); // Get last 4 and reverse for newest first
+  // Only show the first 4 workouts (most recent, since array is stored newest first)
+  const recentWorkouts = allWorkouts.slice(0, 4);
 
   return (
     <div className="bg-cardColor p-6 rounded-xl mt-8">

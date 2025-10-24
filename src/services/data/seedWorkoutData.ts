@@ -349,6 +349,7 @@ export function generatePPLTemplates(): Template[] {
         "Close-Grip Barbell Bench Press",
         "Dumbbell Shoulder Press",
         "Incline Dumbbell Flyes",
+
         "Front Two-Dumbbell Raise",
       ].map((name) => buildExercise(name, "push")),
     },
