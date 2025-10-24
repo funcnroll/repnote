@@ -12,6 +12,9 @@ import { isWorkingOut } from "@/app/homeSlice";
 
 function Templates() {
   const templates = useAppSelector((state) => state.templates.templates);
+  const activeTemplate = useAppSelector(
+    (state) => state.activeTemplate.activeTemplate
+  );
   const dispatch = useAppDispatch();
 
   const navigate = useNavigate();
@@ -57,7 +60,7 @@ function Templates() {
                       e.preventDefault();
                       dispatch(startTemplate(template));
                       dispatch(isWorkingOut());
-                      navigate(`/activeTemplate/${template.id}`);
+                      navigate(`/active-template/${template.id}`);
                     }}
                   />
                   <X
@@ -65,6 +68,14 @@ function Templates() {
                     className="text-textSecondary hover:text-red cursor-pointer transition"
                     onClick={(e) => {
                       e.preventDefault();
+
+                      // Prevent deleting the active template
+                      if (activeTemplate?.id === template.id) {
+                        alert(
+                          "Cannot delete this template while it's in use. Please finish or cancel the active workout first."
+                        );
+                        return;
+                      }
 
                       dispatch(deleteTemplate(template.id));
                     }}

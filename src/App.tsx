@@ -69,7 +69,7 @@ export default function App() {
                 element={<AddExercise />}
               />
               <Route
-                path="/activeTemplate/:activeTemplateId"
+                path="/active-template/:activeTemplateId"
                 element={<ActiveTemplate />}
               />
               <Route

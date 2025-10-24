@@ -131,7 +131,7 @@ function Home() {
               <div className="flex flex-col gap-2 sm:gap-3 items-center sm:items-start w-full sm:w-auto">
                 <Button
                   variant="text"
-                  to={`/activeTemplate/${activeTemplate?.id}`}
+                  to={`/active-template/${activeTemplate?.id}`}
                   className="text-xl sm:text-2xl text-center sm:text-left"
                 >
                   {activeTemplate?.name}

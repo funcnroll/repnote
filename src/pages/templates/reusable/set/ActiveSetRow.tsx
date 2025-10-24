@@ -42,10 +42,14 @@ function ActiveSetRow({
             min="0"
             value={actualReps ?? ""}
             onChange={(e) => {
-              const value = e.target.value === "" ? null : parseInt(e.target.value);
-              // Prevent negative values
-              if (value !== null && value < 0) return;
-              onRepsChange?.(value || null);
+              if (e.target.value === "") {
+                onRepsChange?.(null);
+                return;
+              }
+              const value = parseInt(e.target.value, 10);
+              // Prevent invalid numbers, negative values, and zero
+              if (isNaN(value) || value < 0) return;
+              onRepsChange?.(value);
             }}
             className="bg-transparent text-textPrimary font-medium focus:outline-none focus:bg-backgroundColor focus:px-2 focus:py-1 focus:rounded transition-all duration-200 w-full max-w-12 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             placeholder={reps?.toString() || "0"}
@@ -60,10 +64,14 @@ function ActiveSetRow({
             step="0.5"
             value={weight ?? ""}
             onChange={(e) => {
-              const value = e.target.value === "" ? null : parseFloat(e.target.value);
-              // Prevent negative values
-              if (value !== null && value < 0) return;
-              onWeightChange?.(value || null);
+              if (e.target.value === "") {
+                onWeightChange?.(null);
+                return;
+              }
+              const value = parseFloat(e.target.value);
+              // Prevent invalid numbers and negative values (allow 0 for weight)
+              if (isNaN(value) || value < 0) return;
+              onWeightChange?.(value);
             }}
             className="bg-transparent text-textPrimary font-medium focus:outline-none focus:bg-backgroundColor focus:px-2 focus:py-1 focus:rounded transition-all duration-200 w-full max-w-12 text-center [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
             placeholder="0"

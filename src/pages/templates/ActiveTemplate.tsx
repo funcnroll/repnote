@@ -20,15 +20,28 @@ function ActiveTemplate() {
     (state) => state.activeTemplate.activeTemplate
   );
 
+  if (!activeTemplate) {
+    return (
+      <div className="bg-backgroundColor text-textPrimary px-6 py-8 pb-24">
+        <ChevronBack />
+        <H1 variant="medium">No Active Workout</H1>
+        <p className="text-textSecondary mt-4">
+          No active workout found. Please start a workout from the Templates
+          page.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div className="bg-backgroundColor text-textPrimary px-6 py-8 pb-24">
       <ChevronBack />
 
       <H1 variant="medium">Active Template</H1>
-      <H1 variant="medium">{activeTemplate?.name}</H1>
+      <H1 variant="medium">{activeTemplate.name}</H1>
 
       <div>
-        {activeTemplate?.exercises.map((exercise, index) => (
+        {activeTemplate.exercises.map((exercise, index) => (
           <ExerciseCard
             key={exercise.id}
             exercise={exercise}
@@ -54,7 +67,7 @@ function ActiveTemplate() {
       {/* Add Exercise Button */}
       <div className="mt-6">
         <Button
-          to={`/active-template/${activeTemplate?.id}/add-exercise`}
+          to={`/active-template/${activeTemplate.id}/add-exercise`}
           fullWidth
         >
           + Add Exercise

@@ -199,7 +199,13 @@ const templateSlice = createSlice({
     ) {
       const { templateId, exercises } = action.payload;
 
-      const templateToModify = templateUtils.find(templateId, state.templates);
+      const templateIndex = templateUtils.find(templateId, state.templates);
+
+      // Validate template exists before updating
+      if (templateIndex === -1 || !state.templates[templateIndex]) {
+        console.error(`Template with id ${templateId} not found`);
+        return;
+      }
 
       // Reset all completed flags when saving exercises back to template
       const resetExercises = exercises.map((exercise) => ({
@@ -210,8 +216,7 @@ const templateSlice = createSlice({
         })),
       }));
 
-      // Tell TS that this element will ALWAYS exist
-      state.templates[templateToModify]!.exercises = resetExercises;
+      state.templates[templateIndex].exercises = resetExercises;
     },
   },
 });
