@@ -80,10 +80,7 @@ export default function App() {
           </div>
 
           {name && (
-            <div
-              className="fixed bottom-0 left-0 w-full sm:absolute"
-              style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
-            >
+            <div className="fixed bottom-0 left-0 w-full sm:absolute">
               <NavMenu />
             </div>
           )}
