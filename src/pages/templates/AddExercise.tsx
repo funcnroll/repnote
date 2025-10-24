@@ -43,7 +43,7 @@ function AddExercise() {
   const debouncedSearch = useDebouncedValue(search, 150);
 
   return (
-    <div className="h-screen px-6 py-8 pb-24 overflow-y-auto bg-backgroundColor text-textPrimary">
+    <div className="px-6 py-8 pb-24 bg-backgroundColor text-textPrimary">
       <ChevronBack />
 
       <H1 variant="medium">{exerciseId ? "Edit Exercise" : "Add Exercise"}</H1>

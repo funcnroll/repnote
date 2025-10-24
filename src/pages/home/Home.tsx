@@ -99,7 +99,7 @@ function Home() {
   }
 
   return (
-    <div className="h-screen overflow-y-auto p-4 pb-24 text-textPrimary">
+    <div className="p-4 pb-24 text-textPrimary">
       <div className="flex justify-center items-center flex-wrap">
         <H1>Welcome back, {name}</H1>
       </div>

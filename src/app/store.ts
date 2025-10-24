@@ -3,6 +3,7 @@ import templatesReducer, {
   addTemplate,
   updateTemplate,
   deleteTemplate,
+  updateTemplateFromActive,
 } from "./templateSlice";
 import activeTemplateReducer from "./activeTemplateSlice";
 import errorReducer from "./errorSlice";
@@ -49,6 +50,14 @@ listenerMiddleware.startListening({
 
 listenerMiddleware.startListening({
   actionCreator: deleteTemplate,
+  effect: (_action, listenerApi) => {
+    const state = listenerApi.getState() as RootState;
+    saveTemplatesToLocalStorage(state.templates.templates);
+  },
+});
+
+listenerMiddleware.startListening({
+  actionCreator: updateTemplateFromActive,
   effect: (_action, listenerApi) => {
     const state = listenerApi.getState() as RootState;
     saveTemplatesToLocalStorage(state.templates.templates);

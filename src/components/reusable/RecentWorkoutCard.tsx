@@ -32,25 +32,26 @@ function RecentWorkoutCard({ workout, index }: RecentWorkoutCardProps) {
           <h3 className="font-semibold text-textPrimary group-hover:text-blue transition-colors duration-200">
             {workout.name}
           </h3>
-          <div className="flex items-center gap-2 mt-2">
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-blue rounded-full"></div>
-              <span className="text-textSecondary text-sm">
+          <div className="flex items-center gap-2 mt-2 flex-nowrap whitespace-nowrap">
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <div className="w-2 h-2 bg-blue rounded-full flex-shrink-0"></div>
+              <span className="text-textSecondary text-sm whitespace-nowrap">
                 {workout.completedSets}/{workout.sets} sets
               </span>
             </div>
-            <div className="flex items-center gap-2">
-              <div className="w-2 h-2 bg-green rounded-full"></div>
-              <span className="text-textSecondary text-sm">
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <div className="w-2 h-2 bg-green rounded-full flex-shrink-0"></div>
+              <span className="text-textSecondary text-sm whitespace-nowrap">
                 {new Date(workout.timestamp).toLocaleDateString("en-US", {
                   month: "short",
                   day: "numeric",
                   year: "numeric",
+                  timeZone: "UTC",
                 })}
               </span>
             </div>
-            <div className="w-2 h-2 bg-purple rounded-full"></div>
-            <span className="text-textSecondary text-sm">
+            <div className="w-2 h-2 bg-purple rounded-full flex-shrink-0"></div>
+            <span className="text-textSecondary text-sm whitespace-nowrap">
               {formatDuration(workout.duration)}
             </span>
           </div>

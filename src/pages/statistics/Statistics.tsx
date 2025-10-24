@@ -17,7 +17,7 @@ function Statistics() {
 
   if (sortedData.length === 0)
     return (
-      <div className="h-screen p-4 pb-24 overflow-y-auto text-textPrimary">
+      <div className="p-4 pb-24 text-textPrimary">
         <div className="max-w-4xl mx-auto">
           <div className="p-6 bg-cardColor rounded-xl">
             <h2 className="flex items-center gap-2 mb-6 text-xl font-semibold">
@@ -34,7 +34,7 @@ function Statistics() {
     );
 
   return (
-    <div className="h-screen p-4 pb-24 overflow-y-auto text-textPrimary">
+    <div className="p-4 pb-24 text-textPrimary">
       <div className="max-w-4xl mx-auto">
         <div className="p-6 bg-cardColor rounded-xl">
           <h2 className="flex items-center gap-2 mb-6 text-xl font-semibold">

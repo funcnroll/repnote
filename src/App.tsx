@@ -23,7 +23,7 @@ export default function App() {
           <div
             className={`flex-1 flex flex-col ${
               !name ? "justify-center items-center" : ""
-            } px-4 py-6 pb-20`}
+            } px-4 py-6 pb-20 overflow-y-auto`}
           >
             {/* conditionally center only the name input */}
             <Routes>
@@ -79,7 +79,7 @@ export default function App() {
             </Routes>
           </div>
 
-          <div className="w-full absolute bottom-0 left-0">
+          <div className="w-full fixed sm:absolute bottom-0 left-0">
             <NavMenu />
           </div>
         </Router>

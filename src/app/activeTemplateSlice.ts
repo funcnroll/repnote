@@ -35,8 +35,18 @@ const activeTemplateSlice = createSlice({
   reducers: {
     // Start a workout with a template
     startTemplate(state, action: PayloadAction<ActiveTemplate>) {
+      // Reset all completed flags to false for a fresh start
+      const resetExercises = action.payload.exercises.map((exercise) => ({
+        ...exercise,
+        sets: exercise.sets.map((set) => ({
+          ...set,
+          completed: false,
+        })),
+      }));
+
       const templateWithDuration = {
         ...action.payload,
+        exercises: resetExercises,
         duration: Date.now(),
       };
 

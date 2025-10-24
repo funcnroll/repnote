@@ -21,7 +21,7 @@ function ActiveTemplate() {
   );
 
   return (
-    <div className="h-screen overflow-y-auto bg-backgroundColor text-textPrimary px-6 py-8 pb-24">
+    <div className="bg-backgroundColor text-textPrimary px-6 py-8 pb-24">
       <ChevronBack />
 
       <H1 variant="medium">Active Template</H1>

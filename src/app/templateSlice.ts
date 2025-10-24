@@ -72,7 +72,10 @@ const templateSlice = createSlice({
           name: found.name ?? "",
           // Deep clone exercises to prevent mutations affecting the original
           exercises: found.exercises
-            ? found.exercises.map((e) => ({ ...e } as Exercise))
+            ? found.exercises.map((e) => ({
+                ...e,
+                sets: e.sets.map((set) => ({ ...set })),
+              } as Exercise))
             : [],
         };
       } else {
@@ -198,8 +201,17 @@ const templateSlice = createSlice({
 
       const templateToModify = templateUtils.find(templateId, state.templates);
 
+      // Reset all completed flags when saving exercises back to template
+      const resetExercises = exercises.map((exercise) => ({
+        ...exercise,
+        sets: exercise.sets.map((set) => ({
+          ...set,
+          completed: false,
+        })),
+      }));
+
       // Tell TS that this element will ALWAYS exist
-      state.templates[templateToModify]!.exercises = exercises;
+      state.templates[templateToModify]!.exercises = resetExercises;
     },
   },
 });

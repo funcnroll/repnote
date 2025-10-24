@@ -32,7 +32,7 @@ function Performance() {
         />
       </div>
 
-      <div className="w-full max-w-sm space-y-2 ">
+      <div className="w-full max-w-sm space-y-2 mt-[-16px]">
         {search.length > 0 &&
           results.map((e) => (
             <SearchExerciseCard

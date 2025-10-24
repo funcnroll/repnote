@@ -17,7 +17,7 @@ function Templates() {
   const navigate = useNavigate();
 
   return (
-    <div className="h-screen overflow-y-auto bg-backgroundColor text-textPrimary px-4 py-6 pb-24">
+    <div className="bg-backgroundColor text-textPrimary px-4 py-6 pb-24">
       <H1
         variant="small"
         centered
