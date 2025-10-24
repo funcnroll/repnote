@@ -23,7 +23,7 @@ function Performance() {
   return (
     <ChartPageLayout
       title="Performance"
-      description="See how your strength evolves week by week with 1RM estimates and exercise trends."
+      description="See how your strength evolves week by week with One Rep Max (1RM) estimates and exercise trends."
     >
       <div className="max-w-sm">
         <SearchExercises
@@ -93,7 +93,7 @@ function Performance() {
                   <CartesianGrid {...gridStyle} />
                   <XAxisStyled label="Week" />
                   <YAxisStyled
-                    label="Volume Load"
+                    label="Training Volume"
                     unit="kg"
                     width={48}
                   />
@@ -103,7 +103,7 @@ function Performance() {
                     dataKey="volume"
                     dot={false}
                     type="monotone"
-                    name="Volume Load"
+                    name="Total Training Volume"
                     stroke={chartColors.blue}
                   />
                   <LegendStyled />

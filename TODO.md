@@ -58,5 +58,3 @@
   - [x] Add both completed workouts and partial sessions for authenticity
 
 ---
-
-### More goals to come as project grows

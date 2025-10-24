@@ -5,22 +5,61 @@
 ## 📱 App Preview
 
 <div align="center">
-  <img src="preview/home.png" alt="Home Screen" width="200" />
-  <img src="preview/templates.png" alt="Templates" width="200" />
-  <img src="preview/history.png" alt="History" width="200" />
-  <img src="preview/statistics.png" alt="Statistics" width="200" />
+  <img src="preview/preview1.png" alt="Consistency" width="200" />
+  <img src="preview/preview2.png" alt="Active Template" width="200" />
+  <img src="preview/preview3.png" alt="Workout History" width="200" />
+  <img src="preview/preview4.png" alt="Training Volume" width="200" />
 </div>
 
 ## ✨ Features
 
-- 👤 Onboarding via name input
-- 📱 **Mobile-style layout** (375x812) for showcasing in browser
-- 🧩 Workout **template creation**
-- 🗂️ Saved templates & planned exercises
-- 🔁 Global state with **Redux Toolkit**
-- 📍 Page routing with **React Router**
-- 📊 Foundations for **data visualisation** and **stats-based insights**
-- 🧠 Designed for simplicity and demo effectiveness
+- 👤 **Onboarding**
+
+  - Simple name-based onboarding to personalize the app
+
+- 🧩 **Workout Templates**
+
+  - Create and edit custom workout templates
+  - Add, remove, or reorder exercises within templates
+  - Support for both built-in and custom exercises
+  - Draft vs saved template logic (edit mode vs workout mode)
+
+- 💪 **Workout Tracking**
+
+  - Log sets, reps, and weight during workouts
+  - Edit exercises and sets mid-workout
+  - Track progress with per-exercise set completion indicators
+  - Resume active templates from local storage
+
+- 🗂️ **Exercise Management**
+
+  - Searchable library of common exercises
+  - Support for custom exercise creation
+  - Remove or reorder sets dynamically
+
+- 📈 **Statistics & Data Visualisation**
+
+  - **Training Volume**
+    - Weekly sets, reps, and weight totals
+    - Radar chart for total sets per muscle group
+  - **Performance**
+    - Estimated One Rep Max (1RM) progression
+    - Total training volume load trends
+  - **Consistency**
+    - Completed vs missed sets tracking
+    - Workout duration (average + total minutes)
+    - Weekly adherence / streak view
+
+- 🧠 **Data Layer**
+
+  - Global state management with Redux Toolkit
+  - Persistent workout history and templates via local storage
+  - Seeded with months of realistic sample workout data (including progression + partial sessions)
+
+- 🎨 **UI/UX**
+  - Mobile-style layout (375x812) for browser demo
+  - Navigation with React Router
+  - Styled with TailwindCSS
 
 ---
 
