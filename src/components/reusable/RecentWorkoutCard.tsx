@@ -32,7 +32,7 @@ function RecentWorkoutCard({ workout, index }: RecentWorkoutCardProps) {
           <h3 className="font-semibold text-textPrimary group-hover:text-blue transition-colors duration-200">
             {workout.name}
           </h3>
-          <div className="flex items-center gap-2 mt-2 flex-nowrap whitespace-nowrap">
+          <div className="flex items-center gap-2 mt-2 flex-wrap">
             <div className="flex items-center gap-2 flex-shrink-0">
               <div className="w-2 h-2 bg-blue rounded-full flex-shrink-0"></div>
               <span className="text-textSecondary text-sm whitespace-nowrap">

@@ -54,9 +54,10 @@ function AddExerciseButton({
           return;
         }
 
+        // Only generate new IDs for truly new sets (those without an existing ID)
         const sets: Set[] = localSets.map((set, index) => ({
           ...set,
-          id: Date.now() + index, // Generate proper IDs for Redux
+          id: set.id ?? Date.now() + index, // Preserve existing IDs, generate only if missing
         }));
 
         dispatch(clearAddExerciseError());

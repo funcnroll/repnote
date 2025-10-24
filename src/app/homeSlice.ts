@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { loadNameFromLocalStorage } from "./localStorage";
+import { loadNameFromLocalStorage, loadActiveTemplateFromLocalStorage } from "./localStorage";
 
 // State for user profile and workout session status
 interface HomeState {
@@ -9,7 +9,8 @@ interface HomeState {
 
 const initialState: HomeState = {
   name: loadNameFromLocalStorage() || "",
-  isWorkingOut: false,
+  // Automatically determine if user is working out based on whether there's an active template
+  isWorkingOut: loadActiveTemplateFromLocalStorage() !== null,
 };
 
 const homeSlice = createSlice({

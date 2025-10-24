@@ -168,14 +168,14 @@ const templateSlice = createSlice({
     },
     // Update an existing exercise in the temporary template
     editExerciseInTemplate(state, action: PayloadAction<Exercise>) {
-      const { id, exerciseName, sets } = action.payload;
-
-      state.draftTemplate.exercises = exerciseUtils.edit(
-        id,
-        exerciseName,
-        sets,
-        state.draftTemplate.exercises
+      const updatedExercise = action.payload;
+      const exerciseIndex = state.draftTemplate.exercises.findIndex(
+        (exercise) => exercise.id === updatedExercise.id
       );
+
+      if (exerciseIndex !== -1) {
+        state.draftTemplate.exercises[exerciseIndex] = updatedExercise;
+      }
     },
 
     // Reorder exercises within the temporary template
