@@ -2,6 +2,7 @@
 
 ## **RepNote** is a minimalist training log and performance dashboard, built with a strong focus on **data visualization**. It simulates a mobile-style interface directly in the browser, allowing users to log workouts and instantly see trends in **strength, volume, and consistency**.
 
+🔗 **[Live Demo](https://repnotedemo.funcnroll)**
 ---
 
 ## 📱 App Preview
