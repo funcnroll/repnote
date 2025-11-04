@@ -89,6 +89,7 @@ git clone https://github.com/funcnroll/repnote.git
 cd repnote
 npm install
 npm run dev
+```
 
 ## 🙏 Acknowledgments
 
