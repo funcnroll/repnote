@@ -1,6 +1,6 @@
 # 🏋️ RepNote
 
-## **RepNote** is a minimalist training log and performance dashboard, built with a strong focus on **data visualization**. It simulates a mobile-style interface directly in the browser, allowing users to log workouts and instantly see trends in **strength, volume, and consistency**.
+## RepNote is a minimalist training log and performance dashboard, built with a strong focus on **data visualization** and **smooth UX**. It simulates a mobile-style interface directly in the browser, allowing users to log workouts and instantly see trends in **strength, volume, and consistency**.
 
 🔗 **[Live Demo](https://repnotedemo.funcnroll.dev)**
 ---
@@ -64,23 +64,11 @@
 
 RepNote was built as a **developer portfolio project** to highlight:
 
-- 🏗️ **Scalable React Architecture**  
-  Clean, modular components with reusable chart and layout primitives.
-
-- 📊 **Data Visualization in Practice**  
-  Transforming workout data into meaningful charts with Recharts.
-
-- 🔄 **State Management with Redux Toolkit**  
-  Predictable flows for templates, active workouts, and workout history.
-
-- 🎨 **UI/UX Exploration**  
-  A mobile-style browser experience, styled with TailwindCSS.
-
-- 🗂️ **Local Data Persistence**  
-  Templates and workout history stored in local storage for instant demo use.
-
-- 💡 **Experimentation & Play**  
-  A sandbox for exploring UI ideas, workout data structures, and consistency tracking.
+- Clean, scalable **React architecture**  
+- Strong attention to **data visualisation and UX**  
+- State management with **Redux Toolkit**  
+- Modern **TailwindCSS** design patterns  
+- Clear data flow and interactivity in a medium-complexity fitness tool  
 
 ---
 
@@ -101,3 +89,11 @@ git clone https://github.com/funcnroll/repnote.git
 cd repnote
 npm install
 npm run dev
+
+## 🙏 Acknowledgments
+
+Exercise data provided by [free-exercise-db](https://github.com/yuhonas/free-exercise-db)
+
+## 📜 License
+
+This project is licensed under the [MIT License](LICENSE).
