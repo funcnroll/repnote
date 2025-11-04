@@ -67,7 +67,6 @@ RepNote was built as a **developer portfolio project** to highlight:
 - Clean, scalable **React architecture**  
 - Strong attention to **data visualisation and UX**  
 - State management with **Redux Toolkit**  
-- Modern **TailwindCSS** design patterns  
 - Clear data flow and interactivity in a medium-complexity fitness tool  
 
 ---
