@@ -1,11 +1,12 @@
-# 🏋️ RepNote
+# RepNote
 
-## RepNote is a minimalist training log and performance dashboard, built with a strong focus on **data visualization** and **smooth UX**. It simulates a mobile-style interface directly in the browser, allowing users to log workouts and instantly see trends in **strength, volume, and consistency**.
+RepNote is a minimalist training log and performance dashboard built for the browser. It simulates a mobile interface and lets you log workouts while tracking trends in strength, volume, and consistency over time.
 
-🔗 **[Live Demo](https://repnotedemo.funcnroll.dev)**
+**[Live Demo](https://repnotedemo.funcnroll.dev)**
+
 ---
 
-## 📱 App Preview
+## Preview
 
 <div align="center">
   <img src="preview/preview1.png" alt="Consistency" width="200" />
@@ -16,72 +17,45 @@
 
 ---
 
-## ✨ Features
+## Features
 
-- 👤 **Onboarding**
-  - Simple name-based setup for personalization
+**Onboarding** - Simple name-based setup to personalise the experience.
 
-- 🧩 **Training Templates**
-  - Create and edit custom training plans
-  - Add, remove, and reorder exercises
-  - Draft vs. saved templates (edit vs. workout mode)
+**Training Templates** - Create and edit custom training plans. Add, remove and reorder exercises, with a clear distinction between draft and saved states.
 
-- 💪 **Workout Logging**
-  - Track sets, reps, and weight during training
-  - Edit exercises and sets mid-session
-  - Resume active workouts from local storage
-  - Per-set completion indicators
+**Workout Logging** - Track sets, reps and weight during a session. You can edit exercises mid-workout and resume an active session from local storage. You can also see per-set completion at a glance.
 
-- 🗂️ **Exercise Library**
-  - Searchable library of common exercises
-  - Add or modify sets dynamically
+**Exercise Library** - A searchable library of common exercises with dynamic set management.
 
-- 📈 **Statistics & Data Visualization**
-  - **Training Volume**
-    - Weekly totals for sets, reps, and weight
-    - Radar chart of sets distributed across muscle groups
-  - **Performance**
-    - One Rep Max (1RM) progression estimates
-    - Volume load trends over time
-  - **Consistency**
-    - Completed vs. missed sets
-    - Workout duration tracking
-    - Weekly adherence / streaks
+**Statistics and Data Visualisation**
 
-- 🧠 **Data Layer**
-  - Global state management with Redux Toolkit
-  - Local storage persistence
-  - Seeded with months of realistic sample data (progression + partial sessions)
+- Training volume: weekly totals for sets, reps and weight as well as a radar chart showing distribution across muscle groups
+- Performance: estimated one rep max (1RM) progression and volume load trends over time
+- Consistency: completed vs missed sets, workout duration, weekly adherence and streaks
 
-- 🎨 **UI/UX**
-  - Mobile-style layout (375x812) for browser demo
-  - Smooth navigation with React Router
-  - TailwindCSS design system
+**Data Layer** - Global state with Redux Toolkit with local storage persistence that includes months of realistic seeded sample data to demonstrate progression and partial sessions.
+
+**UI/UX** - Mobile-style layout (375×812) for the browser demo, smooth navigation with React Router and a TailwindCSS design system.
 
 ---
 
-## 🧪 Demo Goals
+## About the Project
 
-RepNote was built as a **developer portfolio project** to highlight:
-
-- Clean, scalable **React architecture**  
-- Strong attention to **data visualisation and UX**  
-- State management with **Redux Toolkit**  
-- Clear data flow and interactivity in a medium-complexity fitness tool  
+RepNote was built as a portfolio project to demonstrate clean React architecture with a focus on data visualisation and UX. It was also made to display practical use of Redux Toolkit in a medium-complexity application in a closed system.
 
 ---
 
-## 📌 Tech Stack
+## Tech Stack
 
-- React + Vite  
-- Redux Toolkit  
-- React Router  
-- TailwindCSS  
-- Recharts  
+- React + Vite
+- Redux Toolkit
+- React Router
+- TailwindCSS
+- Recharts
 
 ---
 
-## 🧑‍💻 Getting Started
+## Getting Started
 
 ```bash
 git clone https://github.com/funcnroll/repnote.git
@@ -90,10 +64,12 @@ npm install
 npm run dev
 ```
 
-## 🙏 Acknowledgments
+---
 
-Exercise data provided by [free-exercise-db](https://github.com/yuhonas/free-exercise-db)
+## Acknowledgments
 
-## 📜 License
+Exercise data from [free-exercise-db](https://github.com/yuhonas/free-exercise-db).
 
-This project is licensed under the [MIT License](LICENSE).
+## License
+
+[MIT](LICENSE)
