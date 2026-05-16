@@ -19,10 +19,14 @@ function RecentActiveTemplate() {
     return <WorkoutNotFound />;
   }
 
-  // QOL Fix: scroll to top when a recent active template is clicked
+  // QOL Fix: scroll to top when a recent active template is clicked no matter the device
   useEffect(() => {
-    const scrollContainer = document.querySelector(".overflow-y-auto");
-    scrollContainer?.scrollTo({ top: 0, behavior: "instant" });
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      document.body.scrollTo(0, 0);
+      document.documentElement.scrollTo(0, 0);
+      document.querySelector(".overflow-y-auto")?.scrollTo({ top: 0 });
+    }, 0);
   }, []);
 
   return (
