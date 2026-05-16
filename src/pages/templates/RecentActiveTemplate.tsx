@@ -4,6 +4,7 @@ import WorkoutNotFound from "./reusable/workout/WorkoutNotFound";
 import WorkoutPageLayout from "./reusable/workout/WorkoutPageLayout";
 import WorkoutHeader from "./reusable/workout/WorkoutHeader";
 import RecentExerciseCard from "./reusable/exercise/RecentExerciseCard";
+import { useEffect } from "react";
 
 function RecentActiveTemplate() {
   const { recentActiveTemplateId } = useParams();
@@ -11,19 +12,28 @@ function RecentActiveTemplate() {
   const recentWorkouts = loadRecentWorkoutsFromLocalStorage();
 
   const workout = recentWorkouts.find(
-    (recWorkout) => recWorkout.id === recentActiveTemplateId
+    (recWorkout) => recWorkout.id === recentActiveTemplateId,
   );
 
   if (!workout) {
     return <WorkoutNotFound />;
   }
 
+  // QOL Fix: scroll to top when a recent active template is clicked
+  useEffect(() => {
+    const scrollContainer = document.querySelector(".overflow-y-auto");
+    scrollContainer?.scrollTo({ top: 0, behavior: "instant" });
+  }, []);
+
   return (
     <WorkoutPageLayout>
       <WorkoutHeader workoutName={workout.name} />
       <div>
         {workout.exercises.map((exercise) => (
-          <RecentExerciseCard key={exercise.id} exercise={exercise} />
+          <RecentExerciseCard
+            key={exercise.id}
+            exercise={exercise}
+          />
         ))}
       </div>
     </WorkoutPageLayout>
